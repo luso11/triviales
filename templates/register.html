@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Registro</title>
+</head>
+<script type="text/javascript" src="{{ STATIC_URL }}register.js"></script>
+<body>
+    <form name="f1" action="register" method="post">{% csrf_token %}
+        <table>
+            <tr>
+                <td>Usuario: </td>
+                <td><input type="text" name="username" /></td>
+            </tr>
+            <tr>
+                <td>Correo electr&oacute;nico: </td>
+                <td><input type="text" name="correo" /></td>
+            </tr>
+            <tr>
+                <td>Contraseña: </td>
+                <td><input type="password" name="clave1" /></td>
+            </tr>
+            <tr>
+                <td>Repita su contraseña: </td>
+                <td><input type="password" name="clave2" /></td>
+            </tr>
+
+        </table>
+    <input type="button" value="Registrar" onClick="comprobar()"/>
+</form>
+</body>
+</html>
