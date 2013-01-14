@@ -9,10 +9,12 @@ function comprobarClave(){
     clave1 = document.f1.clave1.value
     clave2 = document.f1.clave2.value
 
-    if (clave1 == clave2){
+    if ((clave1 == clave2)&& (clave1 != "")){
+        document.f1.clave1 = hex_md5(clave1)
+        document.f1.clave2 = hex_md5(clave2)
         document.f1.submit()
     }else{
-        alert("Las dos claves son distintas")
+        alert("Las dos claves son distintas.")
         return false
     }
 }
@@ -27,7 +29,10 @@ function validarCorreo(correo){
 }
 
 function comprobar(){
-    if (validarCorreo(document.f1.correo)){
+    if (document.f1.username == ""){
+        alert("El nombre de usuario no puede estar vacío.");
+        return false
+    }else if (validarCorreo(document.f1.correo) && (document.f1.username != "") ){
         comprobarClave();
     }
 }

@@ -1,10 +1,8 @@
 # Create your views here.
 from django.core.context_processors import request
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
 from django import forms
-from django.shortcuts import render_to_response
-from django.forms.formsets import formset_factory
 from models import User
 
 class RegForm (forms.Form):
@@ -20,10 +18,14 @@ def home(request):
 
 
 def register(request):
+    t = loader.get_template('register.html')
+    c = RequestContext(request)
     if request.method == 'POST':
         user = User()
-        user.email = request.POST.mail
-        print "hola"
-    else:
-        print "adios"
-    return render_to_response('register.html')
+        dict = request.POST
+        user.username = dict['username']
+        user.email = dict['correo']
+        user.password = dict['clave1']
+        user.save()
+        HttpResponseRedirect('home.html')
+    return HttpResponse(t.render(c))
