@@ -8,6 +8,9 @@ urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'trivial.views.home', name='home'),
     url(r'^register$', 'trivial.views.register', name='register'),
+    url(r'^login$', 'trivial.views.login', name='login'),
+    url(r'^games$', 'trivial.views.games', name='games'),
+
     # url(r'^triviales/', include('triviales.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
