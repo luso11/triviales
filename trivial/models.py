@@ -24,15 +24,7 @@ class Question(models.Model):
     def __unicode__(self):
         return self.question
 
-
-class User (models.Model):
-    username = models.CharField(max_length=200,unique=True)
-    email = models.CharField(max_length=200)
-    password = models.CharField(max_length=200)
-    def __unicode__(self):
-        return self.username
-
 class Game (models.Model):
-    user1 = User;
-    user2 = User;
+    user1 = models.CharField(max_length=200);
+    user2 = models.CharField(max_length=200);
 
