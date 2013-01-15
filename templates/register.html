@@ -29,7 +29,7 @@
 </script>
 <body>
     <form name="f1" action="register" method="post">
-        <input type="hidden" id= "csrf" value="{% csrf_token %}" />
+        {% csrf_token %}
         <table>
             <tr>
                 <td>Usuario: </td>
