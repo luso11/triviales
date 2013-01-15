@@ -6,12 +6,34 @@
 </head>
 <script type="text/javascript" src="{{ STATIC_URL }}md5.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}register.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}jquery-1.8.3.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#username').blur(function(){
+            $('#Info').html('<img src="{{ STATIC_URL }}loader.gif" alt="" />').fadeOut(1000);
+            var username = $(this).val();
+            var postdata={
+                'username':username,
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            }
+            $.ajax({
+                type: "POST",
+                url: "check_username_availability",
+                data: postdata,
+                success: function(data) {
+                    $('#Info').fadeIn(1000).html(data);
+                }
+            });
+        });
+    });
+</script>
 <body>
-    <form name="f1" action="register" method="post">{% csrf_token %}
+    <form name="f1" action="register" method="post">
+        <input type="hidden" id= "csrf" value="{% csrf_token %}" />
         <table>
             <tr>
                 <td>Usuario: </td>
-                <td><input type="text" name="username" /></td>
+                <td><input type="text" name="username" id="username" /><div id="Info"></div></td>
             </tr>
             <tr>
                 <td>Correo electr&oacute;nico: </td>
@@ -19,11 +41,11 @@
             </tr>
             <tr>
                 <td>Contraseña: </td>
-                <td><input type="password" name="clave1" /></td>
+                <td><input type="password" name="password1" /></td>
             </tr>
             <tr>
                 <td>Repita su contraseña: </td>
-                <td><input type="password" name="clave2" /></td>
+                <td><input type="password" name="password2" /></td>
             </tr>
 
         </table>

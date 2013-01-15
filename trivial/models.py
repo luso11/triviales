@@ -28,3 +28,9 @@ class Game (models.Model):
     user1 = models.CharField(max_length=200);
     user2 = models.CharField(max_length=200);
 
+class Usuario(models.Model):
+    username = models.CharField(max_length=200)
+    mail = models.CharField(max_length=200)
+    password = models.CharField(max_length=200)
+    def __unicode__(self):
+        return self.username

@@ -6,12 +6,12 @@
  * To change this template use File | Settings | File Templates.
  */
 function comprobarClave(){
-    clave1 = document.f1.clave1.value
-    clave2 = document.f1.clave2.value
+    clave1 = document.f1.password1.value
+    clave2 = document.f1.password2.value
 
     if ((clave1 == clave2)&& (clave1 != "")){
-        document.f1.clave1 = hex_md5(clave1)
-        document.f1.clave2 = hex_md5(clave2)
+        document.f1.password1.value = hex_md5(clave1)
+        document.f1.password2.value = hex_md5(clave2)
         document.f1.submit()
     }else{
         alert("Las dos claves son distintas.")

@@ -6,9 +6,13 @@
  * To change this template use File | Settings | File Templates.
  */
 
+function limpiaClave(){
+    document.f1.password.value = ""
+}
+
 function enviar(){
-    clave = document.f1.clave
-    document.f1.clave = hex_md5(clave)
+    clave = document.f1.password
+    document.f1.password.value = hex_md5(clave)
     document.f1.submit()
 }
 

@@ -10,6 +10,7 @@ urlpatterns = patterns('',
     url(r'^register$', 'trivial.views.register', name='register'),
     url(r'^login$', 'trivial.views.login', name='login'),
     url(r'^games$', 'trivial.views.games', name='games'),
+    url(r'^check_username_availability$','trivial.views.check_username_availability',name="username"),
 
     # url(r'^triviales/', include('triviales.foo.urls')),
 
