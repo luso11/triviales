@@ -11,8 +11,6 @@ function limpiaClave(){
 }
 
 function enviar(){
-    clave = document.f1.password
-    document.f1.password.value = hex_md5(clave)
     document.f1.submit()
 }
 

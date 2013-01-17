@@ -10,8 +10,6 @@ function comprobarClave(){
     clave2 = document.f1.password2.value
 
     if ((clave1 == clave2)&& (clave1 != "")){
-        document.f1.password1.value = hex_md5(clave1)
-        document.f1.password2.value = hex_md5(clave2)
         document.f1.submit()
     }else{
         alert("Las dos claves son distintas.")

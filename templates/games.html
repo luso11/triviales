@@ -1,19 +1,23 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
         "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+
 <head>
     <title>Triviales</title>
 </head>
+<script type="text/javascript" src="{{ STATIC_URL }}game.js"></script>
 <body>
     {% if games_list %}
         <ul>
-            {% for game in game_list %}
-                <li><a href="/polls/{{ game.id }}/">{{ game.otro_user }}</a></li>
+            {% for game in games_list %}
+                <li><a href="/game/{{ game.id }}/">Partida con {{ game.user2 }}</a></li>
             {% endfor %}
         </ul>
     {% else %}
         <p>No tienes partidas actualmente.</p>
     {% endif %}
+
+    <input type="button" value="Crear nueva partida" onClick="newgame()"/>
 
 </body>
 </html>

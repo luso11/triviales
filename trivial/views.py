@@ -3,10 +3,12 @@
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
-from models import Usuario
+from models import Usuario, Game
 from django.contrib.auth import authenticate
 from django.shortcuts import render_to_response
 from django.utils import simplejson
+from django.contrib import auth
+import hashlib
 
 #Pagina inicial
 #TODO: ponerla bonita!
@@ -19,13 +21,16 @@ def home(request):
 def login(request):
     if request.method == 'POST':
         username = request.POST['username']
-        password = request.POST['password']
+        password = hashlib.sha224(request.POST['password']).hexdigest()
+        print password
         user = authenticate(username=username, password=password)
         if user is not None:
             if user.is_active:
-                django.contrib.auth.login(request, user)
-                return HttpResponseRedirect('games')
+                auth.login(request, user)
+                return HttpResponseRedirect('games/'+str(user.id))
                 # Redirect to a success page.
+            else:
+                return HttpResponseRedirect('register')
         else:
             return render_to_response('login.html',
                                 {"mensaje": 'Ususario o contraseña incorrectos'},
@@ -38,7 +43,6 @@ def login(request):
 
 
 #Pagina de registro
-#TODO: validar nombre libre
 def register(request):
     t = loader.get_template('register.html')
     c = RequestContext(request)
@@ -47,17 +51,30 @@ def register(request):
         user = Usuario()
         user.username = dict['username']
         user.mail = dict['correo']
-        user.password = dict['password1']
+        user.password = hashlib.sha224(dict['password1']).hexdigest()
         user.save()
-        return HttpResponseRedirect('games')
+        return HttpResponseRedirect('games/'+str(user.id))
     return HttpResponse(t.render(c))
 
 # Historial de partidas del jugador
 #TODO: todo
-def games(request):
-    t = loader.get_template('games.html')
-    c = RequestContext(request)
-    return HttpResponse(t.render(c))
+def games(request,id):
+    usuario = Usuario.objects.get(id = id)
+    listado = list()
+    for game in Game.objects.filter(user1 = usuario):
+        if game not in listado:
+            listado.append(game)
+    for game in Game.objects.filter(user2 = usuario):
+        if game not in listado:
+            listado.append(game)
+    listado.reverse()
+    return render_to_response('games.html',
+                             {'games_list': listado},
+                             context_instance=RequestContext(request))
+
+def actualGame(request):
+    return render_to_response('games.html',
+                             {"mensaje" : ""})
 
 
 def check_username_availability(request):

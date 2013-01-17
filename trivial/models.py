@@ -1,6 +1,12 @@
 from django.db import models
 
 # Create your models here.
+class Usuario(models.Model):
+    username = models.CharField(max_length=200, unique=True)
+    mail = models.CharField(max_length=200)
+    password = models.CharField(max_length=200)
+    def __unicode__(self):
+        return self.username
 
 CATEGORY_CHOICES = (
     ('deportes', 'Deportes'),
@@ -25,12 +31,13 @@ class Question(models.Model):
         return self.question
 
 class Game (models.Model):
-    user1 = models.CharField(max_length=200);
-    user2 = models.CharField(max_length=200);
-
-class Usuario(models.Model):
-    username = models.CharField(max_length=200)
-    mail = models.CharField(max_length=200)
-    password = models.CharField(max_length=200)
+    user1 = models.ForeignKey(Usuario, related_name = "user1")
+    user2 = models.ForeignKey(Usuario, related_name = "user2")
+    pos1 = int
+    pos2 = int
+    #json string
+    quesitos1 = models.CharField(max_length=200)
+    quesitos2 = models.CharField(max_length=200)
     def __unicode__(self):
-        return self.username
+        return str(self.id)
+
