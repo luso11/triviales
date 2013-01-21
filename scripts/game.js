@@ -7,5 +7,9 @@
  */
 
 function newgame(){
+    $("# gallery a").lightbox();
+}
 
+function abrir() {
+    ('newgame.html','','top=300,left=300,width=300,height=300') ;
 }

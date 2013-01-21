@@ -3,8 +3,9 @@
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
-from models import Usuario, Game
+from models import Game
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
 from django.utils import simplejson
 from django.contrib import auth
@@ -13,17 +14,15 @@ import hashlib
 #Pagina inicial
 #TODO: ponerla bonita!
 def home(request):
-    t = loader.get_template('home.html')
-    c = RequestContext(request, {'time': 'bar'})
-    return HttpResponse(t.render(c))
+    return render_to_response('home.html',context_instance=RequestContext(request))
 
 #Pagina de acceso al juego
 def login(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = hashlib.sha224(request.POST['password']).hexdigest()
-        print password
         user = authenticate(username=username, password=password)
+        print user
         if user is not None:
             if user.is_active:
                 auth.login(request, user)
@@ -48,7 +47,7 @@ def register(request):
     c = RequestContext(request)
     if request.method == 'POST':
         dict = request.POST
-        user = Usuario()
+        user = User()
         user.username = dict['username']
         user.mail = dict['correo']
         user.password = hashlib.sha224(dict['password1']).hexdigest()
@@ -57,33 +56,50 @@ def register(request):
     return HttpResponse(t.render(c))
 
 # Historial de partidas del jugador
-#TODO: todo
+#TODO: cambiar el orden del jugador en las partidas en que es user2
 def games(request,id):
-    usuario = Usuario.objects.get(id = id)
+    usuario = User.objects.get(id = id)
     listado = list()
     for game in Game.objects.filter(user1 = usuario):
         if game not in listado:
             listado.append(game)
     for game in Game.objects.filter(user2 = usuario):
-        if game not in listado:
-            listado.append(game)
+        juego = game
+        usuario = game.user2
+        juego.user1 = game.user2
+        juego.user2 = game.user1
+        print juego.user1
+        print juego.user2
+        listado.append(juego)
     listado.reverse()
     return render_to_response('games.html',
                              {'games_list': listado},
                              context_instance=RequestContext(request))
 
 def actualGame(request):
-    return render_to_response('games.html',
-                             {"mensaje" : ""})
+    return render_to_response('games.html',context_instance = RequestContext(request))
+
+def newgame(request):
+    return render_to_response('newgame.html',context_instance = RequestContext(request))
 
 
+"""
+    Codigo para reusar en caso de crearPartida
+    dict = request.POST
+    if dict['otroUsuario'] != "":
+        creaPartida(dict['otroUsuario'])
+    elif dict['mail'] != "":
+        creaPartidaMail(dict['mail'])
+    else:
+        creaPartidaRandom()
+    """
 def check_username_availability(request):
     try:
-        Usuario.objects.get(username=request.POST['username'])
+        User.objects.get(username=request.POST['username'])
         mensaje = '<div id="Error" style="color: red;">Usuario ya existente</div>'
         json = simplejson.dumps(mensaje)
         return HttpResponse(json, mimetype='application/json')
-    except Usuario.DoesNotExist:
+    except User.DoesNotExist:
         mensaje =  '<div id="Success" style="color: green;">Disponible</div>'
         json = simplejson.dumps(mensaje)
         return HttpResponse(json, mimetype='application/json')

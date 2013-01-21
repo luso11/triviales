@@ -1,11 +1,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
         "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 
 <head>
     <title>Triviales</title>
 </head>
+<script type="text/javascript" src="{{ STATIC_URL }}jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}game.js"></script>
+
 <body>
     {% if games_list %}
         <ul>
@@ -17,7 +19,6 @@
         <p>No tienes partidas actualmente.</p>
     {% endif %}
 
-    <input type="button" value="Crear nueva partida" onClick="newgame()"/>
-
+   <a href="/newgame"><input type="button" value="Crear nueva partida"></a>
 </body>
 </html>

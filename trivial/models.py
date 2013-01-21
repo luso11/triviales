@@ -1,12 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
-class Usuario(models.Model):
-    username = models.CharField(max_length=200, unique=True)
-    mail = models.CharField(max_length=200)
-    password = models.CharField(max_length=200)
-    def __unicode__(self):
-        return self.username
 
 CATEGORY_CHOICES = (
     ('deportes', 'Deportes'),
@@ -31,10 +26,11 @@ class Question(models.Model):
         return self.question
 
 class Game (models.Model):
-    user1 = models.ForeignKey(Usuario, related_name = "user1")
-    user2 = models.ForeignKey(Usuario, related_name = "user2")
-    pos1 = int
-    pos2 = int
+    user1 = models.ForeignKey(User, related_name = "user1")
+    user2 = models.ForeignKey(User, related_name = "user2")
+    pos1 = models.IntegerField()
+    pos2 = models.IntegerField()
+    turno = models.IntegerField()
     #json string
     quesitos1 = models.CharField(max_length=200)
     quesitos2 = models.CharField(max_length=200)

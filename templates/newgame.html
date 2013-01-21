@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Triviales</title>
+</head>
+<body>
+<script type="text/javascript" src="{{ STATIC_URL }}jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}newgame.js"></script>
+    <table>
+        <tr>
+            <td>
+                <td><input type="button" value="Encontrar por nombre usuario" onclick="porUsuario()"/></td>
+            </td>
+            <td>
+                <td><input type="button" value="Encontrar por email" onclick="porMail()" /></td>
+            </td>
+            <td>
+                <input type="button" value="Aleatorio" />
+            </td>
+        </tr>
+    </table>
+    <input type="text" id="usuario" style="visibility: hidden;"/>
+    <input type="text" id="mail" style="visibility: hidden;"/></br>
+    <input type="button" value="Crear" id="crear" onclick="crear()" style="visibility: hidden;" />
+
+</body>
+</html>
