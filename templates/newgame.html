@@ -1,19 +1,16 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-    <title>Triviales</title>
-</head>
-<body>
-<script type="text/javascript" src="{{ STATIC_URL }}jquery-1.8.3.min.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}newgame.js"></script>
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block extra_javascript %}
+    <script type="text/javascript" src="{{ STATIC_URL }}newgame.js"></script>
+{% endblock %}
+{% block content %}
     <table>
         <tr>
             <td>
-                <td><input type="button" value="Encontrar por nombre usuario" onclick="porUsuario()"/></td>
+            <td><input type="button" value="Encontrar por nombre usuario" onclick="porUsuario()"/></td>
             </td>
             <td>
-                <td><input type="button" value="Encontrar por email" onclick="porMail()" /></td>
+            <td><input type="button" value="Encontrar por email" onclick="porMail()" /></td>
             </td>
             <td>
                 <input type="button" value="Aleatorio" />
@@ -22,7 +19,5 @@
     </table>
     <input type="text" id="usuario" style="visibility: hidden;"/>
     <input type="text" id="mail" style="visibility: hidden;"/></br>
-    <input type="button" value="Crear" id="crear" onclick="crear()" style="visibility: hidden;" />
-
-</body>
-</html>
+    <input type="button" value="Crear partida" id="crearPartida" onclick="crear()" style="visibility: hidden;" />
+{% endblock %}

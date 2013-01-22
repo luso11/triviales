@@ -1,0 +1,12 @@
+<!DOCTYPE HTML >
+<html>
+<head>
+    <title> {% block title %}{{ title }}{% endblock %} </title>
+</head>
+<body {% block extra_body %}{% endblock %}>
+    <script type="text/javascript" src="{{ STATIC_URL }}jquery-1.8.3.min.js"></script>
+    {% block extra_javascript %} {% endblock %}
+    <div id="barraMenu"></div>
+    {% block content %} {% endblock %}
+</body>
+</html>

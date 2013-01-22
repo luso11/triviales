@@ -1,15 +1,14 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/html">
 
 <head>
     <title>Triviales</title>
 </head>
-<script type="text/javascript" src="{{ STATIC_URL }}jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}game.js"></script>
 
 <body>
     {% if games_list %}
+
         <ul>
             {% for game in games_list %}
                 <li><a href="/game/{{ game.id }}/">Partida con {{ game.user2 }}</a></li>

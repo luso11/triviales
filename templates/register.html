@@ -1,33 +1,29 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-    <title>Registro</title>
-</head>
-<script type="text/javascript" src="{{ STATIC_URL }}md5.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}register.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}jquery-1.8.3.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#username').blur(function(){
-            $('#Info').html('<img src="{{ STATIC_URL }}loader.gif" alt="" />').fadeOut(1000);
-            var username = $(this).val();
-            var postdata={
-                'username':username,
-                'csrfmiddlewaretoken': '{{ csrf_token }}'
-            }
-            $.ajax({
-                type: "POST",
-                url: "check_username_availability",
-                data: postdata,
-                success: function(data) {
-                    $('#Info').fadeIn(1000).html(data);
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block extra_javascript %}
+    <script type="text/javascript" src="{{ STATIC_URL }}register.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#username').blur(function(){
+                $('#Info').html('<img src="{{ STATIC_URL }}loader.gif" alt="" />').fadeOut(1000);
+                var username = $(this).val();
+                var postdata={
+                    'username':username,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
                 }
+                $.ajax({
+                    type: "POST",
+                    url: "check_username_availability",
+                    data: postdata,
+                    success: function(data) {
+                        $('#Info').fadeIn(1000).html(data);
+                    }
+                });
             });
         });
-    });
-</script>
-<body>
+    </script>
+{% endblock %}
+{% block content %}
     <form name="f1" action="register" method="post">
         {% csrf_token %}
         <table>
@@ -49,8 +45,7 @@
             </tr>
 
         </table>
-    <input type="button" value="Registrar" onClick="comprobar()"/>
-    <input type="button" value="Volver" onClick="window.location = '/'"/>
-</form>
-</body>
-</html>
+        <input type="button" value="Registrar" onClick="comprobar()"/>
+        <input type="button" value="Volver" onClick="window.location = '/'"/>
+    </form>
+{% endblock %}

@@ -1,12 +1,10 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-    <title>Login</title>
-</head>
-<script type="text/javascript" src="{{ STATIC_URL }}md5.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}login.js"></script>
-<body  onload="limpiaClave()">
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block extra_javascript %}
+    <script type="text/javascript" src="{{ STATIC_URL }}login.js"></script>
+{% endblock %}
+{% block extra_body %}onload="limpiaClave()"{% endblock %}
+{% block content %}
     <p style="color: red;"><b>{{ mensaje }}</b></p>
     <form name="f1" action="login" method="post">{% csrf_token %}
         <table>
@@ -19,8 +17,8 @@
                 <td><input type="password" name="password" /></td>
             </tr>
         </table>
-    <input type="button" value="Entrar" onClick="comprobarLogin()"/>
-    <input type="button" value="Volver" onClick="window.location = '/'"/>
-</form>
-</body>
-</html>
+        <input type="button" value="Entrar" onClick="comprobarLogin()"/>
+        <input type="button" value="Volver" onClick="window.location = '/'"/>
+    </form>
+
+{% endblock %}

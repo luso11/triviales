@@ -2,62 +2,68 @@
 # -*- encoding: utf-8 -*-
 
 from django.http import HttpResponse, HttpResponseRedirect
-from django.template import RequestContext, loader
+from django.template import RequestContext
 from models import Game
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
 from django.utils import simplejson
 from django.contrib import auth
-import hashlib
 
 #Pagina inicial
 #TODO: ponerla bonita!
 def home(request):
-    return render_to_response('home.html',context_instance=RequestContext(request))
+
+    return render_to_response('home.html',
+                {"title": "Triviales"},
+                context_instance=RequestContext(request))
 
 #Pagina de acceso al juego
 def login(request):
+    title = "Triviales Login"
     if request.method == 'POST':
-        username = request.POST['username']
-        password = hashlib.sha224(request.POST['password']).hexdigest()
-        user = authenticate(username=username, password=password)
-        print user
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username,password=password)
         if user is not None:
             if user.is_active:
                 auth.login(request, user)
                 return HttpResponseRedirect('games/'+str(user.id))
-                # Redirect to a success page.
             else:
                 return HttpResponseRedirect('register')
         else:
             return render_to_response('login.html',
-                                {"mensaje": 'Ususario o contraseña incorrectos'},
-                                context_instance=RequestContext(request))
-            # Return an 'invalid login' error message.
+                                    {"mensaje": 'Ususario o contraseña incorrectos',
+                                    "title": title},
+                                    context_instance=RequestContext(request))
     elif request.method == 'GET':
-        t = loader.get_template('login.html')
-        c = RequestContext(request)
-        return HttpResponse(t.render(c))
-
+        return render_to_response('login.html',
+                {"mensaje": '',
+                 "title": title},
+            context_instance=RequestContext(request))
 
 #Pagina de registro
 def register(request):
-    t = loader.get_template('register.html')
-    c = RequestContext(request)
+    title = "Registro"
     if request.method == 'POST':
         dict = request.POST
-        user = User()
-        user.username = dict['username']
-        user.mail = dict['correo']
-        user.password = hashlib.sha224(dict['password1']).hexdigest()
+        user = User.objects.create_user(dict['username'], dict['correo'], dict['password1'])
         user.save()
+        usuario = authenticate(username = user.username, password = user.password)
+        print usuario
         return HttpResponseRedirect('games/'+str(user.id))
-    return HttpResponse(t.render(c))
+    else:
+        return render_to_response('register.html',
+                {'title': title},
+                context_instance=RequestContext(request))
 
 # Historial de partidas del jugador
 #TODO: cambiar el orden del jugador en las partidas en que es user2
 def games(request,id):
+    title = "Partidas"
+    print request.user
+    if not request.user.is_authenticated():
+        return render_to_response('login.html',request)
     usuario = User.objects.get(id = id)
     listado = list()
     for game in Game.objects.filter(user1 = usuario):
@@ -65,7 +71,6 @@ def games(request,id):
             listado.append(game)
     for game in Game.objects.filter(user2 = usuario):
         juego = game
-        usuario = game.user2
         juego.user1 = game.user2
         juego.user2 = game.user1
         print juego.user1
@@ -73,7 +78,8 @@ def games(request,id):
         listado.append(juego)
     listado.reverse()
     return render_to_response('games.html',
-                             {'games_list': listado},
+                             {'games_list': listado,
+                              'title': title},
                              context_instance=RequestContext(request))
 
 def actualGame(request):
