@@ -7,7 +7,7 @@
  */
 
 function porUsuario(){
-    $("#usuario").css('visibility', 'visible');
+    $("#otroUsuario").css('visibility', 'visible');
     $("#crear").css('visibility', 'visible');
     $("#mail").css('visibility', 'hidden');
 }
@@ -15,41 +15,6 @@ function porUsuario(){
 function porMail(){
     $("#mail").css('visibility', 'visible');
     $("#crear").css('visibility', 'visible');
-    $("#usuario").css('visibility', 'hidden');
+    $("#otroUsuario").css('visibility', 'hidden');
 
-}
-
-function crear(){
-    alert("joa");
-    if ($("#mail").value != ""){
-        var postdata={
-            'username':username,
-            'mail': $("#mail").value,
-            'csrfmiddlewaretoken': "{{ csrf_token }}"
-        }
-        $.ajax({
-            type: "POST",
-            url: "newgame",
-            data: postdata,
-            success: function(data) {
-                alert("partida creada con "+data);
-            }
-        });
-    }else if ($("#usuario").value != ""){
-        var postdata={
-            'username':$("#usuario").value,
-            'mail': "",
-            'csrfmiddlewaretoken': "{{ csrf_token }}"
-        }
-        $.ajax({
-            type: "POST",
-            url: "newgame",
-            data: postdata,
-            success: function(data) {
-                alert("partida creada con "+data);
-            }
-        });
-    }else{
-
-    }
 }

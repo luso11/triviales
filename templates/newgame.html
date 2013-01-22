@@ -2,6 +2,43 @@
 {% block title %}{{ title }}{% endblock %}
 {% block extra_javascript %}
     <script type="text/javascript" src="{{ STATIC_URL }}newgame.js"></script>
+    <script>
+        function crear(){
+            if ($("#mail").value != ""){
+                alert($("#otroUsuario").value)
+                var postdata={
+                    'username':"",
+                    'mail': $("#mail").value,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "newgame",
+                    data: postdata,
+                    success: function(data) {
+                        alert("partida creada con "+data);
+                    }
+                });
+            }else if ($("#otroUsuario").value != ""){
+                alert($("#otroUsuario").value)
+                var postdata={
+                    'username':$("#otroUsuario").value,
+                    'mail': "",
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "newgame",
+                    data: postdata,
+                    success: function(data) {
+                        alert("partida creada con "+data);
+                    }
+                });
+            }else{
+
+            }
+        }
+    </script>
 {% endblock %}
 {% block content %}
     <table>
@@ -17,7 +54,9 @@
             </td>
         </tr>
     </table>
-    <input type="text" id="usuario" style="visibility: hidden;"/>
-    <input type="text" id="mail" style="visibility: hidden;"/></br>
-    <input type="button" value="Crear partida" id="crearPartida" onclick="crear()" style="visibility: hidden;" />
+    <form id="userMail" method="post" action="newgame">
+        <input type="text" id="otroUsuario" style="visibility: hidden;" value=""/>
+        <input type="text" id="mail" style="visibility: hidden;" value=""/>
+    </form>
+    <input type="button" value="Crear partida" id="crearPartida" onclick="crear()"/>
 {% endblock %}

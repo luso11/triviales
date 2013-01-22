@@ -6,7 +6,7 @@
 <body {% block extra_body %}{% endblock %}>
     <script type="text/javascript" src="{{ STATIC_URL }}jquery-1.8.3.min.js"></script>
     {% block extra_javascript %} {% endblock %}
-    <div id="barraMenu"></div>
+    <div id="barraMenu"><p> HOLA {{ nombre }}</p></div>
     {% block content %} {% endblock %}
 </body>
 </html>

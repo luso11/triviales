@@ -61,7 +61,6 @@ def register(request):
 #TODO: cambiar el orden del jugador en las partidas en que es user2
 def games(request,id):
     title = "Partidas"
-    print request.user
     if not request.user.is_authenticated():
         return render_to_response('login.html',request)
     usuario = User.objects.get(id = id)
@@ -73,32 +72,48 @@ def games(request,id):
         juego = game
         juego.user1 = game.user2
         juego.user2 = game.user1
-        print juego.user1
-        print juego.user2
+        print 'user1: ',juego.user1
+        print 'user2: ',juego.user2
+        print 'game.user1: ',game.user1
+        print 'game.user2: ',game.user2
+        print 'game.id: ',game.id
         listado.append(juego)
     listado.reverse()
     return render_to_response('games.html',
                              {'games_list': listado,
-                              'title': title},
+                              'title': title,
+                              'nombre': usuario.username},
                              context_instance=RequestContext(request))
 
 def actualGame(request):
     return render_to_response('games.html',context_instance = RequestContext(request))
 
 def newgame(request):
-    return render_to_response('newgame.html',context_instance = RequestContext(request))
-
-
-"""
-    Codigo para reusar en caso de crearPartida
-    dict = request.POST
-    if dict['otroUsuario'] != "":
-        creaPartida(dict['otroUsuario'])
-    elif dict['mail'] != "":
-        creaPartidaMail(dict['mail'])
+    print request.method, request.user
+    if not request.user.is_authenticated():
+        return login(request)
+    elif request.method == "POST":
+        dict = request.POST
+        print dict
+        if dict['otroUsuario'] != "":
+            creaPartida(request.user,dict['otroUsuario'])
+        elif dict['mail'] != "":
+            creaPartidaMail(dict['mail'])
+        else:
+            creaPartidaRandom()
     else:
-        creaPartidaRandom()
-    """
+        return render_to_response('newgame.html',context_instance = RequestContext(request))
+
+def creaPartida(user1,user2):
+    print "hla"
+    game = Game.objects.create()
+    game.user1 = user1
+    game.user2 = User.objects.get(id = user2)
+    game.pos1 = game.pos2 = 1
+    game.quesitos1 = game.quesitos2 = ""
+    print game
+    return render_to_response('home.html',{'title':"partida creada"},context_instance = RequestContext(request))
+
 def check_username_availability(request):
     try:
         User.objects.get(username=request.POST['username'])
