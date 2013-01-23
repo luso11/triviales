@@ -11,6 +11,7 @@ urlpatterns = patterns('',
     url(r'^login$', 'trivial.views.login', name='login'),
     url(r'^games/(\d+)/$', 'trivial.views.games', name='games'),
     url(r'^newgame$', 'trivial.views.newgame', name='newgame'),
+    url(r'^partida/(\d+)/$', 'trivial.views.actualGame', name='partida'),
     url(r'^check_username_availability$','trivial.views.check_username_availability',name="username"),
 
     # url(r'^triviales/', include('triviales.foo.urls')),

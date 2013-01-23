@@ -1,17 +1,13 @@
-<!DOCTYPE HTML>
-<html xmlns="http://www.w3.org/1999/html">
-
-<head>
-    <title>Triviales</title>
-</head>
-<script type="text/javascript" src="{{ STATIC_URL }}game.js"></script>
-
-<body>
-<div id="barraMenu"><p> HOLA {{ nombre }}</p></div>
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block extra_javascript %}
+    <script type="text/javascript" src="{{ STATIC_URL }}game.js"></script>
+{% endblock %}
+{% block content %}
     {% if games_list %}
         <ul>
             {% for game in games_list %}
-                <li><a href="/game/{{ game.id }}/">Partida con {{ game.user2 }}</a></li>
+                <li><a href="/partida/{{ game.id }}/">Partida con {{ game.user2 }}</a></li>
             {% endfor %}
         </ul>
     {% else %}
@@ -19,5 +15,4 @@
     {% endif %}
 
    <a href="/newgame"><input type="button" value="Crear nueva partida"></a>
-</body>
-</html>
+{% endblock %}
