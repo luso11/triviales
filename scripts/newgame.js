@@ -6,15 +6,21 @@
  * To change this template use File | Settings | File Templates.
  */
 
-function porUsuario(){
-    $("#otroUsuario").css('visibility', 'visible');
-    $("#crear").css('visibility', 'visible');
-    $("#mail").css('visibility', 'hidden');
+function conDatosUsuario(){
+    document.f1.elements['eleccion'].value="user";
+    conDatos();
 }
 
-function porMail(){
-    $("#mail").css('visibility', 'visible');
-    $("#crear").css('visibility', 'visible');
-    $("#otroUsuario").css('visibility', 'hidden');
+function conDatosMail(){
+    document.f1.elements['eleccion'].value="mail";
+    conDatos();
+}
 
+function conDatos(){
+    document.f1.elements['datos'].style.visibility= "visible";
+    $("#crearPartida").css('visibility', 'visible');
+}
+
+function crear(){
+   document.f1.submit();
 }

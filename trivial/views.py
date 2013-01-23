@@ -10,10 +10,11 @@ from django.shortcuts import render_to_response
 from django.utils import simplejson
 from django.contrib import auth
 
+quesitos_inicial = simplejson.dumps({'deportes': 0, 'ciencia': 0, 'series': 0, 'historia': 0, 'literatura': 0, 'juegos':0})
+
 #Pagina inicial
 #TODO: ponerla bonita!
 def home(request):
-
     return render_to_response('home.html',
                 {"title": "Triviales"},
                 context_instance=RequestContext(request))
@@ -89,30 +90,27 @@ def actualGame(request):
     return render_to_response('games.html',context_instance = RequestContext(request))
 
 def newgame(request):
-    print request.method, request.user
     if not request.user.is_authenticated():
         return login(request)
     elif request.method == "POST":
-        dict = request.POST
-        print dict
-        if dict['otroUsuario'] != "":
-            creaPartida(request.user,dict['otroUsuario'])
-        elif dict['mail'] != "":
-            creaPartidaMail(dict['mail'])
-        else:
-            creaPartidaRandom()
+        if request.POST['eleccion'] == "user":
+            try:
+                user2 = User.objects.get(username = request.POST['datos'])
+                return creaPartida(request,request.user,user2)
+            except User.DoesNotExist:
+                return render_to_response('newgame.html',{'error': 1},context_instance = RequestContext(request))
+        elif request.POST['eleccion'] == "mail":
+            try:
+                user2 = User.objects.get(email = request.POST['datos'])
+                return creaPartida(request,request.user,user2)
+            except User.DoesNotExist:
+                return render_to_response('newgame.html',{'error': 1},context_instance = RequestContext(request))
     else:
         return render_to_response('newgame.html',context_instance = RequestContext(request))
 
-def creaPartida(user1,user2):
-    print "hla"
-    game = Game.objects.create()
-    game.user1 = user1
-    game.user2 = User.objects.get(id = user2)
-    game.pos1 = game.pos2 = 1
-    game.quesitos1 = game.quesitos2 = ""
-    print game
-    return render_to_response('home.html',{'title':"partida creada"},context_instance = RequestContext(request))
+def creaPartida(request,user1,user2):
+    game = Game.objects.create(user1=user1,user2=user2,pos1=1,pos2=1,quesitos1 = quesitos_inicial, quesitos2=quesitos_inicial,turno=1)
+    return HttpResponseRedirect('/games/'+str(game.id))
 
 def check_username_availability(request):
     try:
