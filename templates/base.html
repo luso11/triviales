@@ -1,12 +1,19 @@
 <!DOCTYPE HTML >
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
     <title> {% block title %}{{ title }}{% endblock %} </title>
 </head>
 <body {% block extra_body %}{% endblock %}>
-    <script type="text/javascript" src="{{ STATIC_URL }}jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}base.js"></script>
     {% block extra_javascript %} {% endblock %}
-    <div id="barraMenu"><p> HOLA {{ nombre }}</p></div>
+    <div id="barraMenu">
+        <p>
+           {% if not logout %}
+               <input type="button" value="Logout" onclick="window.location = '/logout'">
+           {% endif %}
+        </p>
+    </div>
     {% block content %} {% endblock %}
 </body>
 </html>

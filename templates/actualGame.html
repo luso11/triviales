@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block extra_javascript %}
+    <script type="text/javascript" src="{{ STATIC_URL }}actualGame.js"></script>
+{% endblock %}
+{% block content %}
+    <div id="dado">
+        <input type="button" value="Tirar" onclick="tirar()">
+    </div>
+
+    <div id="tablero">
+        
+
+    </div>
+
+{% endblock %}

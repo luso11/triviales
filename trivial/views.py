@@ -14,10 +14,10 @@ import random
 quesitos_inicial = simplejson.dumps({'deportes': 0, 'ciencia': 0, 'series': 0, 'historia': 0, 'literatura': 0, 'juegos':0})
 
 #Pagina inicial
-#TODO: ponerla bonita!
 def home(request):
     return render_to_response('home.html',
-                {"title": "Triviales"},
+                {"title": "Triviales",
+                 "logout": True},
                 context_instance=RequestContext(request))
 
 #Pagina de acceso al juego
@@ -30,7 +30,9 @@ def login(request):
         if user is not None:
             if user.is_active:
                 auth.login(request, user)
-                return HttpResponseRedirect('games/'+str(user.id))
+                response = HttpResponseRedirect('games/'+str(user.id))
+                response.set_cookie('user', user.id)
+                return response
             else:
                 return HttpResponseRedirect('register')
         else:
@@ -51,8 +53,7 @@ def register(request):
         dict = request.POST
         user = User.objects.create_user(dict['username'], dict['correo'], dict['password1'])
         user.save()
-        usuario = authenticate(username = user.username, password = user.password)
-        print usuario
+        authenticate(username = user.username, password = user.password)
         return HttpResponseRedirect('games/'+str(user.id))
     else:
         return render_to_response('register.html',
@@ -63,8 +64,8 @@ def register(request):
 #TODO: cambiar el orden del jugador en las partidas en que es user2
 def games(request,id):
     title = "Partidas"
-    if not request.user.is_authenticated():
-        return render_to_response('login.html',request)
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect("/login")
     usuario = User.objects.get(id = id)
     listado = list()
     for game in Game.objects.filter(user1 = usuario):
@@ -77,8 +78,7 @@ def games(request,id):
     listado.reverse()
     return render_to_response('games.html',
                              {'games_list': listado,
-                              'title': title,
-                              'nombre': usuario.username},
+                              'title': title},
                              context_instance=RequestContext(request))
 
 #pantalla de partida
@@ -87,7 +87,7 @@ def actualGame(request,id):
     #2.- comprobar turno
     #3.- pintar tablero
     #4.- colocar posiciones
-    return render_to_response('games.html',context_instance = RequestContext(request))
+    return render_to_response('actualGame.html',context_instance = RequestContext(request))
 
 def oponenteAleatorio(request):
     total = User.objects.count()
@@ -123,7 +123,9 @@ def newgame(request):
         return render_to_response('newgame.html',context_instance = RequestContext(request))
 
 def creaPartida(request,user1,user2):
+    print "hola"
     game = Game.objects.create(user1=user1,user2=user2,pos1=1,pos2=1,quesitos1 = quesitos_inicial, quesitos2=quesitos_inicial,turno=1)
+    print game
     return HttpResponseRedirect('/partida/'+str(game.id))
 
 def check_username_availability(request):
@@ -136,3 +138,11 @@ def check_username_availability(request):
         mensaje =  '<div id="Success" style="color: green;">Disponible</div>'
         json = simplejson.dumps(mensaje)
         return HttpResponse(json, mimetype='application/json')
+
+
+def logout_user(request):
+    auth.logout(request)
+    response = HttpResponseRedirect('/')
+    response.delete_cookie("sessionid")
+    response.delete_cookie("user")
+    return response
