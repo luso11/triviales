@@ -25,3 +25,7 @@ function comprobarLogin(){
         enviar()
     }
 }
+
+function volver(){
+    history.go(-1)
+}

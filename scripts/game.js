@@ -7,7 +7,7 @@
  */
 
 function newgame(){
-    $("# gallery a").lightbox();
+    window.location = "/newgame"
 }
 
 function abrir() {

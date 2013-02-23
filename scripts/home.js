@@ -6,6 +6,11 @@
  * To change this template use File | Settings | File Templates.
  */
 
-function logout(){
+function registar(){
     window.location = 'logout'
 }
+
+function entrar(){
+    window.location = 'login'
+}
+

@@ -1,10 +1,11 @@
 {% extends "base.html" %}
-{% block title %}{{ title }}{% endblock %}
+{% block title %}
+    {{ title }}
+{% endblock %}
+{% block extra_javascript %}
+    <script type="text/javascript" src="{{ STATIC_URL }}home.js"></script>
+{% endblock %}
 {% block content %}
-    <a href="register">
-        <input type="submit" name="button" value="Registrarse"/>
-    <a/>
-    <a href="login">
-        <input type="submit" name="button" value="Entrar"/>
-    <a/>
+    <input type="button" class="button" name="button" value="Registrarse" onclick="registrar()"/>
+    <input type="button" class="button" name="button" value="Entrar" onclick="entrar()"/>
 {% endblock %}

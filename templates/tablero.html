@@ -1,0 +1,61 @@
+<!-- <body>
+
+
+tengo que generar todas las casillas y asociar la clase que tiene correspondiente a tipo de pregunta y línea de estrella
+
+<script type="text/javascript">
+
+
+
+</script>
+
+</body>-->
+
+
+<html xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<head>
+    <script>
+        function carga(){
+            var quesitos = ["quesitoCiencia", "quesitoDeportes", "quesitoHistoria", "quesitoEspectaulos", "quesitoLiteratura"]
+            for (var quesito in quesitos){
+                var objetoCanvas = document.getElementById(quesitos[quesito]);
+                if(objetoCanvas.getContext){
+                    var context = objetoCanvas.getContext('2d');
+                    context.beginPath();
+                    if (quesito == 0){
+                        context.rect(20, 20, 70, 70);
+                        context.fillStyle = 'green';
+                    }else if (quesito == 1){
+                        context.rect(20, 20, 70, 70);
+                        context.fillStyle = 'orange';
+                    }else if (quesito == 2){
+                        context.rect(10, 0, 180, 90);
+                        context.fillStyle = 'yellow';
+                    }else if (quesito == 3){
+                        context.rect(20, 20, 70, 70);
+                        context.fillStyle = 'pink';
+                    }else{
+                        context.rect(20, 20, 70, 70);
+                        context.fillStyle = 'brown';
+                    }
+                    context.fill();
+                    context.lineWidth = 4;
+                    context.strokeStyle = 'black';
+                    context.stroke();
+                }
+            }
+        }
+        function clickHistoria(){
+            alert("historia!")
+        }
+    </script>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}tablero.css">
+</head>
+<body onload="carga();">
+<canvas id="quesitoHistoria" class="quesito" onclick ="clickHistoria();"></canvas>
+<canvas id="quesitoCiencia" class="quesito" onclick ="clickHistoria();"></canvas>
+<canvas id="quesitoLiteratura" class="quesito" onclick ="clickHistoria();"></canvas>
+<canvas id="quesitoEspectaulos" class="quesito" onclick ="clickHistoria();"></canvas>
+<canvas id="quesitoDeportes" class="quesito" onclick ="clickHistoria();"></canvas>
+</body>
+</html>

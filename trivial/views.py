@@ -11,7 +11,7 @@ from django.utils import simplejson
 from django.contrib import auth
 import random
 
-quesitos_inicial = simplejson.dumps({'deportes': 0, 'ciencia': 0, 'series': 0, 'historia': 0, 'literatura': 0, 'juegos':0})
+quesitos_inicial = simplejson.dumps({'deportes': 0, 'ciencia': 0, 'espectaculo': 0, 'historia': 0, 'literatura': 0})
 
 #Pagina inicial
 def home(request):
@@ -37,14 +37,17 @@ def login(request):
                 return HttpResponseRedirect('register')
         else:
             return render_to_response('login.html',
-                                    {"mensaje": 'Ususario o contraseña incorrectos',
-                                    "title": title},
-                                    context_instance=RequestContext(request))
+                {"mensaje": 'Ususario o contraseña incorrectos',
+                "title": title,
+                "logout": True},
+                context_instance=RequestContext(request))
+
     elif request.method == 'GET':
         return render_to_response('login.html',
                 {"mensaje": '',
-                 "title": title},
-            context_instance=RequestContext(request))
+                    "title": title,
+                    "logout": True},
+                    context_instance=RequestContext(request))
 
 #Pagina de registro
 def register(request):
@@ -57,7 +60,8 @@ def register(request):
         return HttpResponseRedirect('games/'+str(user.id))
     else:
         return render_to_response('register.html',
-                {'title': title},
+                {'title': title,
+                 "logout": True},
                 context_instance=RequestContext(request))
 
 # Historial de partidas del jugador
@@ -75,6 +79,7 @@ def games(request,id):
         juego = game
         juego.user1 = game.user2
         juego.user2 = game.user1
+        listado.append(juego)
     listado.reverse()
     return render_to_response('games.html',
                              {'games_list': listado,
@@ -84,6 +89,8 @@ def games(request,id):
 #pantalla de partida
 def actualGame(request,id):
     #1.- cargar partida de bbdd
+    partida = Game.objects.get(id = id);
+    print(partida.turno)
     #2.- comprobar turno
     #3.- pintar tablero
     #4.- colocar posiciones
@@ -139,10 +146,14 @@ def check_username_availability(request):
         json = simplejson.dumps(mensaje)
         return HttpResponse(json, mimetype='application/json')
 
-
 def logout_user(request):
     auth.logout(request)
     response = HttpResponseRedirect('/')
     response.delete_cookie("sessionid")
     response.delete_cookie("user")
     return response
+
+
+
+def tablero(request):
+    return render_to_response('tablero.html',context_instance = RequestContext(request))

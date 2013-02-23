@@ -1,0 +1,14 @@
+.quesito{
+    width: 120px;
+    height: 120px;
+}
+
+.fila1{
+    transform:skew(45deg, 45deg);
+    -ms-transform:skew(45deg, 45deg); /* IE 9 */
+    -moz-transform:skew(45deg, 45deg); /* Firefox */
+    -webkit-transform:skew(45deg, 45deg); /* Safari and Chrome */
+    -o-transform:skew(45deg, 45deg); /* Opera */
+    width: 98px;
+    height: 98px;
+}

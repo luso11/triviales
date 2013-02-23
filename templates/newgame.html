@@ -11,15 +11,9 @@
             {% endif %}
         </tr>
         <tr>
-            <td>
-                <td><input type="button" value="Encontrar por nombre usuario" onclick="conDatosUsuario()"/></td>
-            </td>
-            <td>
-                <td><input type="button" value="Encontrar por email" onclick="conDatosMail()"/></td>
-            </td>
-            <td>
-                <input type="button" value="Aleatorio" onclick="crear()"/>
-            </td>
+            <td><input type="button" class="button" value="Encontrar por nombre usuario" onclick="conDatosUsuario()"/></td>
+            <td><input type="button" class="button" value="Encontrar por email" onclick="conDatosMail()"/></td>
+            <td><input type="button" class="button" value="Aleatorio" onclick="crear()"/></td>
         </tr>
     </table>
     <form name="f1" method="post" action="newgame">{% csrf_token %}

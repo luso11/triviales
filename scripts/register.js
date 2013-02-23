@@ -34,3 +34,7 @@ function comprobar(){
         comprobarClave();
     }
 }
+
+function volver(){
+    history.go(-1)
+}

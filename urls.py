@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     url(r'^newgame$', 'trivial.views.newgame', name='newgame'),
     url(r'^partida/(\d+)/$', 'trivial.views.actualGame', name='partida'),
     url(r'^check_username_availability$','trivial.views.check_username_availability',name="username"),
+    url(r'^tablero$', 'trivial.views.tablero', name='tablero'),
 
     # url(r'^triviales/', include('triviales.foo.urls')),
 
