@@ -18,104 +18,88 @@ function volver(){
     history.back(-1);
 }
 
+function cargaQuesitos(){
+    var quesitos = ["quesitoHistoria", "quesitoCiencia", "quesitoEspectaculos", "quesitoDeportes", "quesitoLiteratura"]
+    for (var quesito in quesitos){
+        var objetoCanvas = document.getElementById(quesitos[quesito]);
+        var context = objetoCanvas.getContext('2d');
+        if(objetoCanvas.getContext){
+            if (quesitos[quesito] == "quesitoHistoria"){
+                context.beginPath();
+                context.rect(0,0,40,60)
+                context.fillStyle = "yellow"
+                context.fill()
+                context.lineWidth = 2
+                context.strokeStyle = "black"
+                context.stroke();
+            }else if (quesitos[quesito] == "quesitoCiencia"){
+                context.beginPath();
+                context.rect(0,0,60,40)
+                context.fillStyle = "green"
+                context.fill()
+                context.lineWidth = 2
+                context.strokeStyle = "black"
+                context.stroke();
+            }else if (quesitos[quesito] == "quesitoEspectaculos"){
+                context.beginPath();
+                context.rect(0,0,60,42)
+                context.fillStyle = "pink"
+                context.fill()
+                context.lineWidth = 2
+                context.strokeStyle = "black"
+                context.stroke();
+            }else if (quesitos[quesito] == "quesitoDeportes"){
+                context.beginPath();
+                context.rect(0,0,60,50)
+                context.fillStyle = "blue"
+                context.fill()
+                context.lineWidth = 2
+                context.strokeStyle = "black"
+                context.stroke();
+            }else if (quesitos[quesito] == "quesitoLiteratura"){
+                context.beginPath();
+                //Nos colocamos en el centro del canvas
+                context.rect(0,0,60,40)
+                context.fillStyle = "brown"
+                context.fill()
+                context.lineWidth = 2
+                context.strokeStyle = "black"
+                context.stroke();
+            }
+        }
+    }
+}
+
 //Cargamos el tablero de juego
 function cargaTablero() {
     var allHTMLTags = new Array();
+    var allCanvas = new Array();
+    cargaQuesitos();
     // Creamos un array con todas las etiquetas del HTML
-    allHTMLTags=document.getElementsByTagName("*");
+    allHTMLTags = document.getElementsByTagName("canvas");
     // Las recorremos
     for (i=0; i<allHTMLTags.length; i++) {
-        var objetoCanvas = document.getElementById(allHTMLTags[i].id);
-        //si saco aquí la creación comun del elemento context no funciona
-        if (allHTMLTags[i].className=="ciencia") {
-            // Aqui ejecutamos lo que queramos a los elementos
-            // que coincidan con la clase.
-            if(objetoCanvas.getContext){
-                var context = objetoCanvas.getContext('2d');
-                context.beginPath();
-                context.rect(0, 0, 70, 70);
-                context.fillStyle = 'green';
+        if(allHTMLTags[i].id.indexOf("quesito")== -1){
+            if(document.getElementById(allHTMLTags[i].id).getContext){
+                var context = document.getElementById(allHTMLTags[i].id).getContext('2d');
+                context.rect(0,0,30,50)
+            //si saco aquí la creación comun del elemento context no funciona
+                if (allHTMLTags[i].className=="ciencia") {
+                    context.fillStyle = "green";
+                }else if (allHTMLTags[i].className=="historia") {
+                    context.fillStyle = 'yellow';
+                }else if (allHTMLTags[i].className=="deportes") {
+                    context.fillStyle = 'blue';
+                }else if (allHTMLTags[i].className=="literatura") {
+                    context.fillStyle = 'brown';
+                }else if (allHTMLTags[i].className=="espectaculos") {
+                    context.fillStyle = 'pink';
+                }else if (allHTMLTags[i].className=="rojo") {
+                    context.fillStyle = 'red';
+                }else if (allHTMLTags[i].className=="tiraOtraVez") {
+                    context.fillStyle = 'grey';
+                }
                 context.fill();
-                context.lineWidth = 2;
-                context.strokeStyle = 'black';
-                context.stroke();
-            }
-        }else if (allHTMLTags[i].className=="historia") {
-            // Aqui ejecutamos lo que queramos a los elementos
-            // que coincidan con la clase.
-            if(objetoCanvas.getContext){
-                var context = objetoCanvas.getContext('2d');
-                context.beginPath();
-                context.rect(0, 0, 70, 70);
-                context.fillStyle = 'yellow';
-                context.fill();
-                context.lineWidth = 2;
-                context.strokeStyle = 'black';
-                context.stroke();
-            }
-        }else if (allHTMLTags[i].className=="deportes") {
-            // Aqui ejecutamos lo que queramos a los elementos
-            // que coincidan con la clase.
-            if(objetoCanvas.getContext){
-                var context = objetoCanvas.getContext('2d');
-                context.beginPath();
-                context.rect(0, 0, 70, 70);
-                context.fillStyle = 'blue';
-                context.fill();
-                context.lineWidth = 2;
-                context.strokeStyle = 'black';
-                context.stroke();
-            }
-        }else if (allHTMLTags[i].className=="literatura") {
-            // Aqui ejecutamos lo que queramos a los elementos
-            // que coincidan con la clase.
-            if(objetoCanvas.getContext){
-                var context = objetoCanvas.getContext('2d');
-                context.beginPath();
-                context.rect(0, 0, 70, 70);
-                context.fillStyle = 'brown';
-                context.fill();
-                context.lineWidth = 2;
-                context.strokeStyle = 'black';
-                context.stroke();
-            }
-        }else if (allHTMLTags[i].className=="espectaculos") {
-            // Aqui ejecutamos lo que queramos a los elementos
-            // que coincidan con la clase.
-            if(objetoCanvas.getContext){
-                var context = objetoCanvas.getContext('2d');
-                context.beginPath();
-                context.rect(0, 0, 70, 70);
-                context.fillStyle = 'pink';
-                context.fill();
-                context.lineWidth = 2;
-                context.strokeStyle = 'black';
-                context.stroke();
-            }
-        }else if (allHTMLTags[i].className=="rojo") {
-            // Aqui ejecutamos lo que queramos a los elementos
-            // que coincidan con la clase.
-            if(objetoCanvas.getContext){
-                var context = objetoCanvas.getContext('2d');
-                context.beginPath();
-                context.rect(0, 0, 70, 70);
-                context.fillStyle = 'red';
-                context.fill();
-                context.lineWidth = 2;
-                context.strokeStyle = 'black';
-                context.stroke();
-            }
-        }else if (allHTMLTags[i].className=="tiraOtraVez") {
-            // Aqui ejecutamos lo que queramos a los elementos
-            // que coincidan con la clase.
-            if(objetoCanvas.getContext){
-                var context = objetoCanvas.getContext('2d');
-                context.beginPath();
-                context.rect(0, 0, 70, 70);
-                context.fillStyle = 'grey';
-                context.fill();
-                context.lineWidth = 2;
-                context.strokeStyle = 'black';
                 context.stroke();
             }
         }

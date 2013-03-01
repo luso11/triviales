@@ -1,11 +1,10 @@
 {% extends "base.html" %}
-{% block title %}{{ title }}{% endblock %}
 {% block extra_javascript %}
     <script type="text/javascript" src="{{ STATIC_URL }}login.js"></script>
 {% endblock %}
 {% block extra_body %}onload="limpiaClave()"{% endblock %}
 {% block content %}
-    <p style="color: red;"><b>{{ mensaje }}</b></p>
+
     <form name="f1" action="login" method="post">{% csrf_token %}
         <table>
             <tr>
