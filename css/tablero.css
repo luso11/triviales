@@ -1,139 +1,291 @@
 #quesitoHistoria{
     position: absolute;
     top: 50px;
-    left: 45%;
-    transform:skew(-30deg,55deg);
-    -ms-transform:skew(-30deg,55deg); /* IE 9 */
-    -moz-transform:skew(-30deg,55deg); /* Firefox */
-    -webkit-transform:skew(-30deg,55deg); /* Safari and Chrome */
-    -o-transform:skew(-30deg,55deg); /* Opera */
+    left: 41.3%;
+    transform:rotate(63deg) skew(54deg,-23deg));
+    -ms-transform:rotate(63deg) skew(54deg,-23deg); /* IE 9 */
+    -moz-transform:rotate(63deg) skew(54deg,-23deg); /* Firefox */
+    -webkit-transform:rotate(63deg) skew(54deg,-23deg); /* Safari and Chrome */
+    -o-transform:rotate(63deg) skew(54deg,-23deg); /* Opera */
 
 }
 
 #quesitoCiencia{
     position: absolute;
-    top: 250px;
-    left: 65%;
-    transform:skew(-55deg, 32deg);
-    -ms-transform:skew(-55deg, 32deg); /* IE 9 */
-    -moz-transform:skew(-55deg, 32deg); /* Firefox */
-    -webkit-transform:skew(-55deg, 32deg); /* Safari and Chrome */
-    -o-transform:skew(-55deg, 32deg); /* Opera */
+    top: 240px;
+    left: 64.1%;
+    transform:rotate(-6deg) skew(54deg,-32deg);
+    -ms-transform:rotate(-6deg) skew(54deg,-32deg); /* IE 9 */
+    -moz-transform:rotate(-6deg) skew(54deg,-32deg); /* Firefox */
+    -webkit-transform:rotate(-6deg) skew(54deg,-32deg); /* Safari and Chrome */
+    -o-transform:rotate(-6deg) skew(54deg,-32deg); /* Opera */
 }
 
 #quesitoLiteratura{
     position: absolute;
-    top: 250px;
-    left: 25%;
-    transform:skew(-55deg, 32deg);
-    -ms-transform:skew(-55deg, 32deg); /* IE 9 */
-    -moz-transform:skew(-55deg, 32deg); /* Firefox */
-    -webkit-transform:skew(-55deg, 32deg); /* Safari and Chrome */
-    -o-transform:skew(-55deg, 32deg); /* Opera */
+    top: 241px;
+    left: 31.6%;
+    transform:rotate(3deg) skew(54deg,-32deg);
+    -ms-transform:rotate(3deg) skew(54deg,-32deg); /* IE 9 */
+    -moz-transform:rotate(3deg) skew(54deg,-32deg); /* Firefox */
+    -webkit-transform:rotate(3deg) skew(54deg,-32deg); /* Safari and Chrome */
+    -o-transform:rotate(3deg) skew(54deg,-32deg); /* Opera */
 }
 
 #quesitoEspectaculos{
     position: absolute;
-    top: 500px;
-    left: 35%;
-    transform:skew(-58deg,40deg) rotate(23deg);
-    -ms-transform:skew(-58deg,40deg) rotate(23deg); /* IE 9 */
-    -moz-transform:skew(-58deg,40deg) rotate(23deg); /* Firefox */
-    -webkit-transform:skew(-58deg,40deg) rotate(23deg); /* Safari and Chrome */
-    -o-transform:skew(-58deg,40deg) rotate(23deg); /* Opera */
+    top: 453px;
+    left: 39%;
+    transform:rotate(-66deg) skew(54deg,-23deg));
+    -ms-transform:rotate(-66deg) skew(54deg,-23deg); /* IE 9 */
+    -moz-transform:rotate(-66deg) skew(54deg,-23deg); /* Firefox */
+    -webkit-transform:rotate(-66deg) skew(54deg,-23deg); /* Safari and Chrome */
+    -o-transform:rotate(-66deg) skew(54deg,-23deg); /* Opera */
 }
 
 #quesitoDeportes{
     position: absolute;
-    top: 500px;
-    left: 55%;
-    transform:skew(-34deg,42deg) rotate(-25deg);
-    -ms-transform:skew(-34deg,42deg) rotate(-25deg); /* IE 9 */
-    -moz-transform:skew(-34deg,42deg) rotate(-25deg); /* Firefox */
-    -webkit-transform:skew(-34deg,42deg) rotate(-25deg); /* Safari and Chrome */
-    -o-transform:skew(-34deg,42deg) rotate(-25deg); /* Opera */
+    top: 453px;
+    left: 56.45%;
+    transform:rotate(54deg) skew(54deg,-23deg);
+    -ms-transform:rotate(54deg) skew(54deg,-23deg); /* IE 9 */
+    -moz-transform:rotate(54deg) skew(54deg,-23deg); /* Firefox */
+    -webkit-transform:rotate(54deg) skew(54deg,-23deg); /* Safari and Chrome */
+    -o-transform:rotate(54deg) skew(54deg,-23deg); /* Opera */
 }
 
 .lado1{
     position: absolute;
     width: auto;
     height: auto;
-    transform:rotate(30.23deg) skewY(7deg);
-    -ms-transform:rotate(30.23deg) skewY(7deg); /* IE 9 */
-    -moz-transform:rotate(30.23deg) skewY(7deg); /* Firefox */
-    -webkit-transform:rotate(30.23deg) skewY(7deg); /* Safari and Chrome */
-    -o-transform:rotate(30.23deg) skewY(7deg); /* Opera */
+    top:74px
 }
 
 #lado1-1{
-    top: 97px;
-    left: 47.29%;
+    left: 44.9%;
 
  }
 
 #lado1-2{
-    top: 115px;
-    left: 49.1%;
+    left: 47.1%;
 }
 
 #lado1-3{
-    top: 133px;
-    left: 50.91%;
+    left: 49.2%;
 }
 
 #lado1-4{
-    top: 151px;
-    left: 52.72%;
+    left: 51.4%;
 }
 
 #lado1-5{
-    top: 169px;
-    left: 54.53%;
+    left: 53.5%;
 }
 
 #lado1-6{
-    top: 187px;
-    left: 56.34%;
+    left: 55.7%;
 }
 
 .lado2{
     position: absolute;
     width: auto;
     height: auto;
-    transform:rotate(-34.4deg) skewY(-7deg);
-    -ms-transform:rotate(-34.4deg) skewY(-7deg); /* IE 9 */
-    -moz-transform:rotate(-34.4deg) skewY(-7deg); /* Firefox */
-    -webkit-transform:rotate(-34.4deg) skewY(-7deg); /* Safari and Chrome */
-    -o-transform:rotate(-34.4deg) skewY(-7deg); /* Opera */
+    transform:rotate(-51deg) skewY(-5deg);
+    -ms-transform:rotate(-51deg) skewY(-5deg); /* IE 9 */
+    -moz-transform:rotate(-51deg) skewY(-5eg); /* Firefox */
+    -webkit-transform:rotate(-51deg) skewY(-5deg); /* Safari and Chrome */
+    -o-transform:rotate(-51deg) skewY(-5deg); /* Opera */
 }
 
 #lado2-1{
-    top: 101px;
-    left: 43.7%;
-
+    width: auto;
+    height: auto;
+    top: 93px;
+    left: 41.95%;
 }
 
 #lado2-2{
-    top: 121px;
-    left: 42%;
+    width: auto;
+    height: auto;
+    top: 117px;
+    left: 40.8%;
 }
 
 #lado2-3{
-    top: 141px;
-    left: 40.3%;
+    top: 140px;
+    left: 39.7%;
 }
 
 #lado2-4{
-    top: 161px;
-    left: 38.6%;
+    width: auto;
+    height: auto;
+    top: 163px;
+    left: 38.5%;
 }
 
 #lado2-5{
-    top: 181px;
-    left: 36.9%;
+    width: auto;
+    height: auto;
+    top: 187px;
+    left: 37.35%;
 }
 
 #lado2-6{
-    top: 201px;
-    left: 35.2%;
+    width: auto;
+    height: auto;
+    top: 211px;
+    left: 36.2%;
+}
+
+.lado3{
+    position: absolute;
+    width: auto;
+    height: auto;
+    transform:rotate(-60deg) skewY(-5deg);
+    -ms-transform:rotate(-60deg) skewY(-5deg); /* IE 9 */
+    -moz-transform:rotate(-60deg) skewY(-5deg); /* Firefox */
+    -webkit-transform:rotate(-60deg) skewY(-5deg); /* Safari and Chrome */
+    -o-transform:rotate(-60deg) skewY(-5deg); /* Opera */
+}
+
+#lado3-1{
+    width: auto;
+    height: auto;
+    top: 264px;
+    left: 62.35%;
+    z-index: -1;
+
+}
+
+#lado3-2{
+    width: auto;
+    height: auto;
+    top: 290px;
+    left: 61.45%;
+    z-index: -2;
+}
+
+#lado3-3{
+    width: auto;
+    height: auto;
+    top: 317px;
+    left: 60.6%;
+    z-index: -3;
+}
+
+#lado3-4{
+    width: auto;
+    height: auto;
+    top: 343px;
+    left: 59.7%;
+    z-index: -4;
+}
+
+#lado3-5{
+    width: auto;
+    height: auto;
+    top: 369px;
+    left: 58.8%;
+    z-index: -5;
+}
+
+#lado3-6{
+    width: auto;
+    height: auto;
+    top: 396px;
+    left: 57.9%;
+    z-index: -6;
+}
+
+.lado4{
+    position: absolute;
+    width: auto;
+    height: auto;
+    transform:rotate(-120deg) skewY(5deg);
+    -ms-transform:rotate(-120deg) skewY(5deg); /* IE 9 */
+    -moz-transform:rotate(-120deg) skewY(5deg); /* Firefox */
+    -webkit-transform:rotate(-120deg) skewY(5deg); /* Safari and Chrome */
+    -o-transform:rotate(-120deg) skewY(5deg); /* Opera */
+}
+
+#lado4-1{
+    width: auto;
+    height: auto;
+    top: 261px;
+    left: 35.9%;
+    z-index: -1;
+
+}
+
+#lado4-2{
+    width: auto;
+    height: auto;
+    top: 288px;
+    left: 36.85%;
+    z-index: -2;
+}
+
+#lado4-3{
+    width: auto;
+    height: auto;
+    top: 314px;
+    left: 37.75%;
+    z-index: -3;
+}
+
+#lado4-4{
+    width: auto;
+    height: auto;
+    top: 341px;
+    left: 38.7%;
+    z-index: -4;
+}
+
+#lado4-5{
+    width: auto;
+    height: auto;
+    top: 367px;
+    left: 39.6%;
+    z-index: -5;
+}
+
+#lado4-6{
+    width: auto;
+    height: auto;
+    top: 393px;
+    left: 40.5%;
+    z-index: -6;
+}
+
+.lado5{
+    position: absolute;
+    width: auto;
+    height: auto;
+    top:423px;
+}
+
+#lado5-1{
+    left: 54.4%;
+    z-index: -1;
+
+}
+
+#lado5-2{
+    left: 52.2%;
+}
+
+#lado5-3{
+    left: 50%;
+}
+
+#lado5-4{
+    left: 47.8%;
+}
+
+#lado5-5{
+    left: 45.6%;
+}
+
+#lado5-6{
+    left: 43.4%;
 }

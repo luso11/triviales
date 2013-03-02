@@ -26,7 +26,7 @@ function cargaQuesitos(){
         if(objetoCanvas.getContext){
             if (quesitos[quesito] == "quesitoHistoria"){
                 context.beginPath();
-                context.rect(0,0,40,60)
+                context.rect(0,0,60,40)
                 context.fillStyle = "yellow"
                 context.fill()
                 context.lineWidth = 2
@@ -42,7 +42,7 @@ function cargaQuesitos(){
                 context.stroke();
             }else if (quesitos[quesito] == "quesitoEspectaculos"){
                 context.beginPath();
-                context.rect(0,0,60,42)
+                context.rect(0,0,60,40)
                 context.fillStyle = "pink"
                 context.fill()
                 context.lineWidth = 2
@@ -50,7 +50,7 @@ function cargaQuesitos(){
                 context.stroke();
             }else if (quesitos[quesito] == "quesitoDeportes"){
                 context.beginPath();
-                context.rect(0,0,60,50)
+                context.rect(0,0,60,40)
                 context.fillStyle = "blue"
                 context.fill()
                 context.lineWidth = 2
@@ -79,9 +79,10 @@ function cargaTablero() {
     allHTMLTags = document.getElementsByTagName("canvas");
     // Las recorremos
     for (i=0; i<allHTMLTags.length; i++) {
-        if(allHTMLTags[i].id.indexOf("quesito")== -1){
+        var casillaActual = allHTMLTags[i];
+        if(casillaActual.id.indexOf("quesito")== -1){
             if(document.getElementById(allHTMLTags[i].id).getContext){
-                var context = document.getElementById(allHTMLTags[i].id).getContext('2d');
+                var context = document.getElementById(casillaActual.id).getContext('2d');
                 context.rect(0,0,30,50)
             //si saco aquí la creación comun del elemento context no funciona
                 if (allHTMLTags[i].className=="ciencia") {
@@ -100,6 +101,7 @@ function cargaTablero() {
                     context.fillStyle = 'grey';
                 }
                 context.fill();
+                context.lineWidth = 3;
                 context.stroke();
             }
         }
