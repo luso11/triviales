@@ -57,6 +57,7 @@ function cargaTablero() {
     for (i=0; i<allHTMLTags.length; i++) {
         var casillaActual = allHTMLTags[i];
         if(casillaActual.id.indexOf("quesito")== -1){
+            //Si no es un quesito
             if(document.getElementById(allHTMLTags[i].id).getContext){
                 var context = document.getElementById(casillaActual.id).getContext('2d');
                 context.rect(0,0,30,50)
@@ -89,26 +90,24 @@ function clickHistoria(){
     alert("historia!")
 }
 function clickCiencia(){
-    //Request de historia
+    //Request de ciencia
     alert("ciencia!")
 }
 function clickDeportes(){
-    //Request de historia
+    //Request de deportes
     alert("deportes!")
 }
 function clickEspectaculos(){
-    //Request de historia
+    //Request de espectaculos
     alert("espectaculos!")
 }
 function clickLiteratura(){
-    //Request de historia
+    //Request de literatura
     alert("literatura!")
 }
 function clickRojo(){
-    //Request de historia
     alert("rojo!")
 }
 function clickTiraOtraVez(){
-    //Request de historia
     alert("tiraOtraVez!")
 }
