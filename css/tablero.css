@@ -1,291 +1,253 @@
 #quesitoHistoria{
     position: absolute;
-    top: 50px;
-    left: 41.3%;
-    transform:rotate(63deg) skew(54deg,-23deg));
-    -ms-transform:rotate(63deg) skew(54deg,-23deg); /* IE 9 */
-    -moz-transform:rotate(63deg) skew(54deg,-23deg); /* Firefox */
-    -webkit-transform:rotate(63deg) skew(54deg,-23deg); /* Safari and Chrome */
+    top: 61px;
+    left: 640px;
+    transform:rotate(54deg) skewX(18deg);
+    -ms-transform:rotate(54deg) skewX(18deg); /* IE 9 */
+    -moz-transform:rotate(54deg) skewX(18deg); /* Firefox */
+    -webkit-transform:rotate(54deg) skewX(18deg); /* Safari and Chrome */
     -o-transform:rotate(63deg) skew(54deg,-23deg); /* Opera */
 
 }
 
 #quesitoCiencia{
     position: absolute;
-    top: 240px;
-    left: 64.1%;
-    transform:rotate(-6deg) skew(54deg,-32deg);
-    -ms-transform:rotate(-6deg) skew(54deg,-32deg); /* IE 9 */
-    -moz-transform:rotate(-6deg) skew(54deg,-32deg); /* Firefox */
-    -webkit-transform:rotate(-6deg) skew(54deg,-32deg); /* Safari and Chrome */
-    -o-transform:rotate(-6deg) skew(54deg,-32deg); /* Opera */
+    top: 204px;
+    left: 830px;
+    transform:rotate(-54deg) skewX(18deg);
+    -ms-transform:rotate(-54deg) skewX(18deg); /* IE 9 */
+    -moz-transform:rotate(-54deg) skewX(18deg); /* Firefox */
+    -webkit-transform:rotate(-54deg) skewX(18deg); /* Safari and Chrome */
+    -o-transform:rotate(-54deg) skewX(18deg); /* Opera */
 }
 
 #quesitoLiteratura{
     position: absolute;
-    top: 241px;
-    left: 31.6%;
-    transform:rotate(3deg) skew(54deg,-32deg);
-    -ms-transform:rotate(3deg) skew(54deg,-32deg); /* IE 9 */
-    -moz-transform:rotate(3deg) skew(54deg,-32deg); /* Firefox */
-    -webkit-transform:rotate(3deg) skew(54deg,-32deg); /* Safari and Chrome */
-    -o-transform:rotate(3deg) skew(54deg,-32deg); /* Opera */
+    top: 209px;
+    left: 460px;
+    transform:rotate(-18deg) skewX(18deg);
+    -ms-transform:rotate(-18deg) skewX(18deg); /* IE 9 */
+    -moz-transform:rotate(-18deg) skewX(18deg); /* Firefox */
+    -webkit-transform: rotate(-18deg) skewX(18deg);
+    -o-transform:rotate(-18deg) skewX(18deg)); /* Opera */
 }
 
 #quesitoEspectaculos{
     position: absolute;
-    top: 453px;
-    left: 39%;
-    transform:rotate(-66deg) skew(54deg,-23deg));
-    -ms-transform:rotate(-66deg) skew(54deg,-23deg); /* IE 9 */
-    -moz-transform:rotate(-66deg) skew(54deg,-23deg); /* Firefox */
-    -webkit-transform:rotate(-66deg) skew(54deg,-23deg); /* Safari and Chrome */
-    -o-transform:rotate(-66deg) skew(54deg,-23deg); /* Opera */
+    top: 428px;
+    left: 531px;
+    transform:rotate(90deg) skewX(18deg);
+    -ms-transform:rotate(90deg) skewX(18deg); /* IE 9 */
+    -moz-transform:rotate(90deg) skewX(18deg); /* Firefox */
+    -webkit-transform:rotate(90deg) skewX(18deg); /* Safari and Chrome */
+    -o-transform:rotate(90deg) skewX(18deg); /* Opera */
 }
 
 #quesitoDeportes{
     position: absolute;
-    top: 453px;
-    left: 56.45%;
-    transform:rotate(54deg) skew(54deg,-23deg);
-    -ms-transform:rotate(54deg) skew(54deg,-23deg); /* IE 9 */
-    -moz-transform:rotate(54deg) skew(54deg,-23deg); /* Firefox */
-    -webkit-transform:rotate(54deg) skew(54deg,-23deg); /* Safari and Chrome */
-    -o-transform:rotate(54deg) skew(54deg,-23deg); /* Opera */
+    top: 426px;
+    left: 755px;
+    transform:rotate(-162deg) skewX(18deg);
+    -ms-transform:rotate(-162deg) skewX(18deg); /* IE 9 */
+    -moz-transform:rotate(-162deg) skewX(18deg); /* Firefox */
+    -webkit-transform:rotate(-162deg) skewX(18deg); /* Safari and Chrome */
+    -o-transform:rotate(-162deg) skewX(18deg); /* Opera */
 }
 
 .lado1{
     position: absolute;
     width: auto;
     height: auto;
-    top:74px
+    transform:rotate(-36deg) skewY(-5deg);
+    -ms-transform:rotate(-36deg) skewY(-5deg); /* IE 9 */
+    -moz-transform:rotate(-36deg) skewY(-5deg); /* Firefox */
+    -webkit-transform:rotate(-36deg) skewY(-5deg); /* Safari and Chrome */
+    -o-transform:rotate(-36deg) skewY(-5deg); /* Opera */
 }
 
 #lado1-1{
-    left: 44.9%;
+    left: 630px;
+    top: 105px;
 
  }
 
 #lado1-2{
-    left: 47.1%;
+    left: 608px;
+    top: 124px;
 }
 
 #lado1-3{
-    left: 49.2%;
+    left: 586px;
+    top: 143px;
 }
 
 #lado1-4{
-    left: 51.4%;
+    left: 564px;
+    top: 162px;
 }
 
 #lado1-5{
-    left: 53.5%;
+    left: 542px;
+    top: 181px;
 }
 
 #lado1-6{
-    left: 55.7%;
+    left: 520px;
+    top: 200px;
 }
 
 .lado2{
     position: absolute;
     width: auto;
     height: auto;
-    transform:rotate(-51deg) skewY(-5deg);
-    -ms-transform:rotate(-51deg) skewY(-5deg); /* IE 9 */
-    -moz-transform:rotate(-51deg) skewY(-5eg); /* Firefox */
-    -webkit-transform:rotate(-51deg) skewY(-5deg); /* Safari and Chrome */
-    -o-transform:rotate(-51deg) skewY(-5deg); /* Opera */
+    transform:rotate(72deg);
+    -ms-transform:rotate(72deg); /* IE 9 */
+    -moz-transform:rotate(72deg); /* Firefox */
+    -webkit-transform:rotate(72deg); /* Safari and Chrome */
+    -o-transform:rotate(72deg); /* Opera */
 }
 
 #lado2-1{
-    width: auto;
-    height: auto;
-    top: 93px;
-    left: 41.95%;
+    top: 250px;
+    left: 501px;
 }
 
 #lado2-2{
-    width: auto;
-    height: auto;
-    top: 117px;
-    left: 40.8%;
+    top: 278px;
+    left: 510px;
 }
 
 #lado2-3{
-    top: 140px;
-    left: 39.7%;
+    top: 305px;
+    left: 519px;
 }
 
 #lado2-4{
-    width: auto;
-    height: auto;
-    top: 163px;
-    left: 38.5%;
+    top: 332px;
+    left: 528px;
 }
 
 #lado2-5{
-    width: auto;
-    height: auto;
-    top: 187px;
-    left: 37.35%;
+    top: 359px;
+    left: 537px;
 }
 
 #lado2-6{
-    width: auto;
-    height: auto;
-    top: 211px;
-    left: 36.2%;
+    top: 386px;
+    left: 546px;
 }
 
 .lado3{
     position: absolute;
     width: auto;
     height: auto;
-    transform:rotate(-60deg) skewY(-5deg);
-    -ms-transform:rotate(-60deg) skewY(-5deg); /* IE 9 */
-    -moz-transform:rotate(-60deg) skewY(-5deg); /* Firefox */
-    -webkit-transform:rotate(-60deg) skewY(-5deg); /* Safari and Chrome */
-    -o-transform:rotate(-60deg) skewY(-5deg); /* Opera */
+    top: 418px;
 }
 
 #lado3-1{
-    width: auto;
-    height: auto;
-    top: 264px;
-    left: 62.35%;
+    left: 590px;
     z-index: -1;
 
 }
 
 #lado3-2{
-    width: auto;
-    height: auto;
-    top: 290px;
-    left: 61.45%;
-    z-index: -2;
+    left: 620px;
 }
 
 #lado3-3{
-    width: auto;
-    height: auto;
-    top: 317px;
-    left: 60.6%;
-    z-index: -3;
+    left: 648px;
 }
 
 #lado3-4{
-    width: auto;
-    height: auto;
-    top: 343px;
-    left: 59.7%;
-    z-index: -4;
+    left: 676px;
 }
 
 #lado3-5{
-    width: auto;
-    height: auto;
-    top: 369px;
-    left: 58.8%;
-    z-index: -5;
+    left: 704px;
 }
 
 #lado3-6{
-    width: auto;
-    height: auto;
-    top: 396px;
-    left: 57.9%;
-    z-index: -6;
+    left: 728px;
 }
 
 .lado4{
     position: absolute;
     width: auto;
     height: auto;
-    transform:rotate(-120deg) skewY(5deg);
-    -ms-transform:rotate(-120deg) skewY(5deg); /* IE 9 */
-    -moz-transform:rotate(-120deg) skewY(5deg); /* Firefox */
-    -webkit-transform:rotate(-120deg) skewY(5deg); /* Safari and Chrome */
-    -o-transform:rotate(-120deg) skewY(5deg); /* Opera */
+    transform:rotate(-72deg);
+    -ms-transform:rotate(-72deg); /* IE 9 */
+    -moz-transform:rotate(-72deg); /* Firefox */
+    -webkit-transform:rotate(-72deg); /* Safari and Chrome */
+    -o-transform:rotate(-72deg); /* Opera */
 }
 
 #lado4-1{
-    width: auto;
-    height: auto;
-    top: 261px;
-    left: 35.9%;
-    z-index: -1;
-
+    top: 384px;
+    left: 774px;
 }
 
 #lado4-2{
-    width: auto;
-    height: auto;
-    top: 288px;
-    left: 36.85%;
-    z-index: -2;
+    top: 356px;
+    left: 783px;
 }
 
 #lado4-3{
-    width: auto;
-    height: auto;
-    top: 314px;
-    left: 37.75%;
-    z-index: -3;
+    top: 328px;
+    left: 792px;
 }
 
 #lado4-4{
-    width: auto;
-    height: auto;
-    top: 341px;
-    left: 38.7%;
-    z-index: -4;
+    top: 300px;
+    left: 801px;
 }
 
 #lado4-5{
-    width: auto;
-    height: auto;
-    top: 367px;
-    left: 39.6%;
-    z-index: -5;
+    top: 272px;
+    left: 810px;
 }
 
 #lado4-6{
-    width: auto;
-    height: auto;
-    top: 393px;
-    left: 40.5%;
-    z-index: -6;
+    top: 244px;
+    left: 819px;
 }
 
 .lado5{
     position: absolute;
     width: auto;
     height: auto;
-    top:423px;
+    transform:rotate(36deg);
+    -ms-transform:rotate(36deg); /* IE 9 */
+    -moz-transform:rotate(36deg); /* Firefox */
+    -webkit-transform:rotate(36deg); /* Safari and Chrome */
+    -o-transform:rotate(36deg); /* Opera */
 }
 
 #lado5-1{
-    left: 54.4%;
-    z-index: -1;
-
+    top: 194px;
+    left: 799px;
 }
 
 #lado5-2{
-    left: 52.2%;
+    top: 176px;
+    left: 775px;
 }
 
 #lado5-3{
-    left: 50%;
+    top: 158px;
+    left: 751px;
 }
 
 #lado5-4{
-    left: 47.8%;
+    top: 140px;
+    left: 727px;
 }
 
 #lado5-5{
-    left: 45.6%;
+    top: 122px;
+    left: 703px;
 }
 
 #lado5-6{
-    left: 43.4%;
+    top: 104px;
+    left: 679px;
 }

@@ -22,50 +22,26 @@ function cargaQuesitos(){
     var quesitos = ["quesitoHistoria", "quesitoCiencia", "quesitoEspectaculos", "quesitoDeportes", "quesitoLiteratura"]
     for (var quesito in quesitos){
         var objetoCanvas = document.getElementById(quesitos[quesito]);
-        var context = objetoCanvas.getContext('2d');
         if(objetoCanvas.getContext){
+            var context = objetoCanvas.getContext('2d');
+            context.beginPath();
+            //Nos colocamos en el centro del canvas
+            context.rect(0,0,60,60)
             if (quesitos[quesito] == "quesitoHistoria"){
-                context.beginPath();
-                context.rect(0,0,60,40)
-                context.fillStyle = "yellow"
-                context.fill()
-                context.lineWidth = 2
-                context.strokeStyle = "black"
-                context.stroke();
+                context.fillStyle = "yellow";
             }else if (quesitos[quesito] == "quesitoCiencia"){
-                context.beginPath();
-                context.rect(0,0,60,40)
-                context.fillStyle = "green"
-                context.fill()
-                context.lineWidth = 2
-                context.strokeStyle = "black"
-                context.stroke();
+                context.fillStyle = "green";
             }else if (quesitos[quesito] == "quesitoEspectaculos"){
-                context.beginPath();
-                context.rect(0,0,60,40)
-                context.fillStyle = "pink"
-                context.fill()
-                context.lineWidth = 2
-                context.strokeStyle = "black"
-                context.stroke();
+                context.fillStyle = "pink";
             }else if (quesitos[quesito] == "quesitoDeportes"){
-                context.beginPath();
-                context.rect(0,0,60,40)
-                context.fillStyle = "blue"
-                context.fill()
-                context.lineWidth = 2
-                context.strokeStyle = "black"
-                context.stroke();
+                context.fillStyle = "blue";
             }else if (quesitos[quesito] == "quesitoLiteratura"){
-                context.beginPath();
-                //Nos colocamos en el centro del canvas
-                context.rect(0,0,60,40)
-                context.fillStyle = "brown"
-                context.fill()
-                context.lineWidth = 2
-                context.strokeStyle = "black"
-                context.stroke();
+                context.fillStyle = "brown";
             }
+            context.fill()
+            context.lineWidth = 3
+            context.strokeStyle = "black"
+            context.stroke();
         }
     }
 }
