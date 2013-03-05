@@ -9,14 +9,13 @@
     <script type="text/javascript" src="{{ STATIC_URL }}base.js"></script>
     {% block extra_javascript %} {% endblock %}
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}base.css">
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}styles.css">
+    <div id="barraMenu">
+        <h1 id="logoCabecera">TRIVIALES</h1>
     {% if not logout %}
-       <div id="barraMenu">
-           <p>
-            <input type="button" class="button" id="logout" value="Logout" onclick="window.location = '/logout'">
-           </p>
-       </div>
+        <input type="button" class="button" id="logout" value="Logout" onclick="window.location = '/logout'">
     {% endif %}
+    </div>
     {% block content %} {% endblock %}
-    {% csrf_token %}
 </body>
 </html>

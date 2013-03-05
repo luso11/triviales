@@ -1,19 +1,22 @@
 {% extends "base.html" %}
 {% block extra_javascript %}
-    <script type="text/javascript" src="{{ STATIC_URL }}login.js"></script>
-    <link rel="stylesheet" href="{{ STATIC_URL }}styles.css">
+    <script type="text/javascript" src="{{ STATIC_URL }}login.js" xmlns="http://www.w3.org/1999/html"></script>
 {% endblock %}
-{% block extra_body %}onload="limpiaClave()"{% endblock %}
 {% block content %}
     <div id="container">
-        <form id="f1">
+        <form id="f1" action="login" method="POST">
+            {% if mensaje %}
+                <label id="error" style="color: red"> Usuario o contrase&ntilde;a incorrectos.</label></br>
+            {% endif %}
             <label for="username">Usuario:</label>
-                <input type="name" id="username">
+                <input type="name" name="username" id="username" required="required">
             <label for="password">Contrase&ntilde;a:</label>
-                <input type="password" id="password">
+                <input type="password" name="password" id="password" required="required">
             <div id="lower">
-                <input type="submit" value="Login" onclick="comprobarLogin()">
+                <input type="submit" value="Login">
+                <input type="button" value="Volver" onclick="window.location='/'">
             </div>
+            {% csrf_token %}
         </form>
     </div>
 {% endblock %}

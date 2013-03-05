@@ -6,8 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 
-function registar(){
-    window.location = 'logout'
+function registrar(){
+    window.location = 'register'
 }
 
 function entrar(){

@@ -2,7 +2,6 @@
 {% block title %}{{ title }}{% endblock %}
 {% block extra_javascript %}
     <script type="text/javascript" src="{{ STATIC_URL }}actualGame.js"></script>
-    <script src="{{ STATIC_URL }}actualGame.js"></script>
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}tablero.css">
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}actualGame.css">
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}cubo.css">
@@ -126,5 +125,5 @@
             <p id="respuesta4">assd</p>
         </div>
     </div>
-    <input type="button" class="button" value="Volver" onclick="volver()">
+    <input type="button" class="button" style="float: right" value="Volver" onclick="volver()">
 {% endblock %}
