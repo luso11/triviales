@@ -47,7 +47,7 @@ function cargaQuesitos(){
 }
 
 //Cargamos el tablero de juego
-function cargaTablero() {
+window.onload=function() {
     var allHTMLTags = new Array();
     var allCanvas = new Array();
     cargaQuesitos();
@@ -111,3 +111,4 @@ function clickRojo(){
 function clickTiraOtraVez(){
     alert("tiraOtraVez!")
 }
+

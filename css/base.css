@@ -30,8 +30,9 @@
     background: #1b435e;
 }
 
-body{
-    background-image: url("background.png");
+body {
+    background-image: url("fondoVerde.jpg");
+
 }
 
 #logout{

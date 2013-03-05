@@ -6,19 +6,15 @@
  * To change this template use File | Settings | File Templates.
  */
 
-function limpiaClave(){
-    document.f1.password.value = ""
-}
-
 function enviar(){
-    document.f1.submit()
+    document.container.f1.submit()
 }
 
 function comprobarLogin(){
-    if (document.f1.username == ""){
+    if (document.getElementById("f1").username == ""){
         alert("El nombre de usuario no puede estar vacío.");
         return false
-    }else if (document.f1.clave == ""){
+    }else if (document.getElementById("f1").password == ""){
         alert("La clave no puede ser un campo vacío.");
         return false
     }else{
