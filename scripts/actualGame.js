@@ -123,6 +123,7 @@ function clickRojo(){
     alert("rojo!")
 }
 function clickTiraOtraVez(){
+    document.getElementById('dado').onclick= function(){tirar()};
     giraDado();
 }
 
