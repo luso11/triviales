@@ -5,12 +5,24 @@
  * Time: 17:08
  * To change this template use File | Settings | File Templates.
  */
+var tiempo;
 
 function tirar(){
-    //Generamos el número que marcará el dado y lo devolvemos
+    //Paramos el timeOut de cambio de imagen del fondo.
+    clearTimeout(tiempo);
+    //Evitamos que se pueda tirar otra vez
+    document.getElementById('dado').onclick=null;
+    //Generamos el número que marcará el dado y lo pintamos
     num = Math.floor((Math.random()*6)+1);
-    alert(num);
-    return num;
+    document.getElementById('dado').style.backgroundImage ="url(/static/"+num+".jpg)";
+    //Marcamos las casillas donde podemos ir
+
+
+    //TODO: descomentar el onclick y giraDado()
+    //Volvemos a colocar el dado como clickable
+    //document.getElementById('dado').onclick= function(){tirar()};
+    //volvemos a tirar el dado
+    //giraDado();
 }
 
 function volver(){
@@ -83,6 +95,8 @@ window.onload=function() {
             }
         }
     }
+    document.getElementById('dado').onclick= function(){tirar()};
+    giraDado();
 }
 
 function clickHistoria(){
@@ -109,6 +123,33 @@ function clickRojo(){
     alert("rojo!")
 }
 function clickTiraOtraVez(){
-    alert("tiraOtraVez!")
+    giraDado();
+}
+
+var imagenes=new Array()
+
+imagenes[0]= new Image(100,100);
+imagenes[0].src = "/static/1.jpg";
+
+imagenes[1]= new Image(100,100);
+imagenes[1].src = "/static/2.jpg";
+
+imagenes[2]= new Image(100,100);
+imagenes[2].src = "/static/3.jpg";
+
+imagenes[3]= new Image(100,100);
+imagenes[3].src = "/static/4.jpg";
+
+imagenes[4]= new Image(100,100);
+imagenes[4].src = "/static/5.jpg";
+
+imagenes[5]= new Image(100,100);
+imagenes[5].src = "/static/6.jpg";
+
+function giraDado(){
+    num = Math.floor((Math.random()*6));
+    document.getElementById('dado').style.backgroundImage ="url("+imagenes[num].src+")";
+    tiempo=window.setTimeout('giraDado()',100);
+//cambia la cantidad por el tiempo que quieras que transcurra entre imagen e imagen
 }
 
