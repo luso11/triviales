@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -6,10 +8,9 @@ from django.contrib.auth.models import User
 CATEGORY_CHOICES = (
     ('deportes', 'Deportes'),
     ('historia', 'Historia'),
-    ('seriesTv', 'Series de TV'),
+    ('espectaculos', 'Espectáculos'),
     ('ciencia', 'Ciencia'),
     ('literatura', 'Literatura'),
-    ('juegosMesa', 'Juegos de mesa'),
     )
 
 class Question(models.Model):
@@ -20,8 +21,6 @@ class Question(models.Model):
     wrong_answer_1 = models.CharField(max_length=200)
     wrong_answer_2 = models.CharField(max_length=200)
     wrong_answer_3 = models.CharField(max_length=200)
-    wrong_answer_3 = models.CharField(max_length=200)
-    is_quesito = models.BooleanField(default=False)
     def __unicode__(self):
         return self.question
 

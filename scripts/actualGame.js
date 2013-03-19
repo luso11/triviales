@@ -42,13 +42,13 @@ function cargaQuesitos(){
             if (quesitos[quesito] == "quesitoHistoria"){
                 context.fillStyle = "yellow";
             }else if (quesitos[quesito] == "quesitoCiencia"){
-                context.fillStyle = "green";
+                context.fillStyle = "#1CB429";
             }else if (quesitos[quesito] == "quesitoEspectaculos"){
-                context.fillStyle = "pink";
+                context.fillStyle = "#B800E1";
             }else if (quesitos[quesito] == "quesitoDeportes"){
-                context.fillStyle = "blue";
+                context.fillStyle = "#34A6E3";
             }else if (quesitos[quesito] == "quesitoLiteratura"){
-                context.fillStyle = "brown";
+                context.fillStyle = "#FFAD39";
             }
             context.fill()
             context.lineWidth = 3
@@ -75,19 +75,24 @@ window.onload=function() {
                 context.rect(0,0,30,50)
             //si saco aquí la creación comun del elemento context no funciona
                 if (allHTMLTags[i].className=="ciencia") {
-                    context.fillStyle = "green";
+                    context.fillStyle = "#1CB429";
                 }else if (allHTMLTags[i].className=="historia") {
                     context.fillStyle = 'yellow';
                 }else if (allHTMLTags[i].className=="deportes") {
-                    context.fillStyle = 'blue';
+                    context.fillStyle = '#34A6E3';
                 }else if (allHTMLTags[i].className=="literatura") {
-                    context.fillStyle = 'brown';
+                    context.fillStyle = '#FFAD39';
                 }else if (allHTMLTags[i].className=="espectaculos") {
-                    context.fillStyle = 'pink';
+                    context.fillStyle = '#B800E1';
                 }else if (allHTMLTags[i].className=="rojo") {
-                    context.fillStyle = 'red';
+                    context.fillStyle = '#E61453';
+                    context.moveTo(0,0);
+                    context.lineTo(30,50);
+                    context.moveTo(0,50);
+                    context.lineTo(30,0);
                 }else if (allHTMLTags[i].className=="tiraOtraVez") {
-                    context.fillStyle = 'grey';
+                    context.fillStyle = 'black';
+                    //TODO: Intentar hacer un cubo en 3D con líneas del canvas;
                 }
                 context.fill();
                 context.lineWidth = 3;
@@ -148,6 +153,7 @@ imagenes[5]= new Image(100,100);
 imagenes[5].src = "/static/6.jpg";
 
 function giraDado(){
+    //TODO: poner que cuando se este girando el dado no se note el click en ningún otro sitio
     num = Math.floor((Math.random()*6));
     document.getElementById('dado').style.backgroundImage ="url("+imagenes[num].src+")";
     tiempo=window.setTimeout('giraDado()',100);

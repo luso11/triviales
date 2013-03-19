@@ -1,7 +1,7 @@
 # Create your views here.
 # -*- encoding: utf-8 -*-
 
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from models import Game
 from django.contrib.auth import authenticate
@@ -134,17 +134,6 @@ def creaPartida(request,user1,user2):
     game = Game.objects.create(user1=user1,user2=user2,pos1=1,pos2=1,quesitos1 = quesitos_inicial, quesitos2=quesitos_inicial,turno=1)
     print game
     return HttpResponseRedirect('/partida/'+str(game.id))
-
-def check_username_availability(request):
-    try:
-        User.objects.get(username=request.POST['username'])
-        mensaje = '<div id="Error" style="color: red;">Usuario ya existente</div>'
-        json = simplejson.dumps(mensaje)
-        return HttpResponse(json, mimetype='application/json')
-    except User.DoesNotExist:
-        mensaje =  '<div id="Success" style="color: green;">Disponible</div>'
-        json = simplejson.dumps(mensaje)
-        return HttpResponse(json, mimetype='application/json')
 
 def logout_user(request):
     auth.logout(request)
