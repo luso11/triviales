@@ -6,6 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 var tiempo;
+var posicionActual;
 
 function tirar(){
     //Paramos el timeOut de cambio de imagen del fondo.
@@ -14,9 +15,9 @@ function tirar(){
     document.getElementById('dado').onclick=null;
     //Generamos el número que marcará el dado y lo pintamos
     num = Math.floor((Math.random()*6)+1);
-    document.getElementById('dado').style.backgroundImage ="url(/static/"+num+".jpg)";
+    document.getElementById('dado').style.backgroundImage ="url(/static/"+num+".png)";
     //Marcamos las casillas donde podemos ir
-
+    calculaPosicion(posicionActual);
 
     //TODO: descomentar el onclick y giraDado()
     //Volvemos a colocar el dado como clickable
@@ -44,11 +45,11 @@ function cargaQuesitos(){
             }else if (quesitos[quesito] == "quesitoCiencia"){
                 context.fillStyle = "#1CB429";
             }else if (quesitos[quesito] == "quesitoEspectaculos"){
-                context.fillStyle = "#B800E1";
+                context.fillStyle = "#FF4BD0";
             }else if (quesitos[quesito] == "quesitoDeportes"){
                 context.fillStyle = "#34A6E3";
             }else if (quesitos[quesito] == "quesitoLiteratura"){
-                context.fillStyle = "#FFAD39";
+                context.fillStyle = "#74400C";
             }
             context.fill()
             context.lineWidth = 3
@@ -81,17 +82,15 @@ window.onload=function() {
                 }else if (allHTMLTags[i].className=="deportes") {
                     context.fillStyle = '#34A6E3';
                 }else if (allHTMLTags[i].className=="literatura") {
-                    context.fillStyle = '#FFAD39';
+                    context.fillStyle = '#74400C';
                 }else if (allHTMLTags[i].className=="espectaculos") {
-                    context.fillStyle = '#B800E1';
-                }else if (allHTMLTags[i].className=="rojo") {
-                    context.fillStyle = '#E61453';
+                    context.fillStyle = '#FF4BD0';
+                }else if (allHTMLTags[i].className=="tiraOtraVez") {
+                    context.fillStyle = 'FF0101';
                     context.moveTo(0,0);
                     context.lineTo(30,50);
                     context.moveTo(0,50);
                     context.lineTo(30,0);
-                }else if (allHTMLTags[i].className=="tiraOtraVez") {
-                    context.fillStyle = 'black';
                     //TODO: Intentar hacer un cubo en 3D con líneas del canvas;
                 }
                 context.fill();
@@ -135,22 +134,22 @@ function clickTiraOtraVez(){
 var imagenes=new Array()
 
 imagenes[0]= new Image(100,100);
-imagenes[0].src = "/static/1.jpg";
+imagenes[0].src = "/static/1.png";
 
 imagenes[1]= new Image(100,100);
-imagenes[1].src = "/static/2.jpg";
+imagenes[1].src = "/static/2.png";
 
 imagenes[2]= new Image(100,100);
-imagenes[2].src = "/static/3.jpg";
+imagenes[2].src = "/static/3.png";
 
 imagenes[3]= new Image(100,100);
-imagenes[3].src = "/static/4.jpg";
+imagenes[3].src = "/static/4.png";
 
 imagenes[4]= new Image(100,100);
-imagenes[4].src = "/static/5.jpg";
+imagenes[4].src = "/static/5.png";
 
 imagenes[5]= new Image(100,100);
-imagenes[5].src = "/static/6.jpg";
+imagenes[5].src = "/static/6.png";
 
 function giraDado(){
     //TODO: poner que cuando se este girando el dado no se note el click en ningún otro sitio
@@ -160,3 +159,11 @@ function giraDado(){
 //cambia la cantidad por el tiempo que quieras que transcurra entre imagen e imagen
 }
 
+function cambiaTurno(){
+    alert(document.getElementById("turno").value);
+    if (document.getElementById("turno").value == 1){
+        document.getElementById("turno").value = 2;
+    }else{
+        document.getElementById("turno").value = 1;
+    }
+}

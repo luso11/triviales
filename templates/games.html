@@ -4,13 +4,19 @@
     <script type="text/javascript" src="{{ STATIC_URL }}game.js"></script>
 {% endblock %}
 {% block content %}
-    {% if games_list %}
-        <ul>
-            {% for game in games_list %}
+    <ul>
+    {% if games_list_enviados %}
+            {% for game in games_list_enviados %}
                 <li><a href="/partida/{{ game.id }}/">Partida con {{ game.user2 }}</a></li>
             {% endfor %}
-        </ul>
-    {% else %}
+    {% endif %}
+    {% if games_list_recibidos %}
+        {% for game in games_list_recibidos %}
+            <li><a href="/partida/{{ game.id }}/">Partida con {{ game.user1 }}</a></li>
+        {% endfor %}
+    {% endif %}
+    </ul>
+    {% if not games_list_enviados and not games_list_recibidos %}
         <p>No tienes partidas actualmente.</p>
     {% endif %}
     <input type="button" class="button" value="Crear nueva partida" onclick="newgame()">

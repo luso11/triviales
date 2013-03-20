@@ -65,26 +65,28 @@ def register(request):
                 context_instance=RequestContext(request))
 
 # Historial de partidas del jugador
-#TODO: cambiar el orden del jugador en las partidas en que es user2
 def games(request,id):
     title = "Partidas"
     if not request.user.is_authenticated:
-        return HttpResponseRedirect("/login")
-    usuario = User.objects.get(id = id)
-    listado = list()
-    for game in Game.objects.filter(user1 = usuario):
-        if game not in listado:
-            listado.append(game)
-    for game in Game.objects.filter(user2 = usuario):
-        juego = game
-        juego.user1 = game.user2
-        juego.user2 = game.user1
-        listado.append(juego)
-    listado.reverse()
+        return HttpResponseRedirect("/login");
+    usuario = User.objects.get(id = id);
+    listado_enviados = list()
+    for game in Game.objects.filter(user1 = usuario.id):
+        if game not in listado_enviados:
+            listado_enviados.append(game);
+
+    listado_recibidos = list()
+    for game in Game.objects.filter(user2 = usuario.id):
+        if game not in listado_recibidos:
+            listado_recibidos.append(game)
+    print listado_recibidos
+
+
     return render_to_response('games.html',
-                             {'games_list': listado,
+                             {'games_list_enviados': listado_enviados,
+                              'games_list_recibidos': listado_recibidos,
                               'title': title},
-                             context_instance=RequestContext(request))
+                              context_instance=RequestContext(request))
 
 #pantalla de partida
 def actualGame(request,id):
@@ -94,7 +96,7 @@ def actualGame(request,id):
     #2.- comprobar turno
     #3.- pintar tablero
     #4.- colocar posiciones
-    return render_to_response('actualGame.html',context_instance = RequestContext(request))
+    return render_to_response('actualGame.html',{'turno':partida.turno},context_instance = RequestContext(request))
 
 def oponenteAleatorio(request):
     total = User.objects.count()
@@ -130,9 +132,7 @@ def newgame(request):
         return render_to_response('newgame.html',context_instance = RequestContext(request))
 
 def creaPartida(request,user1,user2):
-    print "hola"
     game = Game.objects.create(user1=user1,user2=user2,pos1=1,pos2=1,quesitos1 = quesitos_inicial, quesitos2=quesitos_inicial,turno=1)
-    print game
     return HttpResponseRedirect('/partida/'+str(game.id))
 
 def logout_user(request):
@@ -141,8 +141,3 @@ def logout_user(request):
     response.delete_cookie("sessionid")
     response.delete_cookie("user")
     return response
-
-
-
-def tablero(request):
-    return render_to_response('tablero.html',context_instance = RequestContext(request))

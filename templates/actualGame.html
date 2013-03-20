@@ -7,55 +7,63 @@
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}cubo.css">
 {% endblock %}
 {% block content %}
+    <div id="botonCambiaTurno" onclick="cambiaTurno()" style="display: block; width: 15px; height: 15px; background: #ffffff"></div>
+    <div hidden="hidden" id="posicionActual" name="posicionActual">lado1-2</div>
+    <input type="hidden" id="turno" name="turno" value="{{ turno }}"/>
     <div id="cboxOverlay" style="opacity: 0.9; cursor: pointer;"></div>
     <div class="dado" id="dado"></div>
     <div id="tablero">
         <canvas id="quesitoHistoria" class="quesitoHistoria" onclick ="clickHistoria();" width="60" height="60"></canvas>
         <canvas id="quesitoCiencia" class="quesitoCiencia" onclick ="clickCiencia();" width="60" height="60"></canvas>
-        <canvas id="quesitoLiteratura" class="quesitoLiteratura"  onclick ="clickLiteratura();" width="60" height="60"></canvas>
         <canvas id="quesitoEspectaculos" class="quesitoEspectaculos"  onclick ="clickEspectaculos();" width="60" height="60"></canvas>
+        <canvas id="quesitoLiteratura" class="quesitoLiteratura"  onclick ="clickLiteratura();" width="60" height="60"></canvas>
         <canvas id="quesitoDeportes" class="quesitoDeportes" onclick ="clickDeportes();" width="60" height="60"></canvas>
         <div id="lado1-1" class="lado1">
-            <canvas id="1lado1" class="deportes" onclick ="clickDeportes();" width="30" height="50"></canvas>
+            <canvas id="1lado1" class="espectaculos" onclick ="clickEspectaculos();" width="30" height="50"></canvas>
         </div>
         <div id="lado1-2" class="lado1">
-            <canvas id="2lado1" class="espectaculos" onclick ="clickEspectaculos();" width="30" height="50"></canvas>
+            <canvas id="2lado1" class="literatura" onclick ="clickLiteratura();" width="30" height="50"></canvas>
         </div>
         <div id="lado1-3" class="lado1">
             <canvas id="3lado1" class="tiraOtraVez" onclick ="clickTiraOtraVez();" width="30" height="50"></canvas>
         </div>
         <div id="lado1-4" class="lado1">
-            <canvas id="4lado1" class="literatura" onclick ="clickLiteratura();" width="30" height="50"></canvas>
+            <canvas id="4lado1" class="ciencia" onclick ="clickCiencia();" width="30" height="50"></canvas>
         </div>
         <div id="lado1-5" class="lado1">
-            <canvas id="5lado1" class="rojo" onclick ="clickRojo();" width="30" height="50"></canvas>
+            <canvas id="5lado1" class="deportes" onclick ="clickDeportes();" width="30" height="50"></canvas>
         </div>
         <div id="lado1-6" class="lado1">
             <canvas id="6lado1" class="historia" onclick ="clickHistoria();" width="30" height="50"></canvas>
         </div>
+
+
+
         <div id="lado2-1" class="lado2">
-            <canvas id="1lado2" class="ciencia" onclick ="clickCiencia();" width="30" height="50"></canvas>
+            <canvas id="1lado2" class="literatura" onclick ="clickLiteratura();" width="30" height="50"></canvas>
         </div>
         <div id="lado2-2" class="lado2">
-            <canvas id="2lado2" class="rojo" onclick ="clickRojo();" width="30" height="50"></canvas>
+            <canvas id="2lado2" class="ciencia" onclick ="clickCiencia();" width="30" height="50"></canvas>
         </div>
         <div id="lado2-3" class="lado2">
-            <canvas id="3lado2" class="espectaculos" onclick ="clickEspectaculos();" width="30" height="50"></canvas>
+            <canvas id="3lado2" class="deportes" onclick ="clickDeportes();" width="30" height="50"></canvas>
         </div>
         <div id="lado2-4" class="lado2">
             <canvas id="4lado2" class="tiraOtraVez" onclick ="clickTiraOtraVez();" width="30" height="50"></canvas>
         </div>
         <div id="lado2-5" class="lado2">
-            <canvas id="5lado2" class="ciencia" onclick ="clickCiencia();" width="30" height="50"></canvas>
+            <canvas id="5lado2" class="historia" onclick ="clickHistoria();" width="30" height="50"></canvas>
         </div>
         <div id="lado2-6" class="lado2">
-            <canvas id="6lado2" class="historia" onclick ="clickHistoria();" width="30" height="50"></canvas>
+            <canvas id="6lado2" class="espectaculos" onclick ="clickEspectaculos();" width="30" height="50"></canvas>
         </div>
+
+
         <div id="lado3-1" class="lado3">
             <canvas id="1lado3" class="deportes" onclick ="clickDeportes();" width="30" height="50"></canvas>
         </div>
         <div id="lado3-2" class="lado3">
-            <canvas id="2lado3" class="rojo" onclick ="clickRojo();" width="30" height="50"></canvas>
+            <canvas id="2lado3" class="historia" onclick ="clickHistoria();" width="30" height="50"></canvas>
         </div>
         <div id="lado3-3" class="lado3">
             <canvas id="3lado3" class="ciencia" onclick ="clickCiencia();" width="30" height="50"></canvas>
@@ -69,8 +77,10 @@
         <div id="lado3-6" class="lado3">
             <canvas id="6lado3" class="espectaculos" onclick ="clickEspectaculos();" width="30" height="50"></canvas>
         </div>
+
+
         <div id="lado4-1" class="lado4">
-            <canvas id="1lado4" class="deportes" onclick ="clickDeportes();" width="30" height="50"></canvas>
+            <canvas id="1lado4" class="ciencia" onclick ="clickCiencia();" width="30" height="50"></canvas>
         </div>
         <div id="lado4-2" class="lado4">
             <canvas id="2lado4" class="espectaculos" onclick ="clickEspectaculos();" width="30" height="50"></canvas>
@@ -82,28 +92,31 @@
             <canvas id="4lado4" class="historia" onclick ="clickHistoria();" width="30" height="50"></canvas>
         </div>
         <div id="lado4-5" class="lado4">
-            <canvas id="5lado4" class="rojo" onclick ="clickRojo();" width="30" height="50"></canvas>
+            <canvas id="5lado4" class="literatura" onclick ="clickliteratura();" width="30" height="50"></canvas>
         </div>
         <div id="lado4-6" class="lado4">
-            <canvas id="6lado4" class="ciencia" onclick ="clickCiencia();" width="30" height="50"></canvas>
+            <canvas id="6lado4" class="deportes" onclick ="clickDeportes();" width="30" height="50"></canvas>
         </div>
+
+
+
         <div id="lado5-1" class="lado5">
-            <canvas id="1lado5" class="espectaculos" class="lado5" onclick ="clickEspectaculos();" width="30" height="50"></canvas>
+            <canvas id="1lado5" class="espectaculos" onclick ="clickEspectaculos();" width="30" height="50"></canvas>
         </div>
         <div id="lado5-2" class="lado5">
-            <canvas id="2lado5" class="rojo" class="lado5" onclick ="clickRojo();" width="30" height="50"></canvas>
+            <canvas id="2lado5" class="historia" onclick ="clickHistoria();" width="30" height="50"></canvas>
         </div>
         <div id="lado5-3" class="lado5">
-            <canvas id="3lado5" class="deportes" class="lado5" onclick ="clickDeportes();" width="30" height="50"></canvas>
+            <canvas id="3lado5" class="tiraOtraVez" onclick ="clickTiraOtraVez();" width="30" height="50"></canvas>
         </div>
         <div id="lado5-4" class="lado5">
-            <canvas id="4lado5" class="espectaculos" class="lado5" onclick ="clickEspectaculos();" width="30" height="50"></canvas>
+            <canvas id="4lado5" class="ciencia" onclick ="clickCiencia();" width="30" height="50"></canvas>
         </div>
         <div id="lado5-5" class="lado5">
-            <canvas id="5lado5" class="historia" class="lado5" onclick ="clickHistoria();" width="30" height="50"></canvas>
+            <canvas id="5lado5" class="deportes" onclick ="clickDeportes();" width="30" height="50"></canvas>
         </div>
         <div id="lado5-6" class="lado5">
-            <canvas id="6lado5" class="literatura" class="lado5" onclick ="clickLiteratura();" width="30" height="50"></canvas>
+            <canvas id="6lado5" class="literatura" onclick ="clickLiteratura();" width="30" height="50"></canvas>
         </div>
     </div>
     <div class="overlay" id="overlay">

@@ -21,7 +21,7 @@
     -o-transform:rotate(-54deg) skewX(18deg); /* Opera */
 }
 
-#quesitoLiteratura{
+#quesitoEspectaculos{
     position: absolute;
     top: 209px;
     left: 420px;
@@ -32,7 +32,7 @@
     -o-transform:rotate(-18deg) skewX(18deg)); /* Opera */
 }
 
-#quesitoEspectaculos{
+#quesitoLiteratura{
     position: absolute;
     top: 434px;
     left: 491px;
