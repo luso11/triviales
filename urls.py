@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url(r'^games/(\d+)/$', 'trivial.views.games', name='games'),
     url(r'^newgame$', 'trivial.views.newgame', name='newgame'),
     url(r'^partida/(\d+)/$', 'trivial.views.actualGame', name='partida'),
+    url(r'^pregunta$', 'trivial.views.pregunta'),
 
     # url(r'^triviales/', include('triviales.foo.urls')),
 

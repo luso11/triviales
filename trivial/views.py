@@ -1,9 +1,9 @@
 # Create your views here.
 # -*- encoding: utf-8 -*-
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,HttpResponse
 from django.template import RequestContext
-from models import Game
+from models import Game, Question
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
@@ -79,7 +79,6 @@ def games(request,id):
     for game in Game.objects.filter(user2 = usuario.id):
         if game not in listado_recibidos:
             listado_recibidos.append(game)
-    print listado_recibidos
 
 
     return render_to_response('games.html',
@@ -92,7 +91,6 @@ def games(request,id):
 def actualGame(request,id):
     #1.- cargar partida de bbdd
     partida = Game.objects.get(id = id);
-    print(partida.turno)
     #2.- comprobar turno
     #3.- pintar tablero
     #4.- colocar posiciones
@@ -141,3 +139,23 @@ def logout_user(request):
     response.delete_cookie("sessionid")
     response.delete_cookie("user")
     return response
+
+
+def pregunta(request):
+    if not request.user.is_authenticated():
+        return login(request)
+    elif request.method == "GET":
+        try:
+            questions = Question.objects.filter(category = request.GET['tipo']);
+            tope =  questions.count();
+            print tope
+            num = random.randint(1,tope)
+            pregunta = questions[num]
+            print pregunta.correct_answer
+            json = simplejson.dumps({"pregunta":pregunta.question,"respuesta_correcta":pregunta.correct_answer,
+                                     "respuesta_incorrecta1":pregunta.wrong_answer_1,
+                                     "respuesta_incorrecta2":pregunta.wrong_answer_2,
+                                     "respuesta_incorrecta3":pregunta.wrong_answer_3,})
+            return HttpResponse(json,mimetype ='application/json')
+        except:
+            return HttpResponse("error")

@@ -17,7 +17,7 @@ function tirar(){
     num = Math.floor((Math.random()*6)+1);
     document.getElementById('dado').style.backgroundImage ="url(/static/"+num+".png)";
     //Marcamos las casillas donde podemos ir
-    calculaPosicion(posicionActual);
+    //TODO: calculaPosicion(posicionActual);
 
     //TODO: descomentar el onclick y giraDado()
     //Volvemos a colocar el dado como clickable
@@ -103,29 +103,6 @@ window.onload=function() {
     giraDado();
 }
 
-function clickHistoria(){
-    //Request de historia
-    alert("historia!")
-}
-function clickCiencia(){
-    //Request de ciencia
-    alert("ciencia!")
-}
-function clickDeportes(){
-    //Request de deportes
-    alert("deportes!")
-}
-function clickEspectaculos(){
-    //Request de espectaculos
-    alert("espectaculos!")
-}
-function clickLiteratura(){
-    //Request de literatura
-    alert("literatura!")
-}
-function clickRojo(){
-    alert("rojo!")
-}
 function clickTiraOtraVez(){
     document.getElementById('dado').onclick= function(){tirar()};
     giraDado();

@@ -6,11 +6,11 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 CATEGORY_CHOICES = (
-    ('deportes', 'Deportes'),
-    ('historia', 'Historia'),
-    ('espectaculos', 'Espectáculos'),
-    ('ciencia', 'Ciencia'),
-    ('literatura', 'Literatura'),
+    ('Deportes', 'Deportes'),
+    ('Historia', 'Historia'),
+    ('Espectaculos', 'Espectaculos'),
+    ('Ciencia', 'Ciencia'),
+    ('Literatura', 'Literatura'),
     )
 
 class Question(models.Model):
