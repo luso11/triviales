@@ -3,9 +3,9 @@
 {% block extra_javascript %}
     <script type="text/javascript" src="{{ STATIC_URL }}actualGame.js"></script>
     <script type="text/javascript">
+        var respuestaCorrecta;
         function clickado(tipo){
             //Request
-            alert("click");
             $.ajax({
                 type: "get",
                 url: "/pregunta",
@@ -15,13 +15,32 @@
                     //Recibimos la información de la pregunta del servidor.
                     //La mostramos en el espacio para ello.
                     //TODO:randomizar posición de la respuesta correcta.
+                    respuestaCorrecta = data['respuesta_correcta'];
                     document.getElementById("pregunta").innerHTML=data['pregunta'];
                     document.getElementById("respuesta1").innerHTML=data['respuesta_correcta'];
                     document.getElementById("respuesta2").innerHTML=data['respuesta_incorrecta1'];
                     document.getElementById("respuesta3").innerHTML=data['respuesta_incorrecta2'];
                     document.getElementById("respuesta4").innerHTML=data['respuesta_incorrecta3'];
+                    //Sacamos el lightbox con la pregunta.
+                    document.getElementById('light').style.display='block';
+                    document.getElementById('fade').style.display='block';
                 }
             });
+        }
+        function resuelve(respuesta){
+            respuestaSeleccionada = document.getElementById("respuesta"+respuesta).innerHTML.toString();
+            if (respuestaSeleccionada == respuestaCorrecta){
+                alert("correcto");
+                //Volver a lanzar el dado.
+            }else{
+                //Marcamos como incorrecta
+                document.getElementById('respuesta'+respuesta).style.background='red';
+                //TODO: Mandamos al servidor información de que se ha fallado y cambia turno
+
+            }
+            alert(respuestaSeleccionada)
+            document.getElementById('light').style.display='none';
+            document.getElementById('fade').style.display='none';
         }
     </script>
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}tablero.css">
@@ -141,14 +160,14 @@
             <canvas id="6lado5" class="literatura" onclick ="clickado('Literatura');" width="30" height="50"></canvas>
         </div>
     </div>
-    <div class="overlay" id="overlay">
-        <div>
-            <p id="pregunta">hola</p>
-            <p id="respuesta1">asdfa</p>
-            <p id="respuesta2">fasdf</p>
-            <p id="respuesta3">fdds</p>
-            <p id="respuesta4">assd</p>
-        </div>
+
+    <div id="light" class="white_content">
+        <h1 id="pregunta"></h1>
+        <button id="respuesta1" class="botonRespuesta" onclick="resuelve(1)"></button>
+        <button id="respuesta2" class="botonRespuesta" onclick="resuelve(2)"></button>
+        <button id="respuesta3" class="botonRespuesta" onclick="resuelve(3)"></button>
+        <button id="respuesta4" class="botonRespuesta" onclick="resuelve(4)"></button>
     </div>
+    <div id="fade" class="black_overlay"></div>
     <input type="button" class="button" style="float: right" value="Volver" onclick="volver()">
 {% endblock %}

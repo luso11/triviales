@@ -1,61 +1,27 @@
-.overlay{
-    width: 50px;
-    height: 50px;
-    position: fixed;
-    overflow: hidden;
-    left: 0px;
-    top: 50px;
-    padding: 0px;
-    z-index: 99;
-    text-align: center;
-    background:
-        radial-gradient(
-            center,
-            ellipse cover,
-            rgba(255,255,255,0.56) 0%,
-            rgba(241,210,194,1) 100%
-        );
+.black_overlay{
+    display: none;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index:1001;
+    -moz-opacity: 0.8;
+    opacity:.80;
+    filter: alpha(opacity=80);
 }
-.overlay > div{
-    position: relative;
-    color: rgba(27,54,81,0.8);
-    width: 550px;
-    height: 80px;
-    margin: 40px auto 0px auto;
-    text-shadow: 0px 1px 1px rgba(255,255,255,0.6);
-}
-.overlay div h3,
-.overlay div p{
-    padding: 0px 20px;
-    width: 200px;
-    height: 60px;
-}
-.overlay div h3{
-    font-size: 36px;
-    float: left;
-    text-align: right;
-    border-right: 1px solid rgba(27,54,81,0.4);
-}
-.overlay div h3 span,
-.overlay div p{
-    font-size: 16px;
-    font-family: Constantia, Palatino, serif;
-    font-style: italic;
-}
-.overlay div h3 span{
-    display: block;
-    line-height: 6px;
-}
-.overlay div p{
-    font-size: 14px;
-    text-align: left;
-    float: left;
-    width: 260px;
-}
-.overlay:target {
-    width: auto;
-    height: auto;
-    bottom: 0px;
-    right: 0px;
-    padding: 80px 100px 120px 100px;
+
+.white_content {
+    display: none;
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    width: 50%;
+    height: 50%;
+    padding: 16px;
+    border: 16px solid orange;
+    background-color: white;
+    z-index:1002;
+    overflow: auto;
 }

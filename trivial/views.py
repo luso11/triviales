@@ -148,14 +148,14 @@ def pregunta(request):
         try:
             questions = Question.objects.filter(category = request.GET['tipo']);
             tope =  questions.count();
-            print tope
-            num = random.randint(1,tope)
+            num = random.randint(0,tope-1)
+            print num
             pregunta = questions[num]
-            print pregunta.correct_answer
+            print pregunta
             json = simplejson.dumps({"pregunta":pregunta.question,"respuesta_correcta":pregunta.correct_answer,
-                                     "respuesta_incorrecta1":pregunta.wrong_answer_1,
-                                     "respuesta_incorrecta2":pregunta.wrong_answer_2,
-                                     "respuesta_incorrecta3":pregunta.wrong_answer_3,})
+                                    "respuesta_incorrecta1":pregunta.wrong_answer_1,
+                                    "respuesta_incorrecta2":pregunta.wrong_answer_2,
+                                    "respuesta_incorrecta3":pregunta.wrong_answer_3,});
             return HttpResponse(json,mimetype ='application/json')
         except:
             return HttpResponse("error")
