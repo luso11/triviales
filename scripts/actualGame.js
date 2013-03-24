@@ -100,7 +100,16 @@ window.onload=function() {
         }
     }
     document.getElementById('dado').onclick= function(){tirar()};
-    giraDado();
+    if (document.getElementById("turno").value =="True"){
+        giraDado();
+    }else{
+        document.getElementById("dado").hidden = "hidden";
+        var elementos = document.getElementsByName('*');
+        for (var elem in elementos){
+            alert(elem);
+            break;
+        }
+    }
 }
 
 function clickTiraOtraVez(){
@@ -133,14 +142,8 @@ function giraDado(){
     num = Math.floor((Math.random()*6));
     document.getElementById('dado').style.backgroundImage ="url("+imagenes[num].src+")";
     tiempo=window.setTimeout('giraDado()',100);
-//cambia la cantidad por el tiempo que quieras que transcurra entre imagen e imagen
+    //cambia la cantidad por el tiempo que quieras que transcurra entre imagen e imagen
+
 }
 
-function cambiaTurno(){
-    alert(document.getElementById("turno").value);
-    if (document.getElementById("turno").value == 1){
-        document.getElementById("turno").value = 2;
-    }else{
-        document.getElementById("turno").value = 1;
-    }
-}
+

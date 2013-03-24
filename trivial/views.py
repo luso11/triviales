@@ -92,9 +92,13 @@ def actualGame(request,id):
     #1.- cargar partida de bbdd
     partida = Game.objects.get(id = id);
     #2.- comprobar turno
+    if (partida.turno == 1 and request.user == partida.user1) or (partida.turno == 2 and request.user == partida.user2):
+        turno = True;
+    else:
+        turno = False;
     #3.- pintar tablero
     #4.- colocar posiciones
-    return render_to_response('actualGame.html',{'turno':partida.turno},context_instance = RequestContext(request))
+    return render_to_response('actualGame.html',{'turno':False},context_instance = RequestContext(request))
 
 def oponenteAleatorio(request):
     total = User.objects.count()
@@ -149,9 +153,7 @@ def pregunta(request):
             questions = Question.objects.filter(category = request.GET['tipo']);
             tope =  questions.count();
             num = random.randint(0,tope-1)
-            print num
             pregunta = questions[num]
-            print pregunta
             json = simplejson.dumps({"pregunta":pregunta.question,"respuesta_correcta":pregunta.correct_answer,
                                     "respuesta_incorrecta1":pregunta.wrong_answer_1,
                                     "respuesta_incorrecta2":pregunta.wrong_answer_2,
@@ -159,3 +161,20 @@ def pregunta(request):
             return HttpResponse(json,mimetype ='application/json')
         except:
             return HttpResponse("error")
+
+def cambia_turno(request):
+    if not request.user.is_authenticated():
+        return login(request)
+    elif request.method == "POST":
+        partida = Game.objects.get(id=request.POST['id']);
+        if partida.turno == 1:
+            print partida.turno;
+            partida.turno = 2;
+            partida.save();
+            print partida.turno;
+        else:
+            print partida.turno;
+            partida.turno = 1;
+            partida.save();
+            print partida.turno;
+        return HttpResponse('ok');

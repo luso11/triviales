@@ -3,6 +3,25 @@
 {% block extra_javascript %}
     <script type="text/javascript" src="{{ STATIC_URL }}actualGame.js"></script>
     <script type="text/javascript">
+        function cambiaTurno(){
+            document.getElementById("dado").setAttribute()
+            var url = location.href;
+            var trozos = url.split("/");
+            $.ajax({
+                type: "post",
+                url: "/cambia_turno",
+                data: {'id':trozos[4],
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                success: function(data) {
+                    alert("Espere a que juegue el otro jugador.")
+                }
+            });
+            if (document.getElementById("turno").value == 1){
+                document.getElementById("turno").value = 2;
+            }else{
+                document.getElementById("turno").value = 1;
+            }
+        }
         var respuestaCorrecta;
         function clickado(tipo){
             //Request
@@ -14,13 +33,19 @@
                 success: function(data) {
                     //Recibimos la información de la pregunta del servidor.
                     //La mostramos en el espacio para ello.
+                    document.getElementById("pregunta").innerHTML=data['pregunta'];
                     //TODO:randomizar posición de la respuesta correcta.
                     respuestaCorrecta = data['respuesta_correcta'];
-                    document.getElementById("pregunta").innerHTML=data['pregunta'];
-                    document.getElementById("respuesta1").innerHTML=data['respuesta_correcta'];
-                    document.getElementById("respuesta2").innerHTML=data['respuesta_incorrecta1'];
-                    document.getElementById("respuesta3").innerHTML=data['respuesta_incorrecta2'];
-                    document.getElementById("respuesta4").innerHTML=data['respuesta_incorrecta3'];
+                    posRespCorrecta = Math.floor((Math.random()*4)+1);
+                    document.getElementById("respuesta"+posRespCorrecta).innerHTML=data['respuesta_correcta'];
+                    for (i = 1; i < 4; i++){
+                        if (document.getElementById("respuesta"+i).innerHTML == ""){
+                            document.getElementById("respuesta"+i).innerHTML=data['respuesta_incorrecta'+i];
+                        }else{
+                            elemento = "respuesta"+String(i+1);
+                            document.getElementById(elemento).innerHTML=data['respuesta_incorrecta'+i];
+                        }
+                    }
                     //Sacamos el lightbox con la pregunta.
                     document.getElementById('light').style.display='block';
                     document.getElementById('fade').style.display='block';
@@ -31,16 +56,25 @@
             respuestaSeleccionada = document.getElementById("respuesta"+respuesta).innerHTML.toString();
             if (respuestaSeleccionada == respuestaCorrecta){
                 alert("correcto");
+                //TODO:marcar en verde y quitar el lightbox
                 //Volver a lanzar el dado.
+                document.getElementById('light').style.display='none';
+                document.getElementById('fade').style.display='none';
             }else{
+                alert("error");
                 //Marcamos como incorrecta
                 document.getElementById('respuesta'+respuesta).style.background='red';
-                //TODO: Mandamos al servidor información de que se ha fallado y cambia turno
-
+                //TODO:esperar dos segundos antes de borrar el lightbox
+                document.getElementById('light').style.display='none';
+                document.getElementById('fade').style.display='none';
+                //Cambiamos el turno en el servidor.
+                cambiaTurno();
             }
-            alert(respuestaSeleccionada)
-            document.getElementById('light').style.display='none';
-            document.getElementById('fade').style.display='none';
+            //TODO: en principio no importa, pero mirar para devolver el estado inicial tras fallar una pregunta.
+            for (i = 1; i < 5; i++){
+                document.getElementById("respuesta"+i).innerHTML="";
+                document.getElementById('respuesta'+respuesta).style.appearance = HTMLButtonElement;
+            }
         }
     </script>
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}tablero.css">
@@ -48,35 +82,37 @@
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}cubo.css">
 {% endblock %}
 {% block content %}
-    <div id="botonCambiaTurno" onclick="cambiaTurno()" style="display: block; width: 15px; height: 15px; background: #ffffff"></div>
-    <div hidden="hidden" id="posicionActual" name="posicionActual">lado1-2</div>
+    <div hidden="hidden" id="posicionActual" name="posicionActual"></div>
     <input type="hidden" id="turno" name="turno" value="{{ turno }}"/>
-    <div id="cboxOverlay" style="opacity: 0.9; cursor: pointer;"></div>
     <div class="dado" id="dado"></div>
     <div id="tablero">
-        <canvas id="quesitoHistoria" class="quesitoHistoria" onclick ="clickado('Historia');" width="60" height="60"></canvas>
+        <div id="1">
+            <canvas id="quesitoHistoria" class="quesitoHistoria" onclick ="clickado('Historia');" width="60" height="60"></canvas>
+        </div>
+        <div id="lado1-1" class="lado1">
+            <canvas id="2" class="espectaculos" onclick ="clickado('Espectaculos');" width="30" height="50"></canvas>
+        </div>
+        <div id="lado1-2" class="lado1">
+            <canvas id="3" class="literatura" onclick ="clickado('Literatura');" width="30" height="50"></canvas>
+        </div>
+        <div id="lado1-3" class="lado1">
+            <canvas id="4" class="tiraOtraVez" onclick ="clickTiraOtraVez();" width="30" height="50"></canvas>
+        </div>
+        <div id="lado1-4" class="lado1">
+            <canvas id="5" class="ciencia" onclick ="clickado('Ciencia');" width="30" height="50"></canvas>
+        </div>
+        <div id="lado1-5" class="lado1">
+            <canvas id="6" class="deportes" onclick ="clickado('Deportes');" width="30" height="50"></canvas>
+        </div>
+        <div id="lado1-6" class="lado1">
+            <canvas id="7" class="historia" onclick ="clickado('Historia');" width="30" height="50"></canvas>
+        </div>
+
         <canvas id="quesitoCiencia" class="quesitoCiencia" onclick ="clickado('Ciencia');" width="60" height="60"></canvas>
         <canvas id="quesitoEspectaculos" class="quesitoEspectaculos"  onclick ="clickado('Espectaculos');" width="60" height="60"></canvas>
         <canvas id="quesitoLiteratura" class="quesitoLiteratura"  onclick ="clickado('Literatura');" width="60" height="60"></canvas>
         <canvas id="quesitoDeportes" class="quesitoDeportes" onclick ="clickado('Deportes');" width="60" height="60"></canvas>
-        <div id="lado1-1" class="lado1">
-            <canvas id="1lado1" class="espectaculos" onclick ="clickado('Espectaculos');" width="30" height="50"></canvas>
-        </div>
-        <div id="lado1-2" class="lado1">
-            <canvas id="2lado1" class="literatura" onclick ="clickado('Literatura');" width="30" height="50"></canvas>
-        </div>
-        <div id="lado1-3" class="lado1">
-            <canvas id="3lado1" class="tiraOtraVez" onclick ="clickTiraOtraVez();" width="30" height="50"></canvas>
-        </div>
-        <div id="lado1-4" class="lado1">
-            <canvas id="4lado1" class="ciencia" onclick ="clickado('Ciencia');" width="30" height="50"></canvas>
-        </div>
-        <div id="lado1-5" class="lado1">
-            <canvas id="5lado1" class="deportes" onclick ="clickado('Deportes');" width="30" height="50"></canvas>
-        </div>
-        <div id="lado1-6" class="lado1">
-            <canvas id="6lado1" class="historia" onclick ="clickado('Historia');" width="30" height="50"></canvas>
-        </div>
+
 
 
 

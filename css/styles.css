@@ -21,14 +21,25 @@
 
 /* Basics */
 
-html, body {
+body {
 	width: 100%;
 	height: 100%;
 	font-family: "Helvetica Neue", Helvetica, sans-serif;
 	color: #999;
-	background-image: url(../static/background.gif);
+	background-image: url("../static/background.gif");
     background-position: top;
     background-repeat: repeat;
+}
+
+header{
+}
+
+header h1{
+    color: #ffffff;
+    font-size: 46px;
+    display: compact;
+    width: auto;
+    height: auto;
 }
 
 #container {
@@ -111,10 +122,6 @@ p a {
 	-webkit-transition: all .4s ease;
 	-moz-transition: all .4s ease;
 	transition: all .4s ease;
-}
-
-p a:hover {
-	color: #555;
 }
 
 input {
@@ -203,5 +210,20 @@ input[type=button]:active{
 	background-image: linear-gradient(top left 90deg, #6ec2e8 0%, #b6e2ff 100%);
 }
 
+ul{
+    list-style: none;
+}
 
+a{
+    color: #ffffff;
+    text-decoration: none;
+}
 
+li a:visited{
+    text-decoration: none;
+    color: #ffffff;
+}
+
+li a:hover{
+    color: #90ee90;
+}

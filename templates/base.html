@@ -10,12 +10,12 @@
     {% block extra_javascript %} {% endblock %}
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}base.css">
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}styles.css">
-    <div id="barraMenu">
+    <header id="barraMenu">
         <h1 id="logoCabecera">TRIVIALES</h1>
     {% if not logout %}
         <input type="button" class="button" id="logout" value="Logout" onclick="window.location = '/logout'">
     {% endif %}
-    </div>
+    </header>
     {% block content %} {% endblock %}
 </body>
 </html>

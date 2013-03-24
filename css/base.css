@@ -3,6 +3,6 @@
 }
 
 #logoCabecera{
-    width: auto;
-    height: auto;
+    width: inherit;
+    height: inherit;
 }
