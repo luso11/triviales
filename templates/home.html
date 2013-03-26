@@ -6,6 +6,8 @@
     <script type="text/javascript" src="{{ STATIC_URL }}home.js"></script>
 {% endblock %}
 {% block content %}
-    <input type="button" class="button" name="button" value="Registrarse" onclick="registrar()"/>
-    <input type="button" class="button" name="button" value="Entrar" onclick="entrar()"/>
+    <div id="textoHome" >Bienvenido a TRIVIALES, una nueva manera de jugar socialmente.</div>
+    <img src="../static/1.png" id="imagenHome">
+    <input type="button" class="button" id="buttonRegistrar" value="Registrarse" onclick="registrar()"/>
+    <input type="button" class="button" id="buttonEntrar" value="Entrar" onclick="entrar()"/>
 {% endblock %}

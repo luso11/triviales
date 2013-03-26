@@ -139,11 +139,11 @@ imagenes[5].src = "/static/6.png";
 
 function giraDado(){
     //TODO: poner que cuando se este girando el dado no se note el click en ningún otro sitio
+
     num = Math.floor((Math.random()*6));
     document.getElementById('dado').style.backgroundImage ="url("+imagenes[num].src+")";
     tiempo=window.setTimeout('giraDado()',100);
     //cambia la cantidad por el tiempo que quieras que transcurra entre imagen e imagen
-
 }
 
 
