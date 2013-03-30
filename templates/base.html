@@ -13,9 +13,14 @@
     <div id="barraMenu">
         <h1 id="logoCabecera">TRIVIALES</h1>
     {% if not logout %}
-        <input type="button" class="button" id="logout" value="Logout" onclick="window.location = '/logout'">
+        <input type="button" class="button" id="logout" value="Logout" onclick="logout()">
+    {% endif %}
+    {% if not volver %}
+        <input type="button" class="button" id="botonVolver" value="Volver" onclick="volver()">
     {% endif %}
     </div>
+    <div id="contenido">
     {% block content %} {% endblock %}
+    </div>
 </body>
 </html>

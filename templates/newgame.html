@@ -4,21 +4,23 @@
     <script type="text/javascript" src="{{ STATIC_URL }}newgame.js"></script>
 {% endblock %}
 {% block content %}
-    <table>
-        <tr>
-            {% if error %}
-                <p style="color: red;">No se ha encontrado al otro usuario</p>
-            {% endif %}
-        </tr>
-        <tr>
-            <td><input type="button" class="button" value="Encontrar por nombre usuario" onclick="conDatosUsuario()"/></td>
-            <td><input type="button" class="button" value="Encontrar por email" onclick="conDatosMail()"/></td>
-            <td><input type="button" class="button" value="Aleatorio" onclick="crear()"/></td>
-        </tr>
-    </table>
-    <form name="f1" method="post" action="newgame">{% csrf_token %}
-        <input type="text" id="datos" name="datos" style="visibility: hidden;" />
-        <input type="hidden" id="eleccion" name="eleccion" />
-    </form>
-    <input type="button" value="Crear partida" id="crearPartida" style="visibility: hidden;" onclick="crear()"/>
+    <div id="contenido">
+        <table>
+            <tr>
+                {% if error %}
+                    <p style="color: red;">No se ha encontrado al otro usuario</p>
+                {% endif %}
+            </tr>
+            <tr>
+                <td><input type="button" class="button" value="Encontrar por nombre usuario" onclick="conDatosUsuario()"/></td>
+                <td><input type="button" class="button" value="Encontrar por email" onclick="conDatosMail()"/></td>
+                <td><input type="button" class="button" value="Aleatorio" onclick="crear()"/></td>
+            </tr>
+        </table>
+        <form name="f1" method="post" action="newgame">{% csrf_token %}
+            <input type="text" id="datos" name="datos" style="visibility: hidden;" />
+            <input type="hidden" id="eleccion" name="eleccion" />
+        </form>
+        <input type="button" value="Crear partida" id="crearPartida" style="visibility: hidden;" onclick="crear()"/>
+    </div>
 {% endblock %}

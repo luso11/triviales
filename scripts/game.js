@@ -9,7 +9,3 @@
 function newgame(){
     window.location = "/newgame"
 }
-
-function abrir() {
-    ('newgame.html','','top=300,left=300,width=300,height=300') ;
-}

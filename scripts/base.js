@@ -7,5 +7,10 @@
  */
 
 function logout(){
-    window.location = 'logout'
+    window.location = '/logout';
+}
+
+function volver(){
+    //Volvemos al listado de partidas
+    history.back(-1);
 }

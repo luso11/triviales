@@ -6,7 +6,77 @@
  * To change this template use File | Settings | File Templates.
  */
 var tiempo;
-var posicionActual;
+var arrayQuesitosID = [1,8,15,22,29];
+var elementoMayor;
+var elementoMenor;
+
+function pintaPosicionesPosibles(posicionMayor, posicionMenor){
+    if (arrayQuesitosID.indexOf(posicionMayor) > -1){
+        var context1 = document.getElementById(posicionMayor).firstElementChild.getContext('2d');
+        elementoMayor = document.getElementById(posicionMayor).firstElementChild;
+        elementoMayor.onclick = function(){
+            if (elementoMayor.className != "tiraOtraVez"){
+                clickado(posicionMayor,elementoMayor.className);
+            }else{
+                clickTiraOtraVez(posicionMayor);
+            }
+        }
+    }else{
+        var context1 = document.getElementById(posicionMayor).getContext('2d');
+        elementoMayor = document.getElementById(posicionMayor);
+        elementoMayor.onclick = function(){
+            if (elementoMayor.className != "tiraOtraVez"){
+                clickado(posicionMayor,elementoMayor.className);
+            }else{
+                clickTiraOtraVez(posicionMayor);
+            }
+        }
+    }
+    if (arrayQuesitosID.indexOf(posicionMenor) > -1){
+        var context2 = document.getElementById(posicionMenor).firstElementChild.getContext('2d');
+        document.getElementById(posicionMenor).firstElementChild.onclick = function(){
+            if (document.getElementById(posicionMenor).firstElementChild.className != "tiraOtraVez"){
+                clickado(posicionMenor,document.getElementById(posicionMenor).firstElementChild.className);
+            }else{
+                clickTiraOtraVez(posicionMenor);
+            }
+        }
+    }else{
+        var context2 = document.getElementById(posicionMenor).getContext('2d');
+        document.getElementById(posicionMenor).onclick = function(){
+            if (document.getElementById(posicionMenor).className != "tiraOtraVez"){
+                clickado(posicionMenor,document.getElementById(posicionMenor).className);
+            }else{
+                clickTiraOtraVez(posicionMenor);
+            }
+        }
+    }
+    context1.fillStyle = 'white';
+    context1.fill();
+    context1.lineWidth = 3;
+    context1.stroke();
+    context2.fillStyle = 'white';
+    context2.fill();
+    context2.lineWidth = 3;
+    context2.stroke();
+}
+
+function calculaPosicion(tirada){
+    var posicionActualUsuario = parseInt(document.getElementById('posicionActualUsuario').value);
+    //Calculamos la primera posición posible de movimiento
+    if (posicionActualUsuario - parseInt(tirada) > parseInt("0")){
+        posicionMenor = posicionActualUsuario - parseInt(tirada);
+    }else{
+        posicionMenor = parseInt("35") + posicionActualUsuario - parseInt(tirada);
+    }
+    //Calculamos la segunda posición posible de movimiento
+    if (posicionActualUsuario + parseInt(tirada) <= parseInt("35")){
+        posicionMayor = posicionActualUsuario + parseInt(tirada);
+    }else{
+        posicionMayor = posicionActualUsuario + parseInt(tirada) - parseInt("35");
+    }
+    pintaPosicionesPosibles(posicionMayor, posicionMenor);
+}
 
 function tirar(){
     //Paramos el timeOut de cambio de imagen del fondo.
@@ -17,18 +87,7 @@ function tirar(){
     num = Math.floor((Math.random()*6)+1);
     document.getElementById('dado').style.backgroundImage ="url(/static/"+num+".png)";
     //Marcamos las casillas donde podemos ir
-    //TODO: calculaPosicion(posicionActual);
-
-    //TODO: descomentar el onclick y giraDado()
-    //Volvemos a colocar el dado como clickable
-    //document.getElementById('dado').onclick= function(){tirar()};
-    //volvemos a tirar el dado
-    //giraDado();
-}
-
-function volver(){
-    //Volvemos al listado de partidas
-    history.back(-1);
+    calculaPosicion(num);
 }
 
 function cargaQuesitos(){
@@ -59,11 +118,8 @@ function cargaQuesitos(){
     }
 }
 
-//Cargamos el tablero de juego
-window.onload=function() {
-    var allHTMLTags = new Array();
-    var allCanvas = new Array();
-    cargaQuesitos();
+function cargaCasillas(){
+    pintaPosicionOponente();
     // Creamos un array con todas las etiquetas del HTML
     allHTMLTags = document.getElementsByTagName("canvas");
     // Las recorremos
@@ -74,24 +130,26 @@ window.onload=function() {
             if(document.getElementById(allHTMLTags[i].id).getContext){
                 var context = document.getElementById(casillaActual.id).getContext('2d');
                 context.rect(0,0,30,50)
-            //si saco aquí la creación comun del elemento context no funciona
-                if (allHTMLTags[i].className=="ciencia") {
+                context.clearRect();
+                //si saco aquí la creación comun del elemento context no funciona
+                if (allHTMLTags[i].className=="Ciencia") {
                     context.fillStyle = "#1CB429";
-                }else if (allHTMLTags[i].className=="historia") {
+                }else if (allHTMLTags[i].className=="Historia") {
                     context.fillStyle = 'yellow';
-                }else if (allHTMLTags[i].className=="deportes") {
+                }else if (allHTMLTags[i].className=="Deportes") {
                     context.fillStyle = '#34A6E3';
-                }else if (allHTMLTags[i].className=="literatura") {
+                }else if (allHTMLTags[i].className=="Literatura") {
                     context.fillStyle = '#74400C';
-                }else if (allHTMLTags[i].className=="espectaculos") {
+                }else if (allHTMLTags[i].className=="Espectaculos") {
                     context.fillStyle = '#FF4BD0';
                 }else if (allHTMLTags[i].className=="tiraOtraVez") {
                     context.fillStyle = 'FF0101';
-                    context.moveTo(0,0);
-                    context.lineTo(30,50);
-                    context.moveTo(0,50);
-                    context.lineTo(30,0);
                     //TODO: Intentar hacer un cubo en 3D con líneas del canvas;
+                    context.moveTo(10,10);
+                    context.lineTo(20,10);
+                    context.lineTo(20,20);
+                    context.lineTo(10,20);
+                    context.lineTo(10,10);
                 }
                 context.fill();
                 context.lineWidth = 3;
@@ -99,22 +157,33 @@ window.onload=function() {
             }
         }
     }
-    document.getElementById('dado').onclick= function(){tirar()};
+}
+
+//Cargamos el tablero de juego
+window.onload=function() {
+    var allHTMLTags = new Array();
+    var allCanvas = new Array();
+    cargaQuesitos();
+    cargaCasillas();
+    pintaNuevaPosicion();
     if (document.getElementById("turno").value =="True"){
-        giraDado();
+        girarDado();
     }else{
         document.getElementById("dado").hidden = "hidden";
-        var elementos = document.getElementsByName('*');
-        for (var elem in elementos){
-            alert(elem);
-            break;
-        }
+        quitaClicks();
     }
 }
 
-function clickTiraOtraVez(){
-    document.getElementById('dado').onclick= function(){tirar()};
-    giraDado();
+function clickTiraOtraVez(id){
+    cargaCasillas();
+    cargaQuesitos();
+    actualizaPosicion(id);
+    pintaNuevaPosicion();
+    girarDado();
+}
+
+function actualizaPosicion(id){
+    document.getElementById('posicionActualUsuario').value = id;
 }
 
 var imagenes=new Array()
@@ -137,13 +206,52 @@ imagenes[4].src = "/static/5.png";
 imagenes[5]= new Image(100,100);
 imagenes[5].src = "/static/6.png";
 
-function giraDado(){
-    //TODO: poner que cuando se este girando el dado no se note el click en ningún otro sitio
+function quitaClicks(){
+    allCanvasTags = document.getElementsByTagName("canvas");
+    for (i=0; i<allCanvasTags.length; i++) {
+        document.getElementById(allCanvasTags[i].id).onclick = null;
+    }
+}
 
+function girarDado(){
+    //Activamos el onclick y lo ponemos a girar.
+    document.getElementById('dado').onclick= function(){tirar()};
+    quitaClicks();
+    giraDado();
+}
+
+function giraDado(){
     num = Math.floor((Math.random()*6));
     document.getElementById('dado').style.backgroundImage ="url("+imagenes[num].src+")";
     tiempo=window.setTimeout('giraDado()',100);
     //cambia la cantidad por el tiempo que quieras que transcurra entre imagen e imagen
 }
 
+function quitaLightbox(respuesta){
+    document.getElementById('light').style.display='none';
+    document.getElementById('fade').style.display='none';
+    document.getElementById('respuesta'+respuesta).style.background= '#66add6';
+    for (i = 1; i < 5; i++){
+        document.getElementById('respuesta'+i).innerHTML="";
+    }
+}
 
+function pintaNuevaPosicion(){
+    if (arrayQuesitosID.indexOf(parseInt(document.getElementById('posicionActualUsuario').value)) > -1){
+        var contexto = document.getElementById(document.getElementById('posicionActualUsuario').value).firstElementChild.getContext('2d');
+    }else{
+        var contexto = document.getElementById(document.getElementById('posicionActualUsuario').value).getContext('2d');
+    }
+    contexto.fillStyle= 'black';
+    contexto.fill();
+}
+
+function pintaPosicionOponente(){
+    if (arrayQuesitosID.indexOf(parseInt(document.getElementById('posicionActualOtro').value)) > -1){
+        var contexto = document.getElementById(document.getElementById('posicionActualOtro').value).firstElementChild.getContext('2d');
+    }else{
+        var contexto = document.getElementById(document.getElementById('posicionActualOtro').value).getContext('2d');
+    }
+    contexto.fillStyle= 'white';
+    contexto.fill();
+}

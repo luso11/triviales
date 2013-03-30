@@ -1,5 +1,6 @@
 # Create your views here.
 # -*- encoding: utf-8 -*-
+from re import T
 
 from django.http import HttpResponseRedirect,HttpResponse
 from django.template import RequestContext
@@ -17,7 +18,8 @@ quesitos_inicial = simplejson.dumps({'deportes': 0, 'ciencia': 0, 'espectaculo':
 def home(request):
     return render_to_response('home.html',
                 {"title": "Triviales",
-                 "logout": True},
+                 "logout": True,
+                 "volver": True},
                 context_instance=RequestContext(request))
 
 #Pagina de acceso al juego
@@ -40,14 +42,16 @@ def login(request):
             return render_to_response('login.html',
                 {"mensaje": 'Ususario o contraseña incorrectos',
                 "title": title,
-                "logout": True},
+                "logout": True,
+                "volver": True},
                 context_instance=RequestContext(request))
 
     elif request.method == 'GET':
         return render_to_response('login.html',
                 {"mensaje": '',
                     "title": title,
-                    "logout": True},
+                    "logout": True,
+                    "volver": True},
                     context_instance=RequestContext(request))
 
 #Pagina de registro
@@ -62,7 +66,8 @@ def register(request):
     else:
         return render_to_response('register.html',
                 {'title': title,
-                 "logout": True},
+                 "logout": True,
+                 "volver": True},
                 context_instance=RequestContext(request))
 
 # Historial de partidas del jugador
@@ -85,21 +90,33 @@ def games(request,id):
     return render_to_response('games.html',
                              {'games_list_enviados': listado_enviados,
                               'games_list_recibidos': listado_recibidos,
-                              'title': title},
+                              'title': title,
+                              "volver": True},
                               context_instance=RequestContext(request))
 
 #pantalla de partida
 def actualGame(request,id):
     #1.- cargar partida de bbdd
     partida = Game.objects.get(id = id);
-    #2.- comprobar turno
-    if (partida.turno == 1 and request.user == partida.user1) or (partida.turno == 2 and request.user == partida.user2):
-        turno = True;
+    #2.- comprobar turno y colocar posiciones
+    if (request.user == partida.user1):
+        posicionActualUsuario = partida.pos1;
+        posicionActualOtro = partida.pos2;
+        if partida.turno == 1:
+            turno = True;
+        else:
+            turno = False;
     else:
-        turno = False;
-    #3.- pintar tablero
-    #4.- colocar posiciones
-    return render_to_response('actualGame.html',{'turno':False},context_instance = RequestContext(request))
+        posicionActualUsuario = partida.pos2;
+        posicionActualOtro = partida.pos1;
+        if partida.turno == 2 :
+            turno = True;
+        else:
+            turno = False;
+    return render_to_response('actualGame.html',{'turno':turno,
+                                                 'posicionActualUsuario':posicionActualUsuario,
+                                                 'posicionActualOtro':posicionActualOtro},
+                                                  context_instance = RequestContext(request))
 
 def oponenteAleatorio(request):
     total = User.objects.count()
@@ -169,13 +186,14 @@ def cambia_turno(request):
     elif request.method == "POST":
         partida = Game.objects.get(id=request.POST['id']);
         if partida.turno == 1:
-            print partida.turno;
             partida.turno = 2;
-            partida.save();
-            print partida.turno;
         else:
-            print partida.turno;
             partida.turno = 1;
-            partida.save();
-            print partida.turno;
+        #Actualizamos la posicion del usuario que acaba de fallar.
+        if request.user == partida.user1:
+            partida.pos1 = request.POST['posicionActualUsuario'];
+        else:
+            partida.pos2 = request.POST['posicionActualUsuario'];
+
+        partida.save();
         return HttpResponse('ok');

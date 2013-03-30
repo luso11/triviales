@@ -18,7 +18,7 @@ function conDatosMail(){
 
 function conDatos(){
     document.f1.elements['datos'].style.visibility= "visible";
-    $("#crearPartida").css('visibility', 'visible');
+    document.getElementById("crearPartida").style.visibility = 'visible';
 }
 
 function crear(){

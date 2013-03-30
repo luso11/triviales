@@ -1,12 +1,14 @@
 #logout{
     float: right;
+    top: 12%;
+    margin-right: 20%;
 }
 
 #logoCabecera{
     width: 25%;
     position: absolute;
     left: 10%;
-    color: white;
+    color: #2f2f2d;
     border-color: #ffffff;
     font-style: italic;
     font-weight: inherit;
@@ -17,35 +19,65 @@
     position: absolute;
     top: 0px;
     left: 0px;
-    background-color: #323B37;
+    background-color: #66add6;
     width: 100%;
     font-size: 28px;
 }
 
 #textoHome{
-    position: absolute;
+    position: fixed;
     top: 50%;
-    left: 60%;
+    left: 57%;
     font-size: 20px;
 
 }
 
 #buttonEntrar{
-    position: absolute;
-    top: 60%;
-    left: 70%;
+    position: fixed;
+    top: 66%;
+    left: 64%;
 }
 
 #buttonRegistrar{
-    position: absolute;
-    top: 60%;
-    left: 80%;
+    position: fixed;
+    top: 66%;
+    left: 77%;
 }
 
 #imagenHome{
-    position: absolute;
-    top: 39%;
-    width: 30%;
-    height: 40%;
+    position: fixed;
+    top: 32%;
+    width: 400px;
+    height: 350px;
     left: 19%;
+}
+
+#contenido{
+     position: absolute;
+     top: 25%;
+     width: 100%;
+     height: 81%;
+ }
+
+#continente{
+    width: 60%;
+    margin: 0 15% auto;
+}
+
+#listadoPartidas{
+    height: auto;
+}
+
+#textoPartidas{
+    font-size: 20px;
+    color: #66add6;
+    font-weight: bold;
+}
+
+#buttonNuevaPartida{
+    float: right;
+}
+
+#botonVolver{
+    float: right;
 }
