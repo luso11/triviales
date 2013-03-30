@@ -97,20 +97,33 @@ function cargaQuesitos(){
         if(objetoCanvas.getContext){
             var context = objetoCanvas.getContext('2d');
             context.beginPath();
+            var text;
             //Nos colocamos en el centro del canvas
             context.rect(0,0,60,60)
             if (quesitos[quesito] == "quesitoHistoria"){
                 context.fillStyle = "yellow";
+                text = "Historia";
             }else if (quesitos[quesito] == "quesitoCiencia"){
                 context.fillStyle = "#1CB429";
+                text = "Ciencia";
             }else if (quesitos[quesito] == "quesitoEspectaculos"){
                 context.fillStyle = "#FF4BD0";
+                text = "Espectaculos";
             }else if (quesitos[quesito] == "quesitoDeportes"){
                 context.fillStyle = "#34A6E3";
+                text = "Deportes";
             }else if (quesitos[quesito] == "quesitoLiteratura"){
                 context.fillStyle = "#74400C";
+                text = "Literatura";
             }
             context.fill()
+            var x = 10; // Posición en el eje X donde empezar a dibujar.
+            var y = 10; // Posición en el eje Y donde empezar a dibujar.
+            context.fillStyle = 'white'; // Color del texto
+            context.textBaseline = "top"; // Línea base del texto
+            context.font = '10px Verdana'; // Tamaño y estilo de la fuente
+
+            context.fillText(text , x, y); // Pintamos el texto.
             context.lineWidth = 3
             context.strokeStyle = "black"
             context.stroke();
@@ -119,7 +132,6 @@ function cargaQuesitos(){
 }
 
 function cargaCasillas(){
-    pintaPosicionOponente();
     // Creamos un array con todas las etiquetas del HTML
     allHTMLTags = document.getElementsByTagName("canvas");
     // Las recorremos
@@ -165,6 +177,7 @@ window.onload=function() {
     var allCanvas = new Array();
     cargaQuesitos();
     cargaCasillas();
+    pintaPosicionOponente();
     pintaNuevaPosicion();
     if (document.getElementById("turno").value =="True"){
         girarDado();
@@ -178,6 +191,7 @@ function clickTiraOtraVez(id){
     cargaCasillas();
     cargaQuesitos();
     actualizaPosicion(id);
+    pintaPosicionOponente();
     pintaNuevaPosicion();
     girarDado();
 }
@@ -252,6 +266,6 @@ function pintaPosicionOponente(){
     }else{
         var contexto = document.getElementById(document.getElementById('posicionActualOtro').value).getContext('2d');
     }
-    contexto.fillStyle= 'white';
+    contexto.fillStyle= '';
     contexto.fill();
 }
