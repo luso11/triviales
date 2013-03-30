@@ -162,7 +162,6 @@ def logout_user(request):
     response.delete_cookie("user")
     return response
 
-
 def pregunta(request):
     if not request.user.is_authenticated():
         return login(request)
@@ -181,9 +180,7 @@ def pregunta(request):
             return HttpResponse("error")
 
 def cambia_turno(request):
-    if not request.user.is_authenticated():
-        return login(request)
-    elif request.method == "POST":
+    if request.method == "POST":
         partida = Game.objects.get(id=request.POST['id']);
         if partida.turno == 1:
             partida.turno = 2;
@@ -196,4 +193,5 @@ def cambia_turno(request):
             partida.pos2 = request.POST['posicionActualUsuario'];
 
         partida.save();
+
         return HttpResponse('ok');

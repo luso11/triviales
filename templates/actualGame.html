@@ -11,10 +11,10 @@
                 type: "post",
                 url: "/cambia_turno",
                 data: {'id':trozos[4],
-                       'posicionActualUsuario':document.getElementById('posicionActualUsuario'),
+                       'posicionActualUsuario':document.getElementById('posicionActualUsuario').value,
                        'csrfmiddlewaretoken': '{{ csrf_token }}'},
                 success: function(data) {
-                    alert("Espere a que juegue el otro jugador.")
+                    alert("Espere a que juegue el otro jugador.");
                 }
             });
             document.getElementById("turno").value = "False";
