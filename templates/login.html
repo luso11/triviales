@@ -3,6 +3,7 @@
     <script type="text/javascript" src="{{ STATIC_URL }}login.js" xmlns="http://www.w3.org/1999/html"></script>
 {% endblock %}
 {% block content %}
+    <div id="contenido">
     <div id="container">
         <form id="f1" action="login" method="POST">
             {% if mensaje %}
@@ -18,5 +19,6 @@
             </div>
             {% csrf_token %}
         </form>
+    </div>
     </div>
 {% endblock %}

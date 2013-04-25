@@ -4,6 +4,7 @@
     <script type="text/javascript" src="{{ STATIC_URL }}game.js"></script>
 {% endblock %}
 {% block content %}
+    <div id="contenido">
     <div id="continente">
         <div id="listadoPartidas">
             <ul>
@@ -25,5 +26,6 @@
             </ul>
         <input type="button" class="button" id="buttonNuevaPartida" value="Crear nueva partida" onclick="newgame()">
         </div>
+    </div>
     </div>
 {% endblock %}

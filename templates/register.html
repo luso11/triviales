@@ -4,6 +4,7 @@
     <script type="text/javascript" src="{{ STATIC_URL }}register.js"></script>
 {% endblock %}
 {% block content %}
+    <div id="contenido">
     <div id="container2">
         <form id="f1" action="register" method="post">
             {% csrf_token %}
@@ -20,5 +21,6 @@
                 <input type="button" value="Volver" onClick="window.location='/'"/>
             </div>
         </form>
+    </div>
     </div>
 {% endblock %}

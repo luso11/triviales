@@ -117,7 +117,7 @@ function cargaQuesitos(){
                 text = "Literatura";
             }
             context.fill()
-            var x = 10; // Posición en el eje X donde empezar a dibujar.
+            var x = 5; // Posición en el eje X donde empezar a dibujar.
             var y = 10; // Posición en el eje Y donde empezar a dibujar.
             context.fillStyle = 'white'; // Color del texto
             context.textBaseline = "top"; // Línea base del texto

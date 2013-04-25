@@ -24,15 +24,21 @@ class Question(models.Model):
     def __unicode__(self):
         return self.question
 
+class Rombitos(models.Model):
+    ciencia = models.BooleanField(default=False)
+    espectaculos = models.BooleanField(default=False)
+    deportes = models.BooleanField(default=False)
+    historia = models.BooleanField(default=False)
+    literatura = models.BooleanField(default=False)
+
 class Game (models.Model):
     user1 = models.ForeignKey(User, related_name = "user1")
     user2 = models.ForeignKey(User, related_name = "user2")
     pos1 = models.IntegerField()
     pos2 = models.IntegerField()
     turno = models.IntegerField()
-    #json string
-    quesitos1 = models.CharField(max_length=200)
-    quesitos2 = models.CharField(max_length=200)
+    rombitos1 = models.ForeignKey(Rombitos, related_name= "rombitos1")
+    rombitos2 = models.ForeignKey(Rombitos, related_name= "rombitos2")
     def __unicode__(self):
         return str(self.id)
 

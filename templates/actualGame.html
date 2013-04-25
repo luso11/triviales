@@ -56,16 +56,30 @@
             respuestaSeleccionada = document.getElementById("respuesta"+respuesta).innerHTML.toString();
             cargaCasillas();
             cargaQuesitos();
+            pintaNuevaPosicion();
             if (respuestaSeleccionada == respuestaCorrecta){
-                //alert("correcto");
-                //TODO:marcar en verde y quitar el lightbox
+                //marca en verde y quitar el lightbox
                 document.getElementById('respuesta'+respuesta).style.background='green';
                 window.setTimeout('quitaLightbox('+respuesta+')',2000);
+                var posicion = arrayQuesitosID.indexOf(parseInt(document.getElementById('posicionActualUsuario').value));
+                if (posicion > -1){
+                    var clase = document.getElementById(document.getElementById('posicionActualUsuario').value).firstElementChild.className;
+                    var url = location.href;
+                    var trozos = url.split("/");
+                    $.ajax({
+                        type: "post",
+                        url: "/rombito",
+                        data: {'clase':clase,
+                            'id':trozos[4],
+                            'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                        success: function(data) {
+                            alert('Enhorabuena!!! Has conseguido el rombito de '+ clase);
+                        }
+                    });
+                }
                 //Volver a lanzar el dado.
-                pintaNuevaPosicion();
                 girarDado();
             }else{
-                //alert("error");
                 //Marcamos como incorrecta
                 document.getElementById('respuesta'+respuesta).style.background='red';
                 //esperar dos segundos antes de borrar el lightbox
@@ -73,7 +87,6 @@
                 //Quitamos el dado
                 document.getElementById("dado").hidden = "hidden";
                 //Cambiamos el turno en el servidor.
-                pintaNuevaPosicion();
                 cambiaTurno();
             }
         }
@@ -83,6 +96,7 @@
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}cubo.css">
 {% endblock %}
 {% block content %}
+    <div id="contenidoTablero">
     <input hidden="hidden" id="posicionActualUsuario" name="posicionActualUsuario" value="{{ posicionActualUsuario }}"/>
     <input hidden="hidden" id="posicionActualOtro" name="posicionActualOtro" value="{{ posicionActualOtro }}"/>
     <input type="hidden" id="turno" name="turno" value="{{ turno }}"/>
@@ -211,4 +225,5 @@
         <button id="respuesta4" class="botonRespuesta" onclick="resuelve(4)"></button>
     </div>
     <div id="fade" class="black_overlay"></div>
+    </div>
 {% endblock %}

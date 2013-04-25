@@ -4,15 +4,13 @@ from re import T
 
 from django.http import HttpResponseRedirect,HttpResponse
 from django.template import RequestContext
-from models import Game, Question
+from models import Game, Question, Rombitos
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
 from django.utils import simplejson
 from django.contrib import auth
 import random
-
-quesitos_inicial = simplejson.dumps({'deportes': 0, 'ciencia': 0, 'espectaculo': 0, 'historia': 0, 'literatura': 0})
 
 #Pagina inicial
 def home(request):
@@ -152,7 +150,8 @@ def newgame(request):
         return render_to_response('newgame.html',context_instance = RequestContext(request))
 
 def creaPartida(request,user1,user2):
-    game = Game.objects.create(user1=user1,user2=user2,pos1=1,pos2=1,quesitos1 = quesitos_inicial, quesitos2=quesitos_inicial,turno=1)
+    game = Game.objects.create(user1=user1,user2=user2,pos1=1,pos2=1,
+        rombitos1 = Rombitos.objects.create(), rombitos2 = Rombitos.objects.create(),turno=1)
     return HttpResponseRedirect('/partida/'+str(game.id))
 
 def logout_user(request):
@@ -195,3 +194,35 @@ def cambia_turno(request):
         partida.save();
 
         return HttpResponse('ok');
+
+def rombito(request):
+    if request.method == "POST":
+        partida = Game.objects.get(id=request.POST['id']);
+        #Actualizamos los rombitos del usuario en esa partida.
+        clase = request.POST['clase'];
+        if request.user == partida.user1:
+            if (clase == "ciencia"):
+                partida.rombitos1.ciencia = True;
+            elif (clase == "literatura"):
+                partida.rombitos1.literatura = True;
+            elif (clase == "deportes"):
+                partida.rombitos1.deportes = True;
+            elif (clase == "historia"):
+                partida.rombitos1.historia = True;
+            elif (clase == "espectaculos"):
+                partida.rombitos1.espectaculos = True;
+        else:
+            if (clase == "ciencia"):
+                partida.rombitos2.ciencia = True;
+            elif (clase == "literatura"):
+                partida.rombitos2.literatura = True;
+            elif (clase == "deportes"):
+                partida.rombitos2.deportes = True;
+            elif (clase == "historia"):
+                partida.rombitos2.historia = True;
+            elif (clase == "espectaculos"):
+                partida.rombitos2.espectaculos = True;
+        partida.save();
+
+        return HttpResponse('ok');
+
