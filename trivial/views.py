@@ -4,7 +4,7 @@ from re import T
 
 from django.http import HttpResponseRedirect,HttpResponse
 from django.template import RequestContext
-from models import Game, Question, Rombitos
+from models import Game, Question
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
@@ -26,7 +26,6 @@ def login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        print username,password;
         user = authenticate(username=username,password=password)
         if user is not None:
             if user.is_active:
@@ -59,8 +58,11 @@ def register(request):
         dict = request.POST
         user = User.objects.create_user(dict['username'], dict['correo'], dict['password1'])
         user.save()
-        authenticate(username = user.username, password = user.password)
-        return HttpResponseRedirect('games/'+str(user.id))
+        usuario = authenticate(username=dict['username'],password=dict['password1'])
+        auth.login(request, usuario)
+        response = HttpResponseRedirect('games/'+str(usuario.id))
+        response.set_cookie('user', usuario.id)
+        return response
     else:
         return render_to_response('register.html',
                 {'title': title,
@@ -149,9 +151,12 @@ def newgame(request):
     else:
         return render_to_response('newgame.html',context_instance = RequestContext(request))
 
+
 def creaPartida(request,user1,user2):
     game = Game.objects.create(user1=user1,user2=user2,pos1=1,pos2=1,
-        rombitos1 = Rombitos.objects.create(), rombitos2 = Rombitos.objects.create(),turno=1)
+        rombitos1 = simplejson.dumps({"ciencia":0, "deporte":0, "historia":0, "espectaculos":0, "literatura":0}),
+        rombitos2 = simplejson.dumps({"ciencia":0, "deporte":0, "historia":0, "espectaculos":0, "literatura":0}),
+        turno=1)
     return HttpResponseRedirect('/partida/'+str(game.id))
 
 def logout_user(request):
@@ -198,31 +203,14 @@ def cambia_turno(request):
 def rombito(request):
     if request.method == "POST":
         partida = Game.objects.get(id=request.POST['id']);
-        #Actualizamos los rombitos del usuario en esa partida.
-        clase = request.POST['clase'];
-        if request.user == partida.user1:
-            if (clase == "ciencia"):
-                partida.rombitos1.ciencia = True;
-            elif (clase == "literatura"):
-                partida.rombitos1.literatura = True;
-            elif (clase == "deportes"):
-                partida.rombitos1.deportes = True;
-            elif (clase == "historia"):
-                partida.rombitos1.historia = True;
-            elif (clase == "espectaculos"):
-                partida.rombitos1.espectaculos = True;
+        if (request.user == partida.user1):
+            rombitos = simplejson.loads(partida.rombitos1);
         else:
-            if (clase == "ciencia"):
-                partida.rombitos2.ciencia = True;
-            elif (clase == "literatura"):
-                partida.rombitos2.literatura = True;
-            elif (clase == "deportes"):
-                partida.rombitos2.deportes = True;
-            elif (clase == "historia"):
-                partida.rombitos2.historia = True;
-            elif (clase == "espectaculos"):
-                partida.rombitos2.espectaculos = True;
-        partida.save();
+            rombitos = simplejson.loads(partida.rombitos2);
+        print rombitos
+        print request.POST['clase'];
+        #mirar cómo guardar cuando hay cambio
+        partida.save()
 
         return HttpResponse('ok');
 
