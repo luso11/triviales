@@ -73,7 +73,11 @@
                             'id':trozos[4],
                             'csrfmiddlewaretoken': '{{ csrf_token }}'},
                         success: function(data) {
-                            alert('Enhorabuena!!! Has conseguido el rombito de '+ clase);
+                            if (data == 'ok'){
+                                alert('Enhorabuena!!! Has conseguido el rombito de '+ clase);
+                            }else if (data ='fin'){
+                                alert('Enhorabuena!!! Has ganado la partida.')
+                            }
                         }
                     });
                 }
@@ -201,6 +205,7 @@
             <canvas id="30" class="Espectaculos" width="30" height="50"></canvas>
         </div>
         <div id="lado5-2" class="lado5">
+
             <canvas id="31" class="Historia" width="30" height="50"></canvas>
         </div>
         <div id="lado5-3" class="lado5">
@@ -226,4 +231,10 @@
     </div>
     <div id="fade" class="black_overlay"></div>
     </div>
+
+    <div id="piezaJugador" class="piezaJugador"><p>▼</p></div>
+    <div id="piezaRival" class="piezaRival"><p>▼</p></div>
+
+    <canvas id="piezaLocal" height="100px" width="100px"></canvas>
+    <canvas id="piezaRemota" height="100px" width="100px"></canvas>
 {% endblock %}

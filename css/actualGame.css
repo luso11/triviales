@@ -28,4 +28,50 @@
 
 .botonRespuesta{
     background-color: #66add6;
+    font-size: 20px;
+    width: 24%;
+    text-align: center;
+}
+
+@-webkit-keyframes pound {
+    to { -webkit-transform: scale(1.4); }
+}
+
+@-moz-keyframes pound {
+    to { -moz-transform: scale(1.4); }
+}
+@-o-keyframes pound {
+    to { -o-transform: scale(1.4); }
+}
+@keyframes pound {
+    to { transform: scale(1.4); }
+}
+
+.piezaJugador p{
+    position: absolute;
+    color: blue;
+    font-size: 60px;
+    -webkit-animation: pound .25s infinite alternate;
+    -moz-animation: pound .25s infinite alternate;
+    animation: pound .25s infinite alternate;
+    z-index: 889;
+}
+
+.piezaRival p{
+    position: absolute;
+    color: red;
+    font-size: 60px;
+    z-index: 888;
+}
+
+#piezaLocal{
+    position: absolute;
+    top: 120px;
+    left: 300px;
+}
+
+#piezaRemota{
+    position: absolute;
+    top: 120px;
+    left: 870px;
 }

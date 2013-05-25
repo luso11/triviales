@@ -74,12 +74,12 @@ def register(request):
 def games(request,id):
     title = "Partidas"
     if not request.user.is_authenticated:
-        return HttpResponseRedirect("/login");
-    usuario = User.objects.get(id = id);
+        return HttpResponseRedirect("/login")
+    usuario = User.objects.get(id = id)
     listado_enviados = list()
     for game in Game.objects.filter(user1 = usuario.id):
         if game not in listado_enviados:
-            listado_enviados.append(game);
+            listado_enviados.append(game)
 
     listado_recibidos = list()
     for game in Game.objects.filter(user2 = usuario.id):
@@ -97,22 +97,23 @@ def games(request,id):
 #pantalla de partida
 def actualGame(request,id):
     #1.- cargar partida de bbdd
-    partida = Game.objects.get(id = id);
+    partida = Game.objects.get(id = id)
     #2.- comprobar turno y colocar posiciones
     if (request.user == partida.user1):
-        posicionActualUsuario = partida.pos1;
-        posicionActualOtro = partida.pos2;
+        posicionActualUsuario = partida.pos1
+        posicionActualOtro = partida.pos2
         if partida.turno == 1:
-            turno = True;
+            turno = True
         else:
-            turno = False;
+            turno = False
     else:
-        posicionActualUsuario = partida.pos2;
-        posicionActualOtro = partida.pos1;
+        posicionActualUsuario = partida.pos2
+        posicionActualOtro = partida.pos1
         if partida.turno == 2 :
-            turno = True;
+            turno = True
         else:
-            turno = False;
+            turno = False
+
     return render_to_response('actualGame.html',{'turno':turno,
                                                  'posicionActualUsuario':posicionActualUsuario,
                                                  'posicionActualOtro':posicionActualOtro},
@@ -151,11 +152,10 @@ def newgame(request):
     else:
         return render_to_response('newgame.html',context_instance = RequestContext(request))
 
-
 def creaPartida(request,user1,user2):
     game = Game.objects.create(user1=user1,user2=user2,pos1=1,pos2=1,
-        rombitos1 = simplejson.dumps({"ciencia":0, "deporte":0, "historia":0, "espectaculos":0, "literatura":0}),
-        rombitos2 = simplejson.dumps({"ciencia":0, "deporte":0, "historia":0, "espectaculos":0, "literatura":0}),
+        rombitos1 = simplejson.dumps({"Ciencia":0, "Deporte":0, "Historia":0, "Espectaculos":0, "Literatura":0}),
+        rombitos2 = simplejson.dumps({"Ciencia":0, "Deporte":0, "Historia":0, "Espectaculos":0, "Literatura":0}),
         turno=1)
     return HttpResponseRedirect('/partida/'+str(game.id))
 
@@ -171,46 +171,50 @@ def pregunta(request):
         return login(request)
     elif request.method == "GET":
         try:
-            questions = Question.objects.filter(category = request.GET['tipo']);
-            tope =  questions.count();
+            questions = Question.objects.filter(category = request.GET['tipo'])
+            tope =  questions.count()
             num = random.randint(0,tope-1)
             pregunta = questions[num]
             json = simplejson.dumps({"pregunta":pregunta.question,"respuesta_correcta":pregunta.correct_answer,
                                     "respuesta_incorrecta1":pregunta.wrong_answer_1,
                                     "respuesta_incorrecta2":pregunta.wrong_answer_2,
-                                    "respuesta_incorrecta3":pregunta.wrong_answer_3,});
+                                    "respuesta_incorrecta3":pregunta.wrong_answer_3,})
             return HttpResponse(json,mimetype ='application/json')
         except:
             return HttpResponse("error")
 
 def cambia_turno(request):
     if request.method == "POST":
-        partida = Game.objects.get(id=request.POST['id']);
+        partida = Game.objects.get(id=request.POST['id'])
         if partida.turno == 1:
-            partida.turno = 2;
+            partida.turno = 2
         else:
-            partida.turno = 1;
+            partida.turno = 1
         #Actualizamos la posicion del usuario que acaba de fallar.
         if request.user == partida.user1:
-            partida.pos1 = request.POST['posicionActualUsuario'];
+            partida.pos1 = request.POST['posicionActualUsuario']
         else:
-            partida.pos2 = request.POST['posicionActualUsuario'];
+            partida.pos2 = request.POST['posicionActualUsuario']
 
-        partida.save();
-
-        return HttpResponse('ok');
-
-def rombito(request):
-    if request.method == "POST":
-        partida = Game.objects.get(id=request.POST['id']);
-        if (request.user == partida.user1):
-            rombitos = simplejson.loads(partida.rombitos1);
-        else:
-            rombitos = simplejson.loads(partida.rombitos2);
-        print rombitos
-        print request.POST['clase'];
-        #mirar cómo guardar cuando hay cambio
         partida.save()
 
-        return HttpResponse('ok');
+        return HttpResponse('ok')
+
+
+#funcion de actualizacion de los rombitos de cada jugador
+def rombito(request):
+    if request.method == "POST":
+        partida = Game.objects.get(id=request.POST['id'])
+        if (request.user == partida.user1):
+            rombitos = simplejson.loads(partida.rombitos1)
+        else:
+            rombitos = simplejson.loads(partida.rombitos2)
+
+        rombitos[request.POST['clase']] = 1
+        if (request.user == partida.user1):
+            partida.rombitos1 = simplejson.dumps(rombitos)
+        else:
+            partida.rombitos2 = simplejson.dumps(rombitos)
+        partida.save()
+        return HttpResponse('ok')
 

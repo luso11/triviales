@@ -10,7 +10,7 @@
     {% block extra_javascript %} {% endblock %}
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}base.css">
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}styles.css">
-    <div id="barraMenu">
+    <header id="barraMenu">
         <h1 id="logoCabecera">TRIVIALES</h1>
     {% if not logout %}
         <input type="button" class="button" id="logout" value="Logout" onclick="logout()">
@@ -18,8 +18,15 @@
     {% if not volver %}
         <input type="button" class="button" id="botonVolver" value="Volver" onclick="volver()">
     {% endif %}
-    </div>
+    </header>
     {% block content %} {% endblock %}
     </div>
+    <footer>
+        <nav>
+            <p>
+                <a href="mailto:luisluso89@gmail.com" target="_blank">Contacto</a>
+            </p>
+        </nav>
+    </footer>
 </body>
 </html>

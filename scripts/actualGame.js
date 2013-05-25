@@ -7,26 +7,22 @@
  */
 var tiempo;
 var arrayQuesitosID = [1,8,15,22,29];
-var elementoMayor;
-var elementoMenor;
 
 function pintaPosicionesPosibles(posicionMayor, posicionMenor){
     if (arrayQuesitosID.indexOf(posicionMayor) > -1){
         var context1 = document.getElementById(posicionMayor).firstElementChild.getContext('2d');
-        elementoMayor = document.getElementById(posicionMayor).firstElementChild;
-        elementoMayor.onclick = function(){
-            if (elementoMayor.className != "tiraOtraVez"){
-                clickado(posicionMayor,elementoMayor.className);
+        document.getElementById(posicionMayor).firstElementChild.onclick = function(){
+            if (document.getElementById(posicionMayor).firstElementChild.className != "tiraOtraVez"){
+                clickado(posicionMayor,document.getElementById(posicionMayor).firstElementChild.className);
             }else{
                 clickTiraOtraVez(posicionMayor);
             }
         }
     }else{
         var context1 = document.getElementById(posicionMayor).getContext('2d');
-        elementoMayor = document.getElementById(posicionMayor);
-        elementoMayor.onclick = function(){
-            if (elementoMayor.className != "tiraOtraVez"){
-                clickado(posicionMayor,elementoMayor.className);
+        document.getElementById(posicionMayor).onclick = function(){
+            if (document.getElementById(posicionMayor).className != "tiraOtraVez"){
+                clickado(posicionMayor,document.getElementById(posicionMayor).className);
             }else{
                 clickTiraOtraVez(posicionMayor);
             }
@@ -85,7 +81,7 @@ function tirar(){
     document.getElementById('dado').onclick=null;
     //Generamos el número que marcará el dado y lo pintamos
     num = Math.floor((Math.random()*6)+1);
-    document.getElementById('dado').style.backgroundImage ="url(/static/"+num+".png)";
+    document.getElementById('dado').style.backgroundImage =imagenes[num];
     //Marcamos las casillas donde podemos ir
     calculaPosicion(num);
 }
@@ -132,7 +128,7 @@ function cargaQuesitos(){
 }
 
 function cargaCasillas(){
-    // Creamos un array con todas las etiquetas del HTML
+    // Creamos un array con todas las etiquetas canvas del HTML
     allHTMLTags = document.getElementsByTagName("canvas");
     // Las recorremos
     for (i=0; i<allHTMLTags.length; i++) {
@@ -141,7 +137,7 @@ function cargaCasillas(){
             //Si no es un quesito
             if(document.getElementById(allHTMLTags[i].id).getContext){
                 var context = document.getElementById(casillaActual.id).getContext('2d');
-                context.rect(0,0,30,50)
+                context.rect(0,0,30,50);
                 context.clearRect();
                 //si saco aquí la creación comun del elemento context no funciona
                 if (allHTMLTags[i].className=="Ciencia") {
@@ -173,12 +169,11 @@ function cargaCasillas(){
 
 //Cargamos el tablero de juego
 window.onload=function() {
-    var allHTMLTags = new Array();
-    var allCanvas = new Array();
     cargaQuesitos();
     cargaCasillas();
     pintaPosicionOponente();
     pintaNuevaPosicion();
+    pintaFichas();
     if (document.getElementById("turno").value =="True"){
         girarDado();
     }else{
@@ -189,7 +184,6 @@ window.onload=function() {
 
 function clickTiraOtraVez(id){
     cargaCasillas();
-    cargaQuesitos();
     actualizaPosicion(id);
     pintaPosicionOponente();
     pintaNuevaPosicion();
@@ -252,20 +246,48 @@ function quitaLightbox(respuesta){
 
 function pintaNuevaPosicion(){
     if (arrayQuesitosID.indexOf(parseInt(document.getElementById('posicionActualUsuario').value)) > -1){
-        var contexto = document.getElementById(document.getElementById('posicionActualUsuario').value).firstElementChild.getContext('2d');
+        var obj = document.getElementById(document.getElementById('posicionActualUsuario').value).firstElementChild;
     }else{
-        var contexto = document.getElementById(document.getElementById('posicionActualUsuario').value).getContext('2d');
+        var obj = document.getElementById(document.getElementById('posicionActualUsuario').value);
     }
-    contexto.fillStyle= 'black';
-    contexto.fill();
+    var style = window.getComputedStyle(obj);
+    var arriba = style.getPropertyValue('top');
+    var izquierda = style.getPropertyValue('left');
+
+    document.getElementById("piezaJugador").firstElementChild.style.top = (parseInt(arriba.substr(0,2))-20).toString()+"px";
+    document.getElementById("piezaJugador").firstElementChild.style.left = izquierda;
 }
 
 function pintaPosicionOponente(){
     if (arrayQuesitosID.indexOf(parseInt(document.getElementById('posicionActualOtro').value)) > -1){
-        var contexto = document.getElementById(document.getElementById('posicionActualOtro').value).firstElementChild.getContext('2d');
+
+        var obj = document.getElementById(document.getElementById('posicionActualOtro').value).firstElementChild;
+
     }else{
-        var contexto = document.getElementById(document.getElementById('posicionActualOtro').value).getContext('2d');
+        var obj = document.getElementById(document.getElementById('posicionActualOtro').value);
     }
-    contexto.fillStyle= '';
+    var style = window.getComputedStyle(obj);
+    var arriba = style.getPropertyValue('top');
+    var izquierda = style.getPropertyValue('left');
+
+    document.getElementById("piezaRival").firstElementChild.style.top = (parseInt(arriba.substr(0,2))-20).toString()+"px";
+    document.getElementById("piezaRival").firstElementChild.style.left = izquierda;
+}
+
+function pintaFichas(){
+    var contexto = document.getElementById("piezaLocal").getContext("2d");
+
+    contexto.beginPath();
+    //Nos colocamos en el centro del canvas
+    contexto.rect(0,0,100,100);
+    contexto.fillStyle = "white";
+    contexto.fill();
+
+    var contexto = document.getElementById("piezaRemota").getContext("2d");
+
+    contexto.beginPath();
+    //Nos colocamos en el centro del canvas
+    contexto.rect(0,0,100,100);
+    contexto.fillStyle = "white";
     contexto.fill();
 }
