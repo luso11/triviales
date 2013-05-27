@@ -30,6 +30,7 @@
     background-color: #66add6;
     font-size: 20px;
     width: 24%;
+    margin-top: 30px;
     text-align: center;
 }
 
@@ -59,7 +60,7 @@
 
 .piezaRival p{
     position: absolute;
-    color: red;
+    color: grey;
     font-size: 60px;
     z-index: 888;
 }

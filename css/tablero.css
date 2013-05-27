@@ -34,8 +34,8 @@
 
 #quesitoLiteratura{
     position: absolute;
-    top: 434px;
-    left: 491px;
+    top: 432px;
+    left: 489px;
     transform:rotate(90deg) skewX(18deg);
     -ms-transform:rotate(90deg) skewX(18deg); /* IE 9 */
     -moz-transform:rotate(90deg) skewX(18deg); /* Firefox */
@@ -46,7 +46,7 @@
 #quesitoDeportes {
     position: absolute;
     top: 432px;
-    left: 722px;
+    left: 719px;
     transform:rotate(-162deg) skewX(18deg);
     -ms-transform:rotate(-162deg) skewX(18deg); /* IE 9 */
     -moz-transform:rotate(-162deg) skewX(18deg); /* Firefox */
@@ -108,28 +108,28 @@
 }
 
 #lado2-1{
-    top: 249px;
-    left: 457px;
+    top: 250px;
+    left: 461px;
 }
 
 #lado2-2{
     top: 277px;
-    left: 466px;
+    left: 469px;
 }
 
 #lado2-3{
     top: 305px;
-    left: 475px;
+    left: 478px;
 }
 
 #lado2-4{
-    top: 334px;
-    left: 485px;
+    top: 333px;
+    left: 487px;
 }
 
 #lado2-5{
     top: 361px;
-    left: 494px;
+    left: 495px;
 }
 
 #lado2-6{
@@ -141,32 +141,32 @@
     position: absolute;
     width: auto;
     height: auto;
-    top: 424px;
+    top: 421px;
 }
 
 #lado3-1{
-    left: 550px;
+    left: 548px;
 
 }
 
 #lado3-2{
-    left: 580px;
+    left: 577px;
 }
 
 #lado3-3{
-    left: 608px;
+    left: 606px;
 }
 
 #lado3-4{
-    left: 636px;
+    left: 634px;
 }
 
 #lado3-5{
-    left: 664px;
+    left: 662px;
 }
 
 #lado3-6{
-    left: 693px;
+    left: 691px;
 }
 
 .lado4{
@@ -181,33 +181,33 @@
 }
 
 #lado4-1{
-    top: 387px;
-    left: 741px;
+    top: 388px;
+    left: 737px;
 }
 
 #lado4-2{
-    top: 359px;
-    left: 750px;
+    top: 361px;
+    left: 746px;
 }
 
 #lado4-3{
-    top: 331px;
-    left: 759px;
+    top: 333px;
+    left: 755px;
 }
 
 #lado4-4{
-    top: 303px;
-    left: 768px;
+    top: 305px;
+    left: 764px;
 }
 
 #lado4-5{
-    top: 275px;
-    left: 777px;
+    top: 276px;
+    left: 774px;
 }
 
 #lado4-6{
-    top: 246px;
-    left: 786px;
+    top: 248px;
+    left: 783px;
 }
 
 .lado5{

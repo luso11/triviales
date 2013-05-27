@@ -2,6 +2,24 @@
 {% block title %}{{ title }}{% endblock %}
 {% block extra_javascript %}
     <script type="text/javascript" src="{{ STATIC_URL }}game.js"></script>
+    <script type="text/javascript">
+        function borrado(id){
+            if (confirm("¿Está seguro de que desea eliminar la partida seleccionada?")) {
+                //Borramos la partida
+                $.ajax({
+                    type: "post",
+                    url: "/borrar",
+                    data: {'id':id,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                    success: function(data) {
+                        alert("Partida borrada correctamente.");
+                        //Recargamos la pantalla
+                        location.reload(true);
+                    }
+                });
+            }
+        }
+    </script>
 {% endblock %}
 {% block content %}
     <div id="contenido">
@@ -11,16 +29,26 @@
             {% if not games_list_enviados and not games_list_recibidos %}
                 <p id="textoPartidas">No tienes partidas actualmente.</p>
             {% else %}
-                <p id="textoPartidas">Estas son tus partidas actualmente.</p>
+                <p id="textoPartidas">Partidas que tienes que jugar:</p>
                 {% if games_list_enviados %}
+                    <table>
                         {% for game in games_list_enviados %}
-                            <li><a href="/partida/{{ game.id }}/">Partida con {{ game.user2 }}</a></li>
+                            <tr>
+                                <td><a href="/partida/{{ game.id }}/">Partida con {{ game.user1 }}</a></td>
+                                <td><img onclick="borrado({{ game.id }})" src="/static/1.png"></td>
+                            </tr>
                         {% endfor %}
+                    </table>
                 {% endif %}
                 {% if games_list_recibidos %}
+                    <table>
                     {% for game in games_list_recibidos %}
-                        <li><a href="/partida/{{ game.id }}/">Partida con {{ game.user1 }}</a></li>
+                            <tr>
+                            <td><a href="/partida/{{ game.id }}/">Partida con {{ game.user1 }}</a></td>
+                            <td><a href="/borrar/{{ game.id }}/"><img src="/static/1.png"></a></td>
+                            </tr>
                     {% endfor %}
+                    </table>
                 {% endif %}
             {% endif %}
             </ul>

@@ -9,3 +9,4 @@
 function newgame(){
     window.location = "/newgame"
 }
+

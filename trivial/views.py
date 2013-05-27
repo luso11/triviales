@@ -96,26 +96,35 @@ def games(request,id):
 
 #pantalla de partida
 def actualGame(request,id):
-    #1.- cargar partida de bbdd
-    partida = Game.objects.get(id = id)
-    #2.- comprobar turno y colocar posiciones
-    if (request.user == partida.user1):
-        posicionActualUsuario = partida.pos1
-        posicionActualOtro = partida.pos2
-        if partida.turno == 1:
-            turno = True
-        else:
-            turno = False
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect("/login")
     else:
-        posicionActualUsuario = partida.pos2
-        posicionActualOtro = partida.pos1
-        if partida.turno == 2 :
-            turno = True
+    #1.- cargar partida de bbdd
+        partida = Game.objects.get(id = id)
+        #2.- comprobar turno y colocar posiciones
+        if (request.user == partida.user1):
+            posicionActualUsuario = partida.pos1
+            posicionActualOtro = partida.pos2
+            usuario = partida.user1
+            rival = partida.user2
+            if partida.turno == 1:
+                turno = True
+            else:
+                turno = False
         else:
-            turno = False
+            posicionActualUsuario = partida.pos2
+            posicionActualOtro = partida.pos1
+            usuario = partida.user2
+            rival = partida.user1
+            if partida.turno == 2 :
+                turno = True
+            else:
+                turno = False
 
-    return render_to_response('actualGame.html',{'turno':turno,
+        return render_to_response('actualGame.html',{'turno':turno,
                                                  'posicionActualUsuario':posicionActualUsuario,
+                                                 'usuario':usuario,
+                                                 'rival':rival,
                                                  'posicionActualOtro':posicionActualOtro},
                                                   context_instance = RequestContext(request))
 
@@ -199,8 +208,6 @@ def cambia_turno(request):
         partida.save()
 
         return HttpResponse('ok')
-
-
 #funcion de actualizacion de los rombitos de cada jugador
 def rombito(request):
     if request.method == "POST":
@@ -215,6 +222,36 @@ def rombito(request):
             partida.rombitos1 = simplejson.dumps(rombitos)
         else:
             partida.rombitos2 = simplejson.dumps(rombitos)
-        partida.save()
-        return HttpResponse('ok')
 
+        partida.save()
+        if ((rombitos["Historia"] == 1) & (rombitos["Ciencia"] == 1) & (rombitos["Literatura"] == 1) &
+            (rombitos["Espectáculos"] == 1) & (rombitos["Deporte"] == 1)):
+            return HttpResponse('fin')
+        else:
+            return HttpResponse('ok')
+
+def fichas(request):
+    if request.method == "GET":
+        partida = Game.objects.get(id=request.GET['id'])
+        if (request.user == partida.user1):
+            rombitos1 = partida.rombitos1
+            rombitos2 = partida.rombitos2
+        else:
+            rombitos1 = partida.rombitos2
+            rombitos2 = partida.rombitos1
+
+
+
+        json = simplejson.dumps({"rombitos1":rombitos1,"rombitos2":rombitos2})
+        return HttpResponse(json,mimetype ='application/json')
+
+def borrar(request):
+    if not request.user.is_authenticated():
+        return login(request)
+    elif request.method == "POST":
+        print request.POST['id']
+        game = Game.objects.get(id=request.POST['id'])
+        print game
+        game.delete()
+        print "ok"
+        return HttpResponse('ok')

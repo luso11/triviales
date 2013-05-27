@@ -87,7 +87,7 @@ function tirar(){
 }
 
 function cargaQuesitos(){
-    var quesitos = ["quesitoHistoria", "quesitoCiencia", "quesitoEspectaculos", "quesitoDeportes", "quesitoLiteratura"]
+    var quesitos = ["quesitoHistoria", "quesitoCiencia", "quesitoEspectaculos", "quesitoDeportes", "quesitoLiteratura"];
     for (var quesito in quesitos){
         var objetoCanvas = document.getElementById(quesitos[quesito]);
         if(objetoCanvas.getContext){
@@ -95,31 +95,19 @@ function cargaQuesitos(){
             context.beginPath();
             var text;
             //Nos colocamos en el centro del canvas
-            context.rect(0,0,60,60)
+            context.rect(0,0,60,60);
             if (quesitos[quesito] == "quesitoHistoria"){
                 context.fillStyle = "yellow";
-                text = "Historia";
             }else if (quesitos[quesito] == "quesitoCiencia"){
                 context.fillStyle = "#1CB429";
-                text = "Ciencia";
             }else if (quesitos[quesito] == "quesitoEspectaculos"){
                 context.fillStyle = "#FF4BD0";
-                text = "Espectaculos";
             }else if (quesitos[quesito] == "quesitoDeportes"){
                 context.fillStyle = "#34A6E3";
-                text = "Deportes";
             }else if (quesitos[quesito] == "quesitoLiteratura"){
                 context.fillStyle = "#74400C";
-                text = "Literatura";
             }
-            context.fill()
-            var x = 5; // Posición en el eje X donde empezar a dibujar.
-            var y = 10; // Posición en el eje Y donde empezar a dibujar.
-            context.fillStyle = 'white'; // Color del texto
-            context.textBaseline = "top"; // Línea base del texto
-            context.font = '10px Verdana'; // Tamaño y estilo de la fuente
-
-            context.fillText(text , x, y); // Pintamos el texto.
+            context.fill();
             context.lineWidth = 3
             context.strokeStyle = "black"
             context.stroke();
@@ -133,7 +121,7 @@ function cargaCasillas(){
     // Las recorremos
     for (i=0; i<allHTMLTags.length; i++) {
         var casillaActual = allHTMLTags[i];
-        if(casillaActual.id.indexOf("quesito")== -1){
+        if(casillaActual.id.indexOf("quesito")== -1 && casillaActual.id.indexOf("pieza")== -1){
             //Si no es un quesito
             if(document.getElementById(allHTMLTags[i].id).getContext){
                 var context = document.getElementById(casillaActual.id).getContext('2d');
@@ -248,46 +236,239 @@ function pintaNuevaPosicion(){
     if (arrayQuesitosID.indexOf(parseInt(document.getElementById('posicionActualUsuario').value)) > -1){
         var obj = document.getElementById(document.getElementById('posicionActualUsuario').value).firstElementChild;
     }else{
-        var obj = document.getElementById(document.getElementById('posicionActualUsuario').value);
+        var obj = document.getElementById(document.getElementById('posicionActualUsuario').value).parentNode;
     }
     var style = window.getComputedStyle(obj);
     var arriba = style.getPropertyValue('top');
     var izquierda = style.getPropertyValue('left');
+    if (document.getElementById('posicionActualOtro').value != 1){
+        var arribaModificado = (parseInt(arriba.substr(0,3))-30).toString()+"px";
+    }else{
+        var arribaModificado = (parseInt(arriba.substr(0,2))-30).toString()+"px";
+    }
 
-    document.getElementById("piezaJugador").firstElementChild.style.top = (parseInt(arriba.substr(0,2))-20).toString()+"px";
+    document.getElementById("piezaJugador").firstElementChild.style.top = arribaModificado;
     document.getElementById("piezaJugador").firstElementChild.style.left = izquierda;
 }
 
 function pintaPosicionOponente(){
     if (arrayQuesitosID.indexOf(parseInt(document.getElementById('posicionActualOtro').value)) > -1){
-
         var obj = document.getElementById(document.getElementById('posicionActualOtro').value).firstElementChild;
-
     }else{
-        var obj = document.getElementById(document.getElementById('posicionActualOtro').value);
+        //El div es el padre del que tiene el id, y es a su vez el que tiene la posición.
+        var obj = document.getElementById(document.getElementById('posicionActualOtro').value).parentNode;
     }
     var style = window.getComputedStyle(obj);
     var arriba = style.getPropertyValue('top');
     var izquierda = style.getPropertyValue('left');
-
-    document.getElementById("piezaRival").firstElementChild.style.top = (parseInt(arriba.substr(0,2))-20).toString()+"px";
+    if (document.getElementById('posicionActualOtro').value != 1){
+        var arribaModificado = (parseInt(arriba.substr(0,3))-30).toString()+"px";
+    }else{
+        var arribaModificado = (parseInt(arriba.substr(0,2))-30).toString()+"px";
+    }
+    //TODO: modificar en función de dónde esté para coger 2 o 3 del substring
+    document.getElementById("piezaRival").firstElementChild.style.top = arribaModificado;
     document.getElementById("piezaRival").firstElementChild.style.left = izquierda;
 }
 
-function pintaFichas(){
-    var contexto = document.getElementById("piezaLocal").getContext("2d");
+function pintaFichaUsuario(datos){
+    var data = JSON.parse(datos);
+    for (var i = 0; i < 5; i++){
+        if (i==0){
+            var contexto = document.getElementById("piezaRemotaRombitoHistoria").getContext("2d");
+            contexto.beginPath();
+            //Nos colocamos en el centro del canvas
+            contexto.moveTo(10,0);
+            contexto.lineTo(0,20);
+            contexto.lineTo(10,40);
+            contexto.lineTo(20,20);
+            contexto.lineTo(10,0);
+            contexto.lineWidth = 5;
+            contexto.strokeStyle = "yellow";
+            if (data.Historia == 1){
+                contexto.fillStyle = "yellow";
+            }else{
+                contexto.fillStyle = "grey";
+            }
+            contexto.stroke();
+            contexto.fill();
+        }
+        if (i==1){
+            var contexto = document.getElementById("piezaRemotaRombitoCiencia").getContext("2d");
+            contexto.beginPath();
+            //Nos colocamos en el centro del canvas
+            contexto.moveTo(10,0);
+            contexto.lineTo(0,20);
+            contexto.lineTo(10,40);
+            contexto.lineTo(20,20);
+            contexto.lineTo(10,0);
+            contexto.lineWidth = 5;
+            contexto.strokeStyle = "#1CB429";
+            if (data.Ciencia == 1){
+                contexto.fillStyle = "#1CB429";
+            }else{
+                contexto.fillStyle = "grey";
+            }
+            contexto.stroke();
+            contexto.fill();
+        }
+        if (i==2){
+            var contexto = document.getElementById("piezaRemotaRombitoEspectaculos").getContext("2d");
+            contexto.beginPath();
+            //Nos colocamos en el centro del canvas
+            contexto.moveTo(10,0);
+            contexto.lineTo(0,20);
+            contexto.lineTo(10,40);
+            contexto.lineTo(20,20);
+            contexto.lineTo(10,0);
+            contexto.lineWidth = 5;
+            contexto.strokeStyle = "#FF4BD0";
+            if (data.Espectaculos == 1){
+                contexto.fillStyle = "#FF4BD0";
+            }else{
+                contexto.fillStyle = "grey";
+            }
+            contexto.stroke();
+            contexto.fill();
+        }
+        if (i==3){
+            var contexto = document.getElementById("piezaRemotaRombitoDeporte").getContext("2d");
+            contexto.beginPath();
+            //Nos colocamos en el centro del canvas
+            contexto.moveTo(10,0);
+            contexto.lineTo(0,20);
+            contexto.lineTo(10,40);
+            contexto.lineTo(20,20);
+            contexto.lineTo(10,0);
+            contexto.lineWidth = 5;
+            contexto.strokeStyle = "#34A6E3";
+            if (data.Deporte == 1){
+                contexto.fillStyle = "#34A6E3";
+            }else{
+                contexto.fillStyle = "grey";
+            }
+            contexto.stroke();
+            contexto.fill();
+        }
+        if (i==4){
+            var contexto = document.getElementById("piezaRemotaRombitoLiteratura").getContext("2d");
+            contexto.beginPath();
+            //Nos colocamos en el centro del canvas
+            contexto.moveTo(10,0);
+            contexto.lineTo(0,20);
+            contexto.lineTo(10,40);
+            contexto.lineTo(20,20);
+            contexto.lineTo(10,0);
+            contexto.lineWidth = 5;
+            contexto.strokeStyle = "#74400C";
+            if (data.Literatura == 1){
+                contexto.fillStyle = "#74400C";
+            }else{
+                contexto.fillStyle = "grey";
+            }
+            contexto.stroke();
+            contexto.fill();
+        }
+    }
+}
 
-    contexto.beginPath();
-    //Nos colocamos en el centro del canvas
-    contexto.rect(0,0,100,100);
-    contexto.fillStyle = "white";
-    contexto.fill();
-
-    var contexto = document.getElementById("piezaRemota").getContext("2d");
-
-    contexto.beginPath();
-    //Nos colocamos en el centro del canvas
-    contexto.rect(0,0,100,100);
-    contexto.fillStyle = "white";
-    contexto.fill();
+function pintaFichaOponente(datos){
+    var data = JSON.parse(datos);
+    for (var i = 0; i < 5; i++){
+        if (i==0){
+            var contexto = document.getElementById("piezaLocalRombitoHistoria").getContext("2d");
+            contexto.beginPath();
+            //Nos colocamos en el centro del canvas
+            contexto.moveTo(10,0);
+            contexto.lineTo(0,20);
+            contexto.lineTo(10,40);
+            contexto.lineTo(20,20);
+            contexto.lineTo(10,0);
+            contexto.lineWidth = 5;
+            contexto.strokeStyle = "yellow";
+            if (data.Historia == 1){
+                contexto.fillStyle = "yellow";
+            }else{
+                contexto.fillStyle = "grey";
+            }
+            contexto.stroke();
+            contexto.fill();
+        }
+        if (i==1){
+            var contexto = document.getElementById("piezaLocalRombitoCiencia").getContext("2d");
+            contexto.beginPath();
+            //Nos colocamos en el centro del canvas
+            contexto.moveTo(10,0);
+            contexto.lineTo(0,20);
+            contexto.lineTo(10,40);
+            contexto.lineTo(20,20);
+            contexto.lineTo(10,0);
+            contexto.lineWidth = 5;
+            contexto.strokeStyle = "#1CB429";
+            if (data.Ciencia == 1){
+                contexto.fillStyle = "#1CB429";
+            }else{
+                contexto.fillStyle = "grey";
+            }
+            contexto.stroke();
+            contexto.fill();
+        }
+        if (i==2){
+            var contexto = document.getElementById("piezaLocalRombitoEspectaculos").getContext("2d");
+            contexto.beginPath();
+            //Nos colocamos en el centro del canvas
+            contexto.moveTo(10,0);
+            contexto.lineTo(0,20);
+            contexto.lineTo(10,40);
+            contexto.lineTo(20,20);
+            contexto.lineTo(10,0);
+            contexto.lineWidth = 5;
+            contexto.strokeStyle = "#FF4BD0";
+            if (data.Espectaculos == 1){
+                contexto.fillStyle = "#FF4BD0";
+            }else{
+                contexto.fillStyle = "grey";
+            }
+            contexto.stroke();
+            contexto.fill();
+        }
+        if (i==3){
+            var contexto = document.getElementById("piezaLocalRombitoDeporte").getContext("2d");
+            contexto.beginPath();
+            //Nos colocamos en el centro del canvas
+            contexto.moveTo(10,0);
+            contexto.lineTo(0,20);
+            contexto.lineTo(10,40);
+            contexto.lineTo(20,20);
+            contexto.lineTo(10,0);
+            contexto.lineWidth = 5;
+            contexto.strokeStyle = "#34A6E3";
+            if (data.Deporte == 1){
+                contexto.fillStyle = "#34A6E3";
+            }else{
+                contexto.fillStyle = "grey";
+            }
+            contexto.stroke();
+            contexto.fill();
+        }
+        if (i==4){
+            var contexto = document.getElementById("piezaLocalRombitoLiteratura").getContext("2d");
+            contexto.beginPath();
+            //Nos colocamos en el centro del canvas
+            contexto.moveTo(10,0);
+            contexto.lineTo(0,20);
+            contexto.lineTo(10,40);
+            contexto.lineTo(20,20);
+            contexto.lineTo(10,0);
+            contexto.lineWidth = 5;
+            contexto.strokeStyle = "#74400C";
+            if (data.Literatura == 1){
+                contexto.fillStyle = "#74400C";
+            }else{
+                contexto.fillStyle = "grey";
+            }
+            contexto.stroke();
+            contexto.fill();
+        }
+    }
 }

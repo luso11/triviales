@@ -18,6 +18,7 @@
                 }
             });
             document.getElementById("turno").value = "False";
+            document.getElementById("piezaJugador").firstElementChild.removeAttribute("animation");
         }
 
         var respuestaCorrecta;
@@ -93,6 +94,20 @@
                 //Cambiamos el turno en el servidor.
                 cambiaTurno();
             }
+        }
+
+        function pintaFichas(){
+            var url = location.href;
+            var trozos = url.split("/");
+            $.ajax({
+                type: "get",
+                url: "/fichas",
+                data: {'id':trozos[4]},
+                success: function(data) {
+                    pintaFichaOponente(data['rombitos2']);
+                    pintaFichaUsuario(data['rombitos1']);
+                }
+            });
         }
     </script>
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}tablero.css">
@@ -235,6 +250,21 @@
     <div id="piezaJugador" class="piezaJugador"><p>▼</p></div>
     <div id="piezaRival" class="piezaRival"><p>▼</p></div>
 
-    <canvas id="piezaLocal" height="100px" width="100px"></canvas>
-    <canvas id="piezaRemota" height="100px" width="100px"></canvas>
+
+    <div id="piezaLocal">
+        <h2>{{ usuario }}</h2>
+        <canvas id="piezaLocalRombitoCiencia" height="40px" width="20px"></canvas>
+        <canvas id="piezaLocalRombitoHistoria" height="40px" width="20px"></canvas>
+        <canvas id="piezaLocalRombitoDeporte" height="40px" width="20px"></canvas>
+        <canvas id="piezaLocalRombitoEspectaculos" height="40px" width="20px"></canvas>
+        <canvas id="piezaLocalRombitoLiteratura" height="40px" width="20px"></canvas>
+    </div>
+    <div id="piezaRemota">
+        <h2>{{ rival }}</h2>
+        <canvas id="piezaRemotaRombitoCiencia" height="40px" width="20px"></canvas>
+        <canvas id="piezaRemotaRombitoHistoria" height="40px" width="20px"></canvas>
+        <canvas id="piezaRemotaRombitoDeporte" height="40px" width="20px"></canvas>
+        <canvas id="piezaRemotaRombitoEspectaculos" height="40px" width="20px"></canvas>
+        <canvas id="piezaRemotaRombitoLiteratura" height="40px" width="20px"></canvas>
+    </div>
 {% endblock %}
