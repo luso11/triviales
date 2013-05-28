@@ -29,8 +29,8 @@ body {
 	background-image: url("../static/background.gif");
     background-position: top;
     background-repeat: repeat;
-    /*overflow-x: hidden;
-    overflow-y: hidden;*/
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 header{

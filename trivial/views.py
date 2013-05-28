@@ -76,20 +76,29 @@ def games(request,id):
     if not request.user.is_authenticated:
         return HttpResponseRedirect("/login")
     usuario = User.objects.get(id = id)
-    listado_enviados = list()
+    listado_juega1 = list()
+    listado_juega2 = list()
+    listado_espera1 = list()
+    listado_espera2 = list()
     for game in Game.objects.filter(user1 = usuario.id):
-        if game not in listado_enviados:
-            listado_enviados.append(game)
+        print game.turno
+        if (game.turno == 1):
+            listado_juega1.append(game)
+        else:
+            listado_espera1.append(game)
 
-    listado_recibidos = list()
     for game in Game.objects.filter(user2 = usuario.id):
-        if game not in listado_recibidos:
-            listado_recibidos.append(game)
+        if (game.turno == 2):
+            listado_juega2.append(game)
+        else:
+            listado_espera2.append(game)
 
 
     return render_to_response('games.html',
-                             {'games_list_enviados': listado_enviados,
-                              'games_list_recibidos': listado_recibidos,
+                             {'games_list_juega1': listado_juega1,
+                              'games_list_juega2': listado_juega2,
+                              'games_list_espera1': listado_espera1,
+                              'games_list_espera2': listado_espera2,
                               'title': title,
                               "volver": True},
                               context_instance=RequestContext(request))
