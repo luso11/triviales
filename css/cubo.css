@@ -1,0 +1,11 @@
+.dado{
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 251px;
+    left: 578px;
+    background-color:black;
+    border: 1px solid #000000;
+    -moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
+}

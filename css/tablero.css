@@ -1,0 +1,252 @@
+#quesitoHistoria{
+    position: absolute;
+    top: 64px;
+    left: 600px;
+    transform:rotate(54deg) skewX(18deg);
+    -ms-transform:rotate(54deg) skewX(18deg); /* IE 9 */
+    -moz-transform:rotate(54deg) skewX(18deg); /* Firefox */
+    -webkit-transform:rotate(54deg) skewX(18deg); /* Safari and Chrome */
+    -o-transform:rotate(63deg) skew(54deg,-23deg); /* Opera */
+
+}
+
+#quesitoCiencia{
+    position: absolute;
+    top: 206px;
+    left: 790px;
+    transform:rotate(-54deg) skewX(18deg);
+    -ms-transform:rotate(-54deg) skewX(18deg); /* IE 9 */
+    -moz-transform:rotate(-54deg) skewX(18deg); /* Firefox */
+    -webkit-transform:rotate(-54deg) skewX(18deg); /* Safari and Chrome */
+    -o-transform:rotate(-54deg) skewX(18deg); /* Opera */
+}
+
+#quesitoEspectaculos{
+    position: absolute;
+    top: 209px;
+    left: 420px;
+    transform:rotate(-18deg) skewX(18deg);
+    -ms-transform:rotate(-18deg) skewX(18deg); /* IE 9 */
+    -moz-transform:rotate(-18deg) skewX(18deg); /* Firefox */
+    -webkit-transform: rotate(-18deg) skewX(18deg);
+    -o-transform:rotate(-18deg) skewX(18deg)); /* Opera */
+}
+
+#quesitoLiteratura{
+    position: absolute;
+    top: 432px;
+    left: 489px;
+    transform:rotate(90deg) skewX(18deg);
+    -ms-transform:rotate(90deg) skewX(18deg); /* IE 9 */
+    -moz-transform:rotate(90deg) skewX(18deg); /* Firefox */
+    -webkit-transform:rotate(90deg) skewX(18deg); /* Safari and Chrome */
+    -o-transform:rotate(90deg) skewX(18deg); /* Opera */
+}
+
+#quesitoDeportes {
+    position: absolute;
+    top: 432px;
+    left: 719px;
+    transform:rotate(-162deg) skewX(18deg);
+    -ms-transform:rotate(-162deg) skewX(18deg); /* IE 9 */
+    -moz-transform:rotate(-162deg) skewX(18deg); /* Firefox */
+    -webkit-transform:rotate(-162deg) skewX(18deg); /* Safari and Chrome */
+    -o-transform:rotate(-162deg) skewX(18deg); /* Opera */
+}
+
+.lado1{
+    position: absolute;
+    width: auto;
+    height: auto;
+    transform:rotate(-36deg) skewY(-5deg);
+    -ms-transform:rotate(-36deg) skewY(-5deg); /* IE 9 */
+    -moz-transform:rotate(-36deg) skewY(-5deg); /* Firefox */
+    -webkit-transform:rotate(-36deg) skewY(-5deg); /* Safari and Chrome */
+    -o-transform:rotate(-36deg) skewY(-5deg); /* Opera */
+}
+
+#lado1-1{
+    left: 590px;
+    top: 105px;
+
+ }
+
+#lado1-2{
+    left: 568px;
+    top: 124px;
+}
+
+#lado1-3{
+    left: 546px;
+    top: 143px;
+}
+
+#lado1-4{
+    left: 525px;
+    top: 162px;
+}
+
+#lado1-5{
+    left: 503px;
+    top: 181px;
+}
+
+#lado1-6{
+    left: 480px;
+    top: 200px;
+}
+
+.lado2{
+    position: absolute;
+    width: auto;
+    height: auto;
+    transform:rotate(72deg);
+    -ms-transform:rotate(72deg); /* IE 9 */
+    -moz-transform:rotate(72deg); /* Firefox */
+    -webkit-transform:rotate(72deg); /* Safari and Chrome */
+    -o-transform:rotate(72deg); /* Opera */
+}
+
+#lado2-1{
+    top: 250px;
+    left: 461px;
+}
+
+#lado2-2{
+    top: 277px;
+    left: 469px;
+}
+
+#lado2-3{
+    top: 305px;
+    left: 478px;
+}
+
+#lado2-4{
+    top: 333px;
+    left: 487px;
+}
+
+#lado2-5{
+    top: 361px;
+    left: 495px;
+}
+
+#lado2-6{
+    top: 389px;
+    left: 504px;
+}
+
+.lado3{
+    position: absolute;
+    width: auto;
+    height: auto;
+    top: 421px;
+}
+
+#lado3-1{
+    left: 548px;
+
+}
+
+#lado3-2{
+    left: 577px;
+}
+
+#lado3-3{
+    left: 606px;
+}
+
+#lado3-4{
+    left: 634px;
+}
+
+#lado3-5{
+    left: 662px;
+}
+
+#lado3-6{
+    left: 691px;
+}
+
+.lado4{
+    position: absolute;
+    width: auto;
+    height: auto;
+    transform:rotate(-72deg);
+    -ms-transform:rotate(-72deg); /* IE 9 */
+    -moz-transform:rotate(-72deg); /* Firefox */
+    -webkit-transform:rotate(-72deg); /* Safari and Chrome */
+    -o-transform:rotate(-72deg); /* Opera */
+}
+
+#lado4-1{
+    top: 388px;
+    left: 737px;
+}
+
+#lado4-2{
+    top: 361px;
+    left: 746px;
+}
+
+#lado4-3{
+    top: 333px;
+    left: 755px;
+}
+
+#lado4-4{
+    top: 305px;
+    left: 764px;
+}
+
+#lado4-5{
+    top: 276px;
+    left: 774px;
+}
+
+#lado4-6{
+    top: 248px;
+    left: 783px;
+}
+
+.lado5{
+    position: absolute;
+    width: auto;
+    height: auto;
+    transform:rotate(36deg);
+    -ms-transform:rotate(36deg); /* IE 9 */
+    -moz-transform:rotate(36deg); /* Firefox */
+    -webkit-transform:rotate(36deg); /* Safari and Chrome */
+    -o-transform:rotate(36deg); /* Opera */
+}
+
+#lado5-1{
+    top: 194px;
+    left: 759px;
+}
+
+#lado5-2{
+    top: 176px;
+    left: 735px;
+}
+
+#lado5-3{
+    top: 158px;
+    left: 711px;
+}
+
+#lado5-4{
+    top: 140px;
+    left: 687px;
+}
+
+#lado5-5{
+    top: 122px;
+    left: 663px;
+}
+
+#lado5-6{
+    top: 104px;
+    left: 639px;
+}

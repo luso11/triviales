@@ -1,12 +1,13 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-    <title>Triviales</title>
-</head>
-<body>
-    <a href="register">
-        <input type="submit" name="button" value="Registrarse"/>
-    <a/>
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}
+    {{ title }}
+{% endblock %}
+{% block extra_javascript %}
+    <script type="text/javascript" src="{{ STATIC_URL }}home.js"></script>
+{% endblock %}
+{% block content %}
+    <div id="textoHome" >Bienvenido a TRIVIALES, una nueva manera de jugar socialmente.</div>
+    <img src="../static/1.png" id="imagenHome">
+    <input type="button" class="button" id="buttonRegistrar" value="Registrarse" onclick="registrar()"/>
+    <input type="button" class="button" id="buttonEntrar" value="Entrar" onclick="entrar()"/>
+{% endblock %}

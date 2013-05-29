@@ -6,28 +6,27 @@
  * To change this template use File | Settings | File Templates.
  */
 function comprobarClave(){
-    clave1 = document.f1.clave1.value
-    clave2 = document.f1.clave2.value
+    clave1 = document.forms["f1"].password1.value;
+    clave2 = document.forms["f1"].password2.value;
 
-    if (clave1 == clave2){
-        document.f1.submit()
+    if ((clave1 != "")){
+        if ((clave1 == clave2)){
+            document.getElementById("f1").submit();
+        }else{
+            alert("Las dos claves son distintas.");
+            return false
+        }
     }else{
-        alert("Las dos claves son distintas")
-        return false
-    }
-}
-
-function validarCorreo(correo){
-    if (/\S+@\S+\.\S+/.test(correo.value)){
-        return true
-    } else {
-        alert("La dirección de correo es incorrecta.");
+        alert("La contraseña no puede estar vacía.");
         return false
     }
 }
 
 function comprobar(){
-    if (validarCorreo(document.f1.correo)){
+    if (document.forms["f1"].username.value == ""){
+        alert("El nombre de usuario no puede estar vacío.");
+        return false
+    }else{
         comprobarClave();
     }
 }

@@ -1,0 +1,286 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block extra_javascript %}
+    <script type="text/javascript" src="{{ STATIC_URL }}actualGame.js"></script>
+    <script type="text/javascript">
+        function cambiaTurno(){
+            document.getElementById("dado").setAttribute();
+            var url = location.href;
+            var trozos = url.split("/");
+            $.ajax({
+                type: "post",
+                url: "/cambia_turno",
+                data: {'id':trozos[4],
+                       'posicionActualUsuario':document.getElementById('posicionActualUsuario').value,
+                       'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                success: function(data) {
+                    alert("Espere a que juegue el otro jugador.");
+                }
+            });
+            document.getElementById("turno").value = "False";
+            document.getElementById("piezaJugador").firstElementChild.removeAttribute("animation");
+        }
+
+        var respuestaCorrecta;
+        function clickado(id,tipo){
+            //Quitamos la marca de posible movimiento y ponemos la ficha aquí.
+            actualizaPosicion(id);
+            //Request
+            $.ajax({
+                type: "get",
+                url: "/pregunta",
+                data: {'tipo':tipo,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                success: function(data) {
+                    //Recibimos la información de la pregunta del servidor.
+                    //La mostramos en el espacio para ello.
+                    document.getElementById("pregunta").innerHTML=data['pregunta'];
+                    //TODO:randomizar posición de la respuesta correcta.
+                    respuestaCorrecta = data['respuesta_correcta'];
+                    posRespCorrecta = Math.floor((Math.random()*4)+1);
+                    document.getElementById("respuesta"+posRespCorrecta).innerHTML=data['respuesta_correcta'];
+                    for (i = 1; i < 4; i++){
+                        if (document.getElementById("respuesta"+i).innerHTML == ""){
+                            document.getElementById("respuesta"+i).innerHTML=data['respuesta_incorrecta'+i];
+                        }else{
+                            elemento = "respuesta"+String(i+1);
+                            document.getElementById(elemento).innerHTML=data['respuesta_incorrecta'+i];
+                        }
+                    }
+                    //Sacamos el lightbox con la pregunta.
+                    document.getElementById('light').style.display='block';
+                    document.getElementById('fade').style.display='block';
+                }
+            });
+        }
+
+        function resuelve(respuesta){
+            respuestaSeleccionada = document.getElementById("respuesta"+respuesta).innerHTML.toString();
+            cargaCasillas();
+            cargaQuesitos();
+            if (respuestaSeleccionada == respuestaCorrecta){
+                //marca en verde y quitar el lightbox
+                document.getElementById('respuesta'+respuesta).style.background='green';
+                window.setTimeout('quitaLightbox('+respuesta+')',2000);
+                //Guardar nueva posicion
+                var url = location.href;
+                var trozos = url.split("/");
+                $.ajax({
+                    type: "post",
+                    url: "/posicion",
+                    data: {'posicion':document.getElementById('posicionActualUsuario').value,
+                        'id':trozos[4],
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                    success: function(data) {
+                        //Si actualizamos correctamente pintamos la nueva posicion
+                        pintaNuevaPosicion();
+                    }
+                });
+                var posicion = arrayQuesitosID.indexOf(parseInt(document.getElementById('posicionActualUsuario').value));
+                if (posicion > -1){
+                    var clase = document.getElementById(document.getElementById('posicionActualUsuario').value).firstElementChild.className;
+                    var url = location.href;
+                    var trozos = url.split("/");
+                    $.ajax({
+                        type: "post",
+                        url: "/rombito",
+                        data: {'clase':clase,
+                            'id':trozos[4],
+                            'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                        success: function(data) {
+                            if (data == 'ok'){
+                                pintaFichas();
+                                alert('Enhorabuena!!! Has conseguido el rombito de '+ clase);
+                            }else if (data ='fin'){
+                                alert('Enhorabuena!!! Has ganado la partida.')
+                                finPartida();
+                            }
+                        }
+                    });
+                }
+                //Volver a lanzar el dado.
+                girarDado();
+            }else{
+                //Marcamos como incorrecta
+                document.getElementById('respuesta'+respuesta).style.background='red';
+                //esperar dos segundos antes de borrar el lightbox
+                window.setTimeout('quitaLightbox('+respuesta+')',2000);
+                //Quitamos el dado
+                document.getElementById("dado").hidden = "hidden";
+                //Cambiamos el turno en el servidor.
+                cambiaTurno();
+            }
+        }
+
+        function pintaFichas(){
+            var url = location.href;
+            var trozos = url.split("/");
+            $.ajax({
+                type: "get",
+                url: "/fichas",
+                data: {'id':trozos[4]},
+                success: function(data) {
+                    pintaFichaOponente(data['rombitos2']);
+                    pintaFichaUsuario(data['rombitos1']);
+                }
+            });
+        }
+    </script>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}tablero.css">
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}actualGame.css">
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}cubo.css">
+{% endblock %}
+{% block content %}
+    <div id="contenidoTablero">
+    <input hidden="hidden" id="posicionActualUsuario" name="posicionActualUsuario" value="{{ posicionActualUsuario }}"/>
+    <input hidden="hidden" id="posicionActualOtro" name="posicionActualOtro" value="{{ posicionActualOtro }}"/>
+    <input type="hidden" id="turno" name="turno" value="{{ turno }}"/>
+    <div class="dado" id="dado"></div>
+    <div id="tablero">
+        <div id="1">
+            <canvas id="quesitoHistoria" class="Historia" width="60" height="60"></canvas>
+        </div>
+        <div id="lado1-1" class="lado1">
+            <canvas id="2" class="Espectaculos" width="30" height="50"></canvas>
+        </div>
+        <div id="lado1-2" class="lado1">
+            <canvas id="3" class="Literatura" width="30" height="50"></canvas>
+        </div>
+        <div id="lado1-3" class="lado1">
+            <canvas id="4" class="tiraOtraVez" width="30" height="50"></canvas>
+        </div>
+        <div id="lado1-4" class="lado1">
+            <canvas id="5" class="Ciencia" width="30" height="50"></canvas>
+        </div>
+        <div id="lado1-5" class="lado1">
+            <canvas id="6" class="Deportes" width="30" height="50"></canvas>
+        </div>
+        <div id="lado1-6" class="lado1">
+            <canvas id="7" class="Historia" width="30" height="50"></canvas>
+        </div>
+
+        <div id="8">
+            <canvas id="quesitoEspectaculos" class="Espectaculos" width="60" height="60"></canvas>
+        </div>
+
+        <div id="lado2-1" class="lado2">
+            <canvas id="9" class="Literatura" width="30" height="50"></canvas>
+        </div>
+        <div id="lado2-2" class="lado2">
+            <canvas id="10" class="Ciencia" width="30" height="50"></canvas>
+        </div>
+        <div id="lado2-3" class="lado2">
+            <canvas id="11" class="Deportes" width="30" height="50"></canvas>
+        </div>
+        <div id="lado2-4" class="lado2">
+            <canvas id="12" class="tiraOtraVez" width="30" height="50"></canvas>
+        </div>
+        <div id="lado2-5" class="lado2">
+            <canvas id="13" class="Historia" width="30" height="50"></canvas>
+        </div>
+        <div id="lado2-6" class="lado2">
+            <canvas id="14" class="Espectaculos" width="30" height="50"></canvas>
+        </div>
+
+        <div id="15">
+            <canvas id="quesitoLiteratura" class="Literatura" width="60" height="60"></canvas>
+        </div>
+
+        <div id="lado3-1" class="lado3">
+            <canvas id="16" class="Deportes" width="30" height="50"></canvas>
+        </div>
+        <div id="lado3-2" class="lado3">
+            <canvas id="17" class="Historia" width="30" height="50"></canvas>
+        </div>
+        <div id="lado3-3" class="lado3">
+            <canvas id="18" class="Ciencia" width="30" height="50"></canvas>
+        </div>
+        <div id="lado3-4" class="lado3">
+            <canvas id="19" class="tiraOtraVez" width="30" height="50"></canvas>
+        </div>
+        <div id="lado3-5" class="lado3">
+            <canvas id="20" class="Literatura" width="30" height="50"></canvas>
+        </div>
+        <div id="lado3-6" class="lado3">
+            <canvas id="21" class="Espectaculos" width="30" height="50"></canvas>
+        </div>
+
+        <div id="22">
+            <canvas id="quesitoDeportes" class="Deportes" width="60" height="60"></canvas>
+        </div>
+
+        <div id="lado4-1" class="lado4">
+            <canvas id="23" class="Ciencia" width="30" height="50"></canvas>
+        </div>
+        <div id="lado4-2" class="lado4">
+            <canvas id="24" class="Espectaculos" width="30" height="50"></canvas>
+        </div>
+        <div id="lado4-3" class="lado4">
+            <canvas id="25" class="tiraOtraVez" width="30" height="50"></canvas>
+        </div>
+        <div id="lado4-4" class="lado4">
+            <canvas id="26" class="Historia" width="30" height="50"></canvas>
+        </div>
+        <div id="lado4-5" class="lado4">
+            <canvas id="27" class="Literatura" width="30" height="50"></canvas>
+        </div>
+        <div id="lado4-6" class="lado4">
+            <canvas id="28" class="Deportes" width="30" height="50"></canvas>
+        </div>
+
+        <div id="29">
+            <canvas id="quesitoCiencia" class="Ciencia" width="60" height="60"></canvas>
+        </div>
+
+        <div id="lado5-1" class="lado5">
+            <canvas id="30" class="Espectaculos" width="30" height="50"></canvas>
+        </div>
+        <div id="lado5-2" class="lado5">
+
+            <canvas id="31" class="Historia" width="30" height="50"></canvas>
+        </div>
+        <div id="lado5-3" class="lado5">
+            <canvas id="32" class="tiraOtraVez" width="30" height="50"></canvas>
+        </div>
+        <div id="lado5-4" class="lado5">
+            <canvas id="33" class="Ciencia" width="30" height="50"></canvas>
+        </div>
+        <div id="lado5-5" class="lado5">
+            <canvas id="34" class="Deportes" width="30" height="50"></canvas>
+        </div>
+        <div id="lado5-6" class="lado5">
+            <canvas id="35" class="Literatura" width="30" height="50"></canvas>
+        </div>
+    </div>
+
+    <div id="light" class="white_content">
+        <h1 id="pregunta"></h1>
+        <button id="respuesta1" class="botonRespuesta" onclick="resuelve(1)"></button>
+        <button id="respuesta2" class="botonRespuesta" onclick="resuelve(2)"></button>
+        <button id="respuesta3" class="botonRespuesta" onclick="resuelve(3)"></button>
+        <button id="respuesta4" class="botonRespuesta" onclick="resuelve(4)"></button>
+    </div>
+    <div id="fade" class="black_overlay"></div>
+    </div>
+
+    <div id="piezaJugador" class="piezaJugador"><p>▼</p></div>
+    <div id="piezaRival" class="piezaRival"><p>▼</p></div>
+
+
+    <div id="piezaLocal">
+        <h2>{{ usuario }}</h2>
+        <canvas id="piezaLocalRombitoCiencia" height="40px" width="20px"></canvas>
+        <canvas id="piezaLocalRombitoHistoria" height="40px" width="20px"></canvas>
+        <canvas id="piezaLocalRombitoDeportes" height="40px" width="20px"></canvas>
+        <canvas id="piezaLocalRombitoEspectaculos" height="40px" width="20px"></canvas>
+        <canvas id="piezaLocalRombitoLiteratura" height="40px" width="20px"></canvas>
+    </div>
+    <div id="piezaRemota">
+        <h2>{{ rival }}</h2>
+        <canvas id="piezaRemotaRombitoCiencia" height="40px" width="20px"></canvas>
+        <canvas id="piezaRemotaRombitoHistoria" height="40px" width="20px"></canvas>
+        <canvas id="piezaRemotaRombitoDeportes" height="40px" width="20px"></canvas>
+        <canvas id="piezaRemotaRombitoEspectaculos" height="40px" width="20px"></canvas>
+        <canvas id="piezaRemotaRombitoLiteratura" height="40px" width="20px"></canvas>
+    </div>
+{% endblock %}

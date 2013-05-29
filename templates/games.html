@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block extra_javascript %}
+    <script type="text/javascript" src="{{ STATIC_URL }}game.js"></script>
+    <script type="text/javascript">
+        function borrado(id){
+            if (confirm("¿Está seguro de que desea eliminar la partida seleccionada?")) {
+                //Borramos la partida
+                $.ajax({
+                    type: "post",
+                    url: "/borrar",
+                    data: {'id':id,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                    success: function(data) {
+                        alert("Partida borrada correctamente.");
+                        //Recargamos la pantalla
+                        location.reload(true);
+                    }
+                });
+            }
+        }
+    </script>
+{% endblock %}
+{% block content %}
+    <div id="contenido">
+    <div id="continente">
+        <div id="listadoPartidas">
+            <ul>
+            {% if not games_list_juega1 and not games_list_juega2 and not games_list_espera1 and not games_list_espera2 %}
+                <p id="textoPartidas">No tienes partidas actualmente.</p>
+            {% else %}
+                <p id="textoPartidas">Partidas que tienes que jugar:</p>
+                {% if games_list_juega1 or games_list_juega2%}
+                    <table>
+                        {% for game in games_list_juega1 %}
+                            <tr>
+                                <td><a href="/partida/{{ game.id }}/">Partida con {{ game.user2 }}</a></td>
+                                <td><img onclick="borrado({{ game.id }})" src="/static/papelera.png"></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% endif %}
+                {% if games_list_juega2 %}
+                    <table>
+                        {% for game in games_list_juega2 %}
+                            <tr>
+                                <td><a href="/partida/{{ game.id }}/">Partida con {{ game.user1 }}</a></td>
+                                <td><img onclick="borrado({{ game.id }})" src="/static/papelera.png"></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% endif %}
+                {% if games_list_espera1 or games_list_espera2 %}
+                    <p id="textoPartidas">Partidas en espera del otro jugador:</p>
+                    <table>
+                    {% for game in games_list_espera1 %}
+                            <tr>
+                            <td><a href="/partida/{{ game.id }}/">Partida con {{ game.user2 }}</a></td>
+                            <td><img onclick="borrado({{ game.id }})" src="/static/papelera.png"></td>
+                            </tr>
+                    {% endfor %}
+                    </table>
+                    <table>
+                        {% for game in games_list_espera2 %}
+                            <tr>
+                                <td><a href="/partida/{{ game.id }}/">Partida con {{ game.user1 }}</a></td>
+                                <td><img onclick="borrado({{ game.id }})" src="/static/papelera.png"></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% endif %}
+            {% endif %}
+            </ul>
+        <input type="button" class="button" id="buttonNuevaPartida" value="Crear nueva partida" onclick="newgame()">
+        </div>
+    </div>
+    </div>
+{% endblock %}
