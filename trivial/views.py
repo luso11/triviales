@@ -1,6 +1,7 @@
 # Create your views here.
 # -*- encoding: utf-8 -*-
 from re import T
+from django.core.context_processors import request
 
 from django.http import HttpResponseRedirect,HttpResponse
 from django.template import RequestContext
@@ -129,7 +130,6 @@ def actualGame(request,id):
                 turno = True
             else:
                 turno = False
-
         return render_to_response('actualGame.html',{'turno':turno,
                                                  'posicionActualUsuario':posicionActualUsuario,
                                                  'usuario':usuario,
@@ -172,8 +172,8 @@ def newgame(request):
 
 def creaPartida(request,user1,user2):
     game = Game.objects.create(user1=user1,user2=user2,pos1=1,pos2=1,
-        rombitos1 = simplejson.dumps({"Ciencia":0, "Deporte":0, "Historia":0, "Espectaculos":0, "Literatura":0}),
-        rombitos2 = simplejson.dumps({"Ciencia":0, "Deporte":0, "Historia":0, "Espectaculos":0, "Literatura":0}),
+        rombitos1 = simplejson.dumps({"Ciencia":0, "Deportes":0, "Historia":0, "Espectaculos":0, "Literatura":0}),
+        rombitos2 = simplejson.dumps({"Ciencia":0, "Deportes":0, "Historia":0, "Espectaculos":0, "Literatura":0}),
         turno=1)
     return HttpResponseRedirect('/partida/'+str(game.id))
 
@@ -233,8 +233,9 @@ def rombito(request):
             partida.rombitos2 = simplejson.dumps(rombitos)
 
         partida.save()
-        if ((rombitos["Historia"] == 1) & (rombitos["Ciencia"] == 1) & (rombitos["Literatura"] == 1) &
-            (rombitos["Espectáculos"] == 1) & (rombitos["Deporte"] == 1)):
+        if ((rombitos["Historia"] == 1) and (rombitos["Ciencia"] == 1) and (rombitos["Literatura"] == 1) and
+            (rombitos["Espectaculos"] == 1) and (rombitos["Deportes"] == 1)):
+            partida.turno = 0;
             return HttpResponse('fin')
         else:
             return HttpResponse('ok')
@@ -258,9 +259,17 @@ def borrar(request):
     if not request.user.is_authenticated():
         return login(request)
     elif request.method == "POST":
-        print request.POST['id']
         game = Game.objects.get(id=request.POST['id'])
-        print game
         game.delete()
-        print "ok"
         return HttpResponse('ok')
+
+def posicion(request):
+    if not request.user.is_authenticated():
+        return login(request)
+    elif request.method == "POST":
+        game = Game.objects.get(id=request.POST['id'])
+        if (request.user == game.user1):
+            game.pos1 = request.POST['posicion']
+        else:
+            game.pos2 = request.POST['posicion']
+    return HttpResponse('ok')

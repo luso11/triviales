@@ -4,7 +4,7 @@
     <script type="text/javascript" src="{{ STATIC_URL }}actualGame.js"></script>
     <script type="text/javascript">
         function cambiaTurno(){
-            document.getElementById("dado").setAttribute()
+            document.getElementById("dado").setAttribute();
             var url = location.href;
             var trozos = url.split("/");
             $.ajax({
@@ -53,15 +53,29 @@
                 }
             });
         }
+
         function resuelve(respuesta){
             respuestaSeleccionada = document.getElementById("respuesta"+respuesta).innerHTML.toString();
             cargaCasillas();
             cargaQuesitos();
-            pintaNuevaPosicion();
             if (respuestaSeleccionada == respuestaCorrecta){
                 //marca en verde y quitar el lightbox
                 document.getElementById('respuesta'+respuesta).style.background='green';
                 window.setTimeout('quitaLightbox('+respuesta+')',2000);
+                //Guardar nueva posicion
+                var url = location.href;
+                var trozos = url.split("/");
+                $.ajax({
+                    type: "post",
+                    url: "/posicion",
+                    data: {'posicion':document.getElementById('posicionActualUsuario').value,
+                        'id':trozos[4],
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                    success: function(data) {
+                        //Si actualizamos correctamente pintamos la nueva posicion
+                        pintaNuevaPosicion();
+                    }
+                });
                 var posicion = arrayQuesitosID.indexOf(parseInt(document.getElementById('posicionActualUsuario').value));
                 if (posicion > -1){
                     var clase = document.getElementById(document.getElementById('posicionActualUsuario').value).firstElementChild.className;
@@ -75,9 +89,11 @@
                             'csrfmiddlewaretoken': '{{ csrf_token }}'},
                         success: function(data) {
                             if (data == 'ok'){
+                                pintaFichas();
                                 alert('Enhorabuena!!! Has conseguido el rombito de '+ clase);
                             }else if (data ='fin'){
                                 alert('Enhorabuena!!! Has ganado la partida.')
+                                finPartida();
                             }
                         }
                     });
@@ -255,7 +271,7 @@
         <h2>{{ usuario }}</h2>
         <canvas id="piezaLocalRombitoCiencia" height="40px" width="20px"></canvas>
         <canvas id="piezaLocalRombitoHistoria" height="40px" width="20px"></canvas>
-        <canvas id="piezaLocalRombitoDeporte" height="40px" width="20px"></canvas>
+        <canvas id="piezaLocalRombitoDeportes" height="40px" width="20px"></canvas>
         <canvas id="piezaLocalRombitoEspectaculos" height="40px" width="20px"></canvas>
         <canvas id="piezaLocalRombitoLiteratura" height="40px" width="20px"></canvas>
     </div>
@@ -263,7 +279,7 @@
         <h2>{{ rival }}</h2>
         <canvas id="piezaRemotaRombitoCiencia" height="40px" width="20px"></canvas>
         <canvas id="piezaRemotaRombitoHistoria" height="40px" width="20px"></canvas>
-        <canvas id="piezaRemotaRombitoDeporte" height="40px" width="20px"></canvas>
+        <canvas id="piezaRemotaRombitoDeportes" height="40px" width="20px"></canvas>
         <canvas id="piezaRemotaRombitoEspectaculos" height="40px" width="20px"></canvas>
         <canvas id="piezaRemotaRombitoLiteratura" height="40px" width="20px"></canvas>
     </div>

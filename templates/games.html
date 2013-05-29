@@ -26,28 +26,47 @@
     <div id="continente">
         <div id="listadoPartidas">
             <ul>
-            {% if not games_list_enviados and not games_list_recibidos %}
+            {% if not games_list_juega1 and not games_list_juega2 and not games_list_espera1 and not games_list_espera2 %}
                 <p id="textoPartidas">No tienes partidas actualmente.</p>
             {% else %}
                 <p id="textoPartidas">Partidas que tienes que jugar:</p>
-                {% if games_list_enviados %}
+                {% if games_list_juega1 or games_list_juega2%}
                     <table>
-                        {% for game in games_list_enviados %}
+                        {% for game in games_list_juega1 %}
                             <tr>
-                                <td><a href="/partida/{{ game.id }}/">Partida con {{ game.user1 }}</a></td>
-                                <td><img onclick="borrado({{ game.id }})" src="/static/1.png"></td>
+                                <td><a href="/partida/{{ game.id }}/">Partida con {{ game.user2 }}</a></td>
+                                <td><img onclick="borrado({{ game.id }})" src="/static/papelera.png"></td>
                             </tr>
                         {% endfor %}
                     </table>
                 {% endif %}
-                {% if games_list_recibidos %}
+                {% if games_list_juega2 %}
                     <table>
-                    {% for game in games_list_recibidos %}
+                        {% for game in games_list_juega2 %}
                             <tr>
-                            <td><a href="/partida/{{ game.id }}/">Partida con {{ game.user1 }}</a></td>
-                            <td><a href="/borrar/{{ game.id }}/"><img src="/static/1.png"></a></td>
+                                <td><a href="/partida/{{ game.id }}/">Partida con {{ game.user1 }}</a></td>
+                                <td><img onclick="borrado({{ game.id }})" src="/static/papelera.png"></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% endif %}
+                {% if games_list_espera1 or games_list_espera2 %}
+                    <p id="textoPartidas">Partidas en espera del otro jugador:</p>
+                    <table>
+                    {% for game in games_list_espera1 %}
+                            <tr>
+                            <td><a href="/partida/{{ game.id }}/">Partida con {{ game.user2 }}</a></td>
+                            <td><img onclick="borrado({{ game.id }})" src="/static/papelera.png"></td>
                             </tr>
                     {% endfor %}
+                    </table>
+                    <table>
+                        {% for game in games_list_espera2 %}
+                            <tr>
+                                <td><a href="/partida/{{ game.id }}/">Partida con {{ game.user1 }}</a></td>
+                                <td><img onclick="borrado({{ game.id }})" src="/static/papelera.png"></td>
+                            </tr>
+                        {% endfor %}
                     </table>
                 {% endif %}
             {% endif %}

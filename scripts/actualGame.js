@@ -7,6 +7,25 @@
  */
 var tiempo;
 var arrayQuesitosID = [1,8,15,22,29];
+var imagenes=new Array()
+
+imagenes[0]= new Image(100,100);
+imagenes[0].src = "/static/1.png";
+
+imagenes[1]= new Image(100,100);
+imagenes[1].src = "/static/2.png";
+
+imagenes[2]= new Image(100,100);
+imagenes[2].src = "/static/3.png";
+
+imagenes[3]= new Image(100,100);
+imagenes[3].src = "/static/4.png";
+
+imagenes[4]= new Image(100,100);
+imagenes[4].src = "/static/5.png";
+
+imagenes[5]= new Image(100,100);
+imagenes[5].src = "/static/6.png";
 
 function pintaPosicionesPosibles(posicionMayor, posicionMenor){
     if (arrayQuesitosID.indexOf(posicionMayor) > -1){
@@ -80,8 +99,8 @@ function tirar(){
     //Evitamos que se pueda tirar otra vez
     document.getElementById('dado').onclick=null;
     //Generamos el número que marcará el dado y lo pintamos
-    num = Math.floor((Math.random()*6)+1);
-    document.getElementById('dado').style.backgroundImage =imagenes[num];
+    var num = Math.round((Math.random()*6)+1);
+    document.getElementById('dado').style.backgroundImage ="url("+imagenes[num-1].src+")";
     //Marcamos las casillas donde podemos ir
     calculaPosicion(num);
 }
@@ -182,26 +201,6 @@ function actualizaPosicion(id){
     document.getElementById('posicionActualUsuario').value = id;
 }
 
-var imagenes=new Array()
-
-imagenes[0]= new Image(100,100);
-imagenes[0].src = "/static/1.png";
-
-imagenes[1]= new Image(100,100);
-imagenes[1].src = "/static/2.png";
-
-imagenes[2]= new Image(100,100);
-imagenes[2].src = "/static/3.png";
-
-imagenes[3]= new Image(100,100);
-imagenes[3].src = "/static/4.png";
-
-imagenes[4]= new Image(100,100);
-imagenes[4].src = "/static/5.png";
-
-imagenes[5]= new Image(100,100);
-imagenes[5].src = "/static/6.png";
-
 function quitaClicks(){
     allCanvasTags = document.getElementsByTagName("canvas");
     for (i=0; i<allCanvasTags.length; i++) {
@@ -241,7 +240,8 @@ function pintaNuevaPosicion(){
     var style = window.getComputedStyle(obj);
     var arriba = style.getPropertyValue('top');
     var izquierda = style.getPropertyValue('left');
-    if (document.getElementById('posicionActualOtro').value != 1){
+
+    if (document.getElementById('posicionActualUsuario').value != 1){
         var arribaModificado = (parseInt(arriba.substr(0,3))-30).toString()+"px";
     }else{
         var arribaModificado = (parseInt(arriba.substr(0,2))-30).toString()+"px";
@@ -271,7 +271,7 @@ function pintaPosicionOponente(){
     document.getElementById("piezaRival").firstElementChild.style.left = izquierda;
 }
 
-function pintaFichaUsuario(datos){
+function pintaFichaOponente(datos){
     var data = JSON.parse(datos);
     for (var i = 0; i < 5; i++){
         if (i==0){
@@ -332,7 +332,7 @@ function pintaFichaUsuario(datos){
             contexto.fill();
         }
         if (i==3){
-            var contexto = document.getElementById("piezaRemotaRombitoDeporte").getContext("2d");
+            var contexto = document.getElementById("piezaRemotaRombitoDeportes").getContext("2d");
             contexto.beginPath();
             //Nos colocamos en el centro del canvas
             contexto.moveTo(10,0);
@@ -342,7 +342,7 @@ function pintaFichaUsuario(datos){
             contexto.lineTo(10,0);
             contexto.lineWidth = 5;
             contexto.strokeStyle = "#34A6E3";
-            if (data.Deporte == 1){
+            if (data.Deportes == 1){
                 contexto.fillStyle = "#34A6E3";
             }else{
                 contexto.fillStyle = "grey";
@@ -372,7 +372,7 @@ function pintaFichaUsuario(datos){
     }
 }
 
-function pintaFichaOponente(datos){
+function pintaFichaUsuario(datos){
     var data = JSON.parse(datos);
     for (var i = 0; i < 5; i++){
         if (i==0){
@@ -433,7 +433,7 @@ function pintaFichaOponente(datos){
             contexto.fill();
         }
         if (i==3){
-            var contexto = document.getElementById("piezaLocalRombitoDeporte").getContext("2d");
+            var contexto = document.getElementById("piezaLocalRombitoDeportes").getContext("2d");
             contexto.beginPath();
             //Nos colocamos en el centro del canvas
             contexto.moveTo(10,0);
@@ -443,7 +443,7 @@ function pintaFichaOponente(datos){
             contexto.lineTo(10,0);
             contexto.lineWidth = 5;
             contexto.strokeStyle = "#34A6E3";
-            if (data.Deporte == 1){
+            if (data.Deportes == 1){
                 contexto.fillStyle = "#34A6E3";
             }else{
                 contexto.fillStyle = "grey";
@@ -471,4 +471,9 @@ function pintaFichaOponente(datos){
             contexto.fill();
         }
     }
+}
+
+function finPartida(){
+    quitaClicks();
+    document.getElementById("dado").setAttribute()
 }
