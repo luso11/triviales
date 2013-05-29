@@ -74,7 +74,9 @@ STATICFILES_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     'scripts',
-    'css'
+    'css',
+    'images',
+    'font'
 )
 
 # List of finder classes that know how to find static files in
@@ -120,6 +122,8 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'triviales.trivial',
 )
+
+LOGIN_REDIRECT_URL = '/games'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

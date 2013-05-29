@@ -1,0 +1,32 @@
+<!DOCTYPE HTML >
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <title> {% block title %}{{ title }}{% endblock %} </title>
+    {% block extraHead %}{% endblock %}
+</head>
+<body {% block extra_body %}{% endblock %}>
+    <script type="text/javascript" src="{{ STATIC_URL }}jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}base.js"></script>
+    {% block extra_javascript %} {% endblock %}
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}base.css">
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}styles.css">
+    <header id="barraMenu">
+        <h1 id="logoCabecera">TRIVIALES</h1>
+    {% if not logout %}
+        <input type="button" class="button" id="logout" value="Logout" onclick="logout()">
+    {% endif %}
+    {% if not volver %}
+        <input type="button" class="button" id="botonVolver" value="Volver" onclick="volver()">
+    {% endif %}
+    </header>
+    {% block content %} {% endblock %}
+    </div>
+    <footer>
+        <nav>
+            <p>
+                <a href="mailto:luisluso89@gmail.com" target="_blank">Contacto</a>
+            </p>
+        </nav>
+    </footer>
+</body>
+</html>
