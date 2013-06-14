@@ -78,11 +78,17 @@ function pintaPosicionesPosibles(posicionMayor, posicionMenor){
     context1.arc(15, 20, 10, 0, 2 * Math.PI, false);
     context1.fillStyle = 'white';
     context1.fill();
+    context1.lineWidth = 3
+    context1.strokeStyle = "blue"
+    context1.stroke();
 
     context2.beginPath();
     context2.arc(15, 20, 10, 0, 2 * Math.PI, false);
     context2.fillStyle = 'white';
     context2.fill();
+    context2.lineWidth = 3
+    context2.strokeStyle = "blue"
+    context2.stroke();
 }
 
 function calculaPosicion(tirada){
