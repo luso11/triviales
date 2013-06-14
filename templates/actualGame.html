@@ -14,6 +14,7 @@
                        'posicionActualUsuario':document.getElementById('posicionActualUsuario').value,
                        'csrfmiddlewaretoken': '{{ csrf_token }}'},
                 success: function(data) {
+                    pintaNuevaPosicion();
                     alert("Espere a que juegue el otro jugador.");
                 }
             });
@@ -90,9 +91,9 @@
                         success: function(data) {
                             if (data == 'ok'){
                                 pintaFichas();
-                                alert('Enhorabuena!!! Has conseguido el rombito de '+ clase);
-                            }else if (data ='fin'){
-                                alert('Enhorabuena!!! Has ganado la partida.')
+                                alert('¡¡¡Enhorabuena!!! Has conseguido el rombito de '+ clase);
+                            }else if (data =='fin'){
+                                alert('¡¡¡Enhorabuena!!! Has ganado la partida.')
                                 finPartida();
                             }
                         }

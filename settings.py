@@ -1,7 +1,7 @@
 # Django settings for triviales project.
 
-DEBUG = True
-TEMPLATE_DEBUG = DEBUG
+DEBUG = False
+#TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
     ('Luis Alonso', 'lusopfc@triviales.es'),

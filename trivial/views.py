@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
 from django.utils import simplejson
 from django.contrib import auth
+from django.http import Http404
 import random
 
 #Pagina inicial
@@ -110,32 +111,35 @@ def actualGame(request,id):
         return HttpResponseRedirect("/login")
     else:
     #1.- cargar partida de bbdd
-        partida = Game.objects.get(id = id)
-        #2.- comprobar turno y colocar posiciones
-        if (request.user == partida.user1):
-            posicionActualUsuario = partida.pos1
-            posicionActualOtro = partida.pos2
-            usuario = partida.user1
-            rival = partida.user2
-            if partida.turno == 1:
-                turno = True
+        try:
+            partida = Game.objects.get(id = id)
+            #2.- comprobar turno y colocar posiciones
+            if (request.user == partida.user1):
+                posicionActualUsuario = partida.pos1
+                posicionActualOtro = partida.pos2
+                usuario = partida.user1
+                rival = partida.user2
+                if partida.turno == 1:
+                    turno = True
+                else:
+                    turno = False
             else:
-                turno = False
-        else:
-            posicionActualUsuario = partida.pos2
-            posicionActualOtro = partida.pos1
-            usuario = partida.user2
-            rival = partida.user1
-            if partida.turno == 2 :
-                turno = True
-            else:
-                turno = False
-        return render_to_response('actualGame.html',{'turno':turno,
+                posicionActualUsuario = partida.pos2
+                posicionActualOtro = partida.pos1
+                usuario = partida.user2
+                rival = partida.user1
+                if partida.turno == 2 :
+                    turno = True
+                else:
+                    turno = False
+            return render_to_response('actualGame.html',{'turno':turno,
                                                  'posicionActualUsuario':posicionActualUsuario,
                                                  'usuario':usuario,
                                                  'rival':rival,
                                                  'posicionActualOtro':posicionActualOtro},
                                                   context_instance = RequestContext(request))
+        except:
+            return HttpResponseRedirect('/')
 
 def oponenteAleatorio(request):
     total = User.objects.count()
@@ -199,7 +203,7 @@ def pregunta(request):
                                     "respuesta_incorrecta3":pregunta.wrong_answer_3,})
             return HttpResponse(json,mimetype ='application/json')
         except:
-            return HttpResponse("error")
+            raise Http404
 
 def cambia_turno(request):
     if request.method == "POST":
