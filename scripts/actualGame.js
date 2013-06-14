@@ -7,7 +7,10 @@
  */
 var tiempo;
 var arrayQuesitosID = [1,8,15,22,29];
-var imagenes=new Array()
+var canvasPosicionMayor = null;
+var canvasPosicionMenor = null;
+
+var imagenes=new Array();
 
 imagenes[0]= new Image(100,100);
 imagenes[0].src = "/static/1.png";
@@ -37,6 +40,7 @@ function pintaPosicionesPosibles(posicionMayor, posicionMenor){
                 clickTiraOtraVez(posicionMayor);
             }
         }
+        canvasPosicionMayor = document.getElementById(posicionMayor).firstElementChild;
     }else{
         var context1 = document.getElementById(posicionMayor).getContext('2d');
         document.getElementById(posicionMayor).onclick = function(){
@@ -46,6 +50,7 @@ function pintaPosicionesPosibles(posicionMayor, posicionMenor){
                 clickTiraOtraVez(posicionMayor);
             }
         }
+        canvasPosicionMayor = document.getElementById(posicionMayor);
     }
     if (arrayQuesitosID.indexOf(posicionMenor) > -1){
         var context2 = document.getElementById(posicionMenor).firstElementChild.getContext('2d');
@@ -56,6 +61,7 @@ function pintaPosicionesPosibles(posicionMayor, posicionMenor){
                 clickTiraOtraVez(posicionMenor);
             }
         }
+        canvasPosicionMenor = document.getElementById(posicionMenor).firstElementChild;
     }else{
         var context2 = document.getElementById(posicionMenor).getContext('2d');
         document.getElementById(posicionMenor).onclick = function(){
@@ -65,23 +71,18 @@ function pintaPosicionesPosibles(posicionMayor, posicionMenor){
                 clickTiraOtraVez(posicionMenor);
             }
         }
+        canvasPosicionMenor = document.getElementById(posicionMenor);
     }
 
     context1.beginPath();
     context1.arc(15, 20, 10, 0, 2 * Math.PI, false);
     context1.fillStyle = 'white';
     context1.fill();
-    context1.lineWidth = 3;
-    context1.strokeStyle = 'blue';
-    context1.stroke();
 
     context2.beginPath();
     context2.arc(15, 20, 10, 0, 2 * Math.PI, false);
     context2.fillStyle = 'white';
     context2.fill();
-    context2.lineWidth = 3;
-    context2.strokeStyle = 'blue';
-    context2.stroke();
 }
 
 function calculaPosicion(tirada){
@@ -119,9 +120,8 @@ function cargaQuesitos(){
         var objetoCanvas = document.getElementById(quesitos[quesito]);
         if(objetoCanvas.getContext){
             var context = objetoCanvas.getContext('2d');
+            context.clearRect(0, 0, 60, 60);
             context.beginPath();
-            var text;
-            //Nos colocamos en el centro del canvas
             context.rect(0,0,60,60);
             if (quesitos[quesito] == "quesitoHistoria"){
                 context.fillStyle = "yellow";
@@ -143,6 +143,11 @@ function cargaQuesitos(){
 }
 
 function cargaCasillas(){
+    //limpiamos los canvas de las posiciones anteriores
+    if ((canvasPosicionMayor != null) && (canvasPosicionMenor != null)) {
+        canvasPosicionMayor.width = canvasPosicionMayor.width;
+        canvasPosicionMenor.width = canvasPosicionMenor.width;
+    }
     // Creamos un array con todas las etiquetas canvas del HTML
     allHTMLTags = document.getElementsByTagName("canvas");
     // Las recorremos
@@ -153,7 +158,8 @@ function cargaCasillas(){
             if(document.getElementById(allHTMLTags[i].id).getContext){
                 var context = document.getElementById(casillaActual.id).getContext('2d');
                 context.rect(0,0,30,50);
-                //context.clearRect();
+                context.clearRect(0, 0, document.getElementById(casillaActual.id).width,
+                    document.getElementById(casillaActual.id).height);
                 if (allHTMLTags[i].className=="Ciencia") {
                     context.fillStyle = "#1CB429";
                 }else if (allHTMLTags[i].className=="Historia") {
@@ -173,7 +179,8 @@ function cargaCasillas(){
                     context.lineTo(10,10);
                 }
                 context.fill();
-                context.lineWidth = 3;
+                context.lineWidth = 3
+                context.strokeStyle = "black"
                 context.stroke();
             }
         }
@@ -272,7 +279,6 @@ function pintaPosicionOponente(){
     }else{
         var arribaModificado = (parseInt(arriba.substr(0,2))-30).toString()+"px";
     }
-    //TODO: modificar en función de dónde esté para coger 2 o 3 del substring
     document.getElementById("piezaRival").firstElementChild.style.top = arribaModificado;
     document.getElementById("piezaRival").firstElementChild.style.left = izquierda;
 }
@@ -481,5 +487,5 @@ function pintaFichaUsuario(datos){
 
 function finPartida(){
     quitaClicks();
-    document.getElementById("dado").setAttribute()
+    document.getElementById("dado").setAttribute();
 }

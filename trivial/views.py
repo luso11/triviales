@@ -236,6 +236,7 @@ def rombito(request):
         if ((rombitos["Historia"] == 1) and (rombitos["Ciencia"] == 1) and (rombitos["Literatura"] == 1) and
             (rombitos["Espectaculos"] == 1) and (rombitos["Deportes"] == 1)):
             partida.turno = 0;
+            partida.save()
             return HttpResponse('fin')
         else:
             return HttpResponse('ok')
