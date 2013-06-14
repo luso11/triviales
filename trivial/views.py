@@ -272,6 +272,7 @@ def posicion(request):
             game.pos1 = request.POST['posicion']
         else:
             game.pos2 = request.POST['posicion']
+        game.save()
     return HttpResponse('ok')
 
 def compruebaNombreDisponible(request):
