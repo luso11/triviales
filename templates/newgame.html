@@ -2,25 +2,43 @@
 {% block title %}{{ title }}{% endblock %}
 {% block extra_javascript %}
     <script type="text/javascript" src="{{ STATIC_URL }}newgame.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}newgame.css">
 {% endblock %}
 {% block content %}
     <div id="contenido">
-        <table>
+        <table id="tablaCreaPartida">
             <tr>
-                {% if error %}
-                    <p style="color: red;">No se ha encontrado al otro usuario</p>
-                {% endif %}
+                <td colspan="3">
+                    <h2>Seleccione el modo de creación de partida</h2>
+                </td>
             </tr>
             <tr>
-                <td><input type="button" class="button" value="Encontrar por nombre usuario" onclick="conDatosUsuario()"/></td>
-                <td><input type="button" class="button" value="Encontrar por email" onclick="conDatosMail()"/></td>
+                <td colspan="3">
+                    {% if error %}
+                        <p style="color: red;">No se ha encontrado al otro usuario</p>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td><input type="button" class="button" value="Buscar por nombre usuario" onclick="conDatosUsuario()"/></td>
+                <td><input type="button" class="button" value="Buscar por email" onclick="conDatosMail()"/></td>
                 <td><input type="button" class="button" value="Aleatorio" onclick="crear()"/></td>
             </tr>
+            <tr>
+                <td>
+                    <form id="formulario"  name="f1" method="post" action="newgame">{% csrf_token %}
+                        <input type="text" id="datos" name="datos" style="visibility: hidden;" />
+                        <input type="hidden" id="eleccion" name="eleccion" />
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="button" value="Crear partida" id="crearPartida" style="visibility: hidden;" onclick="crear()"/>
+                </td>
+            </tr>
         </table>
-        <form name="f1" method="post" action="newgame">{% csrf_token %}
-            <input type="text" id="datos" name="datos" style="visibility: hidden;" />
-            <input type="hidden" id="eleccion" name="eleccion" />
-        </form>
-        <input type="button" value="Crear partida" id="crearPartida" style="visibility: hidden;" onclick="crear()"/>
+
+
     </div>
 {% endblock %}

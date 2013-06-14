@@ -273,3 +273,20 @@ def posicion(request):
         else:
             game.pos2 = request.POST['posicion']
     return HttpResponse('ok')
+
+def compruebaNombreDisponible(request):
+    if request.method == "GET":
+        try:
+            user = User.objects.get(username=request.GET['username'])
+            return HttpResponse('error')
+        except:
+            return HttpResponse('ok')
+
+
+def compruebaMailDisponible(request):
+    if request.method == "GET":
+        try:
+            user = User.objects.get(email=request.GET['correo'])
+            return HttpResponse('error')
+        except:
+            return HttpResponse('ok')

@@ -2,16 +2,55 @@
 {% block title %}{{ title }}{% endblock %}
 {% block extra_javascript %}
     <script type="text/javascript" src="{{ STATIC_URL }}register.js"></script>
+    <script type="text/javascript">
+    function compruebaNombre(){
+        if (document.getElementById("username").value != ""){
+            $.ajax({
+                type: "get",
+                url: "/compruebaNombreDisponible",
+                data: {'username': document.getElementById("username").value},
+                success: function(data) {
+                    if (data == "ok"){
+                        document.getElementById("ok").removeAttribute("hidden");
+                    }else{
+                        document.getElementById("noOk").removeAttribute("hidden");
+                    }
+                }
+            });
+         }
+    }
+
+    function compruebaMail(){
+        if (document.getElementById("username").value != ""){
+            $.ajax({
+                type: "get",
+                url: "/compruebaMailDisponible",
+                data: {'correo': document.getElementById("correo").value},
+                success: function(data) {
+                    if (data == "ok"){
+                        document.getElementById("okCorreo").removeAttribute("hidden");
+                    }else{
+                        document.getElementById("noOkCorreo").removeAttribute("hidden");
+                    }
+                }
+            });
+        }
+    }
+    </script>
 {% endblock %}
 {% block content %}
     <div id="contenido">
     <div id="container2">
-        <form id="f1" action="register" method="post">
+        <form id="f1" method="post" action="register" onsubmit="return comprobar()">
             {% csrf_token %}
             <label for="username">Usuario:</label>
-                <input type="name" id="username"  name="username" required="required">
+            <img id="ok" src="/static/acierto.png" hidden="hidden"/>
+            <img id="noOk" src="/static/fallo.png" hidden="hidden"/>
+                <input type="name" id="username"  name="username" required="required" onblur="compruebaNombre()" onfocus="quitaImagenesNombre()">
             <label for="correo">Correo electr&oacute;nico:</label>
-                <input type="email" id="correo"  name="correo" required="required">
+            <img id="okCorreo" src="/static/acierto.png" hidden="hidden"/>
+            <img id="noOkCorreo" src="/static/fallo.png" hidden="hidden"/>
+                <input type="email" id="correo"  name="correo" required="required" onblur="compruebaMail()" onfocus="quitaImagenesMail()">
             <label for="password1">Contrase&ntilde;a:</label>
                 <input type="password" id="password1" name="password1" required="required">
             <label for="password2">Repita la contrase&ntilde;a:</label>

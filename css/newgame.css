@@ -1,0 +1,15 @@
+#tablaCreaPartida{
+    position: absolute;
+    left: 25%;
+}
+
+#formulario{
+    position: absolute;
+    left: 40%;
+}
+
+#crearPartida{
+    position: absolute;
+    left: 40%;
+    top: 130%;
+}

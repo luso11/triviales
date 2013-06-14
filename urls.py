@@ -19,6 +19,8 @@ urlpatterns = patterns('',
     url(r'^fichas$', 'trivial.views.fichas'),
     url(r'^borrar$', 'trivial.views.borrar'),
     url(r'^posicion$', 'trivial.views.posicion'),
+    url(r'^compruebaNombreDisponible$', 'trivial.views.compruebaNombreDisponible'),
+    url(r'^compruebaMailDisponible$', 'trivial.views.compruebaMailDisponible'),
 
     # url(r'^triviales/', include('triviales.foo.urls')),
 

@@ -66,13 +66,21 @@ function pintaPosicionesPosibles(posicionMayor, posicionMenor){
             }
         }
     }
+
+    context1.beginPath();
+    context1.arc(15, 20, 10, 0, 2 * Math.PI, false);
     context1.fillStyle = 'white';
     context1.fill();
     context1.lineWidth = 3;
+    context1.strokeStyle = 'blue';
     context1.stroke();
+
+    context2.beginPath();
+    context2.arc(15, 20, 10, 0, 2 * Math.PI, false);
     context2.fillStyle = 'white';
     context2.fill();
     context2.lineWidth = 3;
+    context2.strokeStyle = 'blue';
     context2.stroke();
 }
 
@@ -145,8 +153,7 @@ function cargaCasillas(){
             if(document.getElementById(allHTMLTags[i].id).getContext){
                 var context = document.getElementById(casillaActual.id).getContext('2d');
                 context.rect(0,0,30,50);
-                context.clearRect();
-                //si saco aquí la creación comun del elemento context no funciona
+                //context.clearRect();
                 if (allHTMLTags[i].className=="Ciencia") {
                     context.fillStyle = "#1CB429";
                 }else if (allHTMLTags[i].className=="Historia") {
@@ -158,8 +165,7 @@ function cargaCasillas(){
                 }else if (allHTMLTags[i].className=="Espectaculos") {
                     context.fillStyle = '#FF4BD0';
                 }else if (allHTMLTags[i].className=="tiraOtraVez") {
-                    context.fillStyle = 'FF0101';
-                    //TODO: Intentar hacer un cubo en 3D con líneas del canvas;
+                    context.fillStyle = '#FF0101';
                     context.moveTo(10,10);
                     context.lineTo(20,10);
                     context.lineTo(20,20);

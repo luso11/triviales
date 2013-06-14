@@ -10,15 +10,15 @@ function comprobarClave(){
     clave2 = document.forms["f1"].password2.value;
 
     if ((clave1 != "")){
-        if ((clave1 == clave2)){
-            document.getElementById("f1").submit();
+        if (clave1 == clave2){
+            return true;
         }else{
             alert("Las dos claves son distintas.");
-            return false
+            return false;
         }
     }else{
         alert("La contraseña no puede estar vacía.");
-        return false
+        return false;
     }
 }
 
@@ -27,6 +27,16 @@ function comprobar(){
         alert("El nombre de usuario no puede estar vacío.");
         return false
     }else{
-        comprobarClave();
+        return comprobarClave();
     }
+}
+
+function quitaImagenesNombre(){
+    document.getElementById("ok").setAttribute("hidden", "hidden");
+    document.getElementById("noOk").setAttribute("hidden", "hidden");
+}
+
+function quitaImagenesMail(){
+    document.getElementById("okCorreo").setAttribute("hidden", "hidden");
+    document.getElementById("noOkCorreo").setAttribute("hidden", "hidden");
 }
